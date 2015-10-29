@@ -15,12 +15,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import Search from 'search';
-import User from 'user';
-
-// Construct GeniusLink
-let GeniusLink = GeniusLink || {};
-
-// Expose modules
-GeniusLink.user = User;
-GeniusLink.search = Search;
+import Search from './search';
+import User from './user';
+import settings from 'martian/settings';
+window.GeniusLink = window.GeniusLink || {};
+window.GeniusLink = {
+    init: (host, options) => {
+        if(!host) {
+            throw 'You must include a host when you create a GeniusLink object.';
+        }
+        let protocolArr = host.match(/^http(s?):/);
+        let protocol = (protocolArr && Array.isArray(protocolArr)) ? protocolArr[0] : window.location.protocol;
+        if(!protocolArr) {
+            host = `${protocol}//${host}`;
+        }
+        if(protocol === 'https:' && window.location.protocol === 'http:') {
+            throw 'You can not use a secure connection for request from an insecure source.';
+        }
+        settings.set('host', host);
+    },
+    search: Search,
+    user: User
+}

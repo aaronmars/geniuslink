@@ -1,2 +1,0 @@
-# martian
-MindTouch JavaScript API

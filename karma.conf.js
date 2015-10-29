@@ -14,27 +14,16 @@ module.exports = function(config) {
         files: [
             'test/mock-ajax.js'
         ],
-        exclude: [
-            'karma.conf.js',
-            'index.js',
-            'geniuslink.js',
-            'gulpfile.js'
-        ],
         jspm: {
             loadFiles: [
                 'test/mock/*.js',
-                'test/search.test.js'
-            ],
-            serveFiles: [
-                'search.js'
+                'test/search.test.js',
+                'index.js'
             ]
         },
         preprocessors: {
-            'search.js': [ 'babel', 'sourcemap', 'coverage' ],
-            // 'user.js':  [ 'babel', 'sourcemap', 'coverage' ],
             'test/*.test.js': [ 'babel' ],
-            'test/mock/*.mock.js': [ 'babel' ],
-            'test/**/*.test.js': [ 'babel' ]
+            'test/mock/*.mock.js': [ 'babel' ]
         }, 
         babelPreprocessor: {
             options: {
@@ -57,7 +46,7 @@ module.exports = function(config) {
         },
         port: 9876,
         colors: true,
-        logLevel: config.LOG_INFO,
+        logLevel: config.LOG_DEBUG,
         autoWatch: true,
         browsers: ['PhantomJS'],
         singleRun: true 

@@ -15,8 +15,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import Search from 'search';
-console.log(Search);
 describe('Search', () => {
     describe('operations', () => {
         beforeEach(() => {
@@ -27,10 +25,11 @@ describe('Search', () => {
         });
         it('can fetch search results', (done) => {
             let infoUri = '/@api/deki/site/query?';
-            jasmine.Ajax.stubRequest(new RegExp(infoUri), null, 'GET').andReturn({ status: 200, responseText: '' });
-            console.log(Search.query);
-            Search.query({}).then((r) => {
+            jasmine.Ajax.stubRequest(new RegExp(infoUri), null, 'GET').andReturn({ status: 500, responseText: '{ \"message\": \"internal error\" }' });
+            GeniusLink.Search.query({ q: "less" }).then((r) => {
                 expect(r).toBeDefined();
+                expect(r.errorCode).toBe(500);
+                expect(r.message).toBe('internal error');
                 done();
             });
         });

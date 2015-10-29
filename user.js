@@ -17,8 +17,15 @@
  */
 
 import { User as MTUser } from 'martian/user';
+import settings from 'martian/settings';
 export default class User {
     static currentUser() {
         return MTUser.getCurrentUser();
+    }
+    static getLoginURL() {
+        return `${settings.get('host')}/@app/login/redirect`;
+    }
+    static getUserHistory() {
+        // query for data
     }
 }

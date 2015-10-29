@@ -15,9 +15,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// import Site from 'martian/site';
+import Site from 'martian/site';
+import settings from 'martian/settings';
 export default class Search {
-    static query(options) {
+    static query(q, options = {}) {
+        if(!q || q === '') {
+            throw 'You need to provide a query in order to search.';
+        }
+        options.q = q;
         return Site.search(options);
     }
 }

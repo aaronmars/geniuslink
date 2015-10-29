@@ -4,6 +4,7 @@ var jspm = require('jspm');
 var gulp = require('gulp');
 var plumber = require('gulp-plumber');
 var cached = require('gulp-cached');
+var uglify = require('gulp-uglify');
 var karma = require('karma').server;
 var bundleOptions = {
         minify: false,
@@ -20,6 +21,7 @@ gulp.task('build', function(cb) {
     jspm.bundleSFX('geniuslink', outFile, bundleOptions).then(function() {
         var stream = gulp.src(outFile)
             .pipe(plumber())
+            .pipe(uglify())
             .pipe(gulp.dest('.'));
         cb();
     }).catch(function(err) {
@@ -34,7 +36,6 @@ gulp.task('test', function(done) {
         singleRun: true
     }, done);
 });
-
 
 /*** sub tasks ***/
 gulp.task('inspect:lint', function() {
