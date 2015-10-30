@@ -1,8 +1,6 @@
 # GeniusLink
 MindTouch GeniusLink for CRM
 
-This 
-
 ## Interfaces
 
 ### GeniusLink.init(host)
