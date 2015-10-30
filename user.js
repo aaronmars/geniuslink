@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-import { User as MTUser } from 'martian/user';
+import MTUser from 'martian/user';
 import settings from 'martian/settings';
 export default class User {
     static currentUser() {
@@ -24,8 +24,5 @@ export default class User {
     }
     static getLoginURL() {
         return `${settings.get('host')}/@app/login/redirect`;
-    }
-    static getUserHistory() {
-        // query for data
     }
 }
