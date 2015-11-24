@@ -15,14 +15,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import MTUser from 'martian/user';
-import settings from 'martian/settings';
-export default class User {
-    static currentUser() {
-        return MTUser.getCurrentUser();
-    }
-    static getLoginURL() {
-        return `${settings.get('host')}/@app/login/redirect`;
-    }
-}
+import GeniusLink from './geniuslink';
+window.GeniusLink = GeniusLink || {};

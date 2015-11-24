@@ -15,14 +15,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import Search from './search';
 import User from './user';
+import search from './search';
 import settings from 'martian/settings';
-window.GeniusLink = window.GeniusLink || {};
-window.GeniusLink = {
-    init: (host, options) => {
+
+export default {
+
+    /**
+     * Initialize GeniusLink connection
+     *
+     * @param {String} host - MindTouch host (e.g. https://example.mindtouch.us)
+     */
+    init: (host) => {
         if(!host) {
-            throw 'You must include a host when you create a GeniusLink object.';
+            throw new Error('A MindTouch host (e.g. https://example.mindtouch.us) is required to initialize the GeniusLink connection.');
         }
         let protocolArr = host.match(/^http(s?):/);
         let protocol = (protocolArr && Array.isArray(protocolArr)) ? protocolArr[0] : window.location.protocol;
@@ -30,10 +36,10 @@ window.GeniusLink = {
             host = `${protocol}//${host}`;
         }
         if(protocol === 'https:' && window.location.protocol === 'http:') {
-            throw 'You can not use a secure connection for request from an insecure source.';
+            throw new Error('A secure HTTPS connection cannot be made from an insecure web page.');
         }
         settings.set('host', host);
     },
-    search: Search,
+    search: search,
     user: User
-}
+};

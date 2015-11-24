@@ -15,9 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import GeniusLink from '../src/geniuslink';
+GeniusLink.init('http://example.mindtouch.us');
 
-import User from 'user';
-describe('User', () => {
+describe('user', () => {
     describe('operations', () => {
         beforeEach(() => {
             jasmine.Ajax.install();
@@ -26,7 +27,7 @@ describe('User', () => {
             jasmine.Ajax.uninstall();
         });
         it('can fetch current user', (done) => {
-            let infoUri = '/@api/user/current?';
+            let infoUri = 'http://example.mindtouch.us/@api/user/current?';
             jasmine.Ajax.stubRequest(new RegExp(infoUri), null, 'GET').andReturn({ status: 200, responseText: '' });
             User.getCurrentUser().then((r) => {
                 expect(r).toBeDefined();

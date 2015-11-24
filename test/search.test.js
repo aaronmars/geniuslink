@@ -15,7 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-describe('Search', () => {
+import GeniusLink from '../src/geniuslink';
+GeniusLink.init('http://example.mindtouch.us');
+
+describe('search', () => {
     describe('operations', () => {
         beforeEach(() => {
             jasmine.Ajax.install();
@@ -24,9 +27,9 @@ describe('Search', () => {
             jasmine.Ajax.uninstall();
         });
         it('can fetch search results', (done) => {
-            let infoUri = '/@api/deki/site/query?';
+            let infoUri = 'http://example.mindtouch.us/@api/deki/site/query?';
             jasmine.Ajax.stubRequest(new RegExp(infoUri), null, 'GET').andReturn({ status: 500, responseText: '{ \"message\": \"internal error\" }' });
-            GeniusLink.Search.query({ q: "less" }).then((r) => {
+            search({ q: "less" }).then((r) => {
                 expect(r).toBeDefined();
                 expect(r.errorCode).toBe(500);
                 expect(r.message).toBe('internal error');

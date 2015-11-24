@@ -16,13 +16,21 @@
  * limitations under the License.
  */
 import Site from 'martian/site';
-import settings from 'martian/settings';
-export default class Search {
-    static query(q, options = {}) {
-        if(!q || q === '') {
-            throw 'You need to provide a query in order to search.';
-        }
-        options.q = q;
-        return Site.search(options);
+
+/**
+ * @param {String} q - keywords or advanced search syntax
+ * @param {Object} options - {
+ *  page: paginated {page}
+ *  limit: limit search results to {limit} items per paginated page
+ *  tags: constrain search results to items tagged with {tag}
+ *  path: constraint search results to items located in the {path} page hierarchy
+ * }
+ * @returns {Object}
+ */
+export function search(q, options = {}) {
+    if(!q || q === '') {
+        throw new Error('Search requires keywords or advanced search syntax.');
     }
+    options.q = q;
+    return Site.search(options);
 }
