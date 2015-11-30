@@ -27,7 +27,7 @@ import Site from 'martian/site';
  * }
  * @returns {Object}
  */
-export function search(q, options = {}) {
+export default function(q, options = {}) {
     if(!q || q === '') {
         throw new Error('Search requires keywords or advanced search syntax.');
     }

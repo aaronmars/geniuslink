@@ -28,7 +28,7 @@ var karma = require('karma').server;
 /*** sub tasks ***/
 gulp.task('build', function(cb) {
     var out = 'dist/geniuslink.js';
-    jspm.bundleSFX('src/index', out, {
+    jspm.bundleSFX('index', out, {
         minify: false,
         sourceMaps: true
     }).then(function() {

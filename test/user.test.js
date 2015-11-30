@@ -15,24 +15,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import GeniusLink from '../src/geniuslink';
-GeniusLink.init('http://example.mindtouch.us');
+import GeniusLink from '../geniuslink';
+import User from 'martian/user';
 
 describe('user', () => {
     describe('operations', () => {
         beforeEach(() => {
-            jasmine.Ajax.install();
+            GeniusLink.init('http://mindtouch.example.com');
         });
         afterEach(() => {
-            jasmine.Ajax.uninstall();
         });
-        it('can fetch current user', (done) => {
-            let infoUri = 'http://example.mindtouch.us/@api/user/current?';
-            jasmine.Ajax.stubRequest(new RegExp(infoUri), null, 'GET').andReturn({ status: 200, responseText: '' });
-            User.getCurrentUser().then((r) => {
-                expect(r).toBeDefined();
-                done();
-            });
+        it('can get current user', (done) => {
+
+            // arrange
+            let mock = sinon.mock(User)
+                .expects('getCurrentUser')
+                .once();
+
+            // act
+            GeniusLink.user.getCurrentUser();
+
+            // assert
+            mock.verify();
+            done();
+        });
+        it('can get login url', (done) => {
+
+            // act
+            var url = GeniusLink.user.getLoginUrl();
+
+            // assert
+            expect(url).toBe('http://mindtouch.example.com/@app/login/redirect');
+            done();
         });
     });
 });

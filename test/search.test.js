@@ -15,26 +15,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import GeniusLink from '../src/geniuslink';
-GeniusLink.init('http://example.mindtouch.us');
+import GeniusLink from '../geniuslink';
+import Site from 'martian/site';
 
 describe('search', () => {
     describe('operations', () => {
         beforeEach(() => {
-            jasmine.Ajax.install();
+            GeniusLink.init('http://mindtouch.example.com');
         });
         afterEach(() => {
-            jasmine.Ajax.uninstall();
         });
-        it('can fetch search results', (done) => {
-            let infoUri = 'http://example.mindtouch.us/@api/deki/site/query?';
-            jasmine.Ajax.stubRequest(new RegExp(infoUri), null, 'GET').andReturn({ status: 500, responseText: '{ \"message\": \"internal error\" }' });
-            search({ q: "less" }).then((r) => {
-                expect(r).toBeDefined();
-                expect(r.errorCode).toBe(500);
-                expect(r.message).toBe('internal error');
-                done();
-            });
+        it('can get search results', (done) => {
+
+            // arrange
+            let mock = sinon.mock(Site)
+                .expects('search')
+                .once();
+
+            // act
+            GeniusLink.search({ q: 'less' });
+
+            // assert
+            mock.verify();
+            done();
         });
     });
 });

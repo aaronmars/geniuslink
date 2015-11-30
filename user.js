@@ -17,6 +17,7 @@
  */
 import MartianUser from 'martian/user';
 import settings from 'martian/settings';
+
 export default class User {
 
     /**

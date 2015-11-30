@@ -19,28 +19,36 @@ module.exports = function(config) {
     'use strict';
     config.set({
         basePath: './',
-        frameworks: [ 'jspm', 'jasmine' ],
+        frameworks: [ 'jspm', 'jasmine', 'phantomjs-shim' ],
         plugins: [
             'karma-jasmine',
             'karma-phantomjs-launcher',
             'karma-babel-preprocessor',
             'karma-sourcemap-loader',
             'karma-coverage',
-            'karma-jspm'
+            'karma-jspm',
+            'karma-phantomjs-shim'
         ],
         files: [
-            'test/mock-ajax.js'
+            'node_modules/sinon/pkg/sinon.js'
         ],
         jspm: {
+            config: 'config.js',
+            packages: 'jspm_packages/',
             loadFiles: [
-                'test/mock/*.js',
-                'test/*.test.js',
-                'src/*.js'
+                'test/*.test.js'
+            ],
+            serveFiles: [
+                'geniuslink.js',
+                'search.js',
+                'user.js'
             ]
         },
         preprocessors: {
             'test/*.test.js': [ 'babel' ],
-            'test/mock/*.mock.js': [ 'babel' ]
+            'geniuslink.js': [ 'babel', 'sourcemap', 'coverage' ],
+            'search.js': [ 'babel', 'sourcemap', 'coverage' ],
+            'user.js': [ 'babel', 'sourcemap', 'coverage' ]
         }, 
         babelPreprocessor: {
             options: {
@@ -63,9 +71,9 @@ module.exports = function(config) {
         },
         port: 9876,
         colors: true,
-        logLevel: config.LOG_DEBUG,
+        logLevel: config.LOG_INFO,
         autoWatch: true,
-        browsers: ['PhantomJS'],
+        browsers: [ 'PhantomJS' ],
         singleRun: true 
     });
 };
