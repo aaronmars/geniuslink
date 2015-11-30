@@ -33,7 +33,7 @@ describe('search', () => {
                 .once();
 
             // act
-            GeniusLink.search({ q: 'less' });
+            GeniusLink.search('foo bar baz', {});
 
             // assert
             mock.verify();
