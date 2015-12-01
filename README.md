@@ -3,10 +3,12 @@ MindTouch GeniusLink is an integration SDK for MindTouch customer success sites.
 
 ## Usage
 
-### GeniusLink.init({String} host)
-Sets up the environment from which you want to query data
+NOTE: The MindTouch API currently does not allow authenticated requests over CORS (Cross-Origin Resource Sharing). As a result, all requests will be in the context of an anonymous site visitor.
 
-**host** {String} - A MindTouch site homepage url or hostname (e.g. example.mindtouch.us, https://example.mindtouch.us). Please note that HTTPS url's cannot be used on on non-HTTP origins. The system or website utilizing GeniusLink must be HTTPS for an HTTPS connection to a MindTouch site.
+### GeniusLink.init({String} host)
+Sets up the GeniusLink integration environment.
+
+**host** {String} - A MindTouch site homepage url or hostname (e.g. `example.mindtouch.us`, `https://example.mindtouch.us`). Please note that HTTPS url's cannot be used on on non-HTTP origins. The system or website utilizing GeniusLink must be HTTPS for an HTTPS connection to a MindTouch site.
 
 ### GeniusLink.search({String} query, {Object} options)
 The interface to search for help articles from a MindTouch site. Returns a promised object for asynchronous JavaScript programming.
@@ -19,7 +21,7 @@ The interface to search for help articles from a MindTouch site. Returns a promi
 * **tags** {String} - Tags by which to filter the results in a comma delimited list (default = '')
 * **path** {String} - A specific hierarchy path to filter by (default = '')
 
-**Returns {Promise<Object>}**
+**Returns {Promise\<Object\>}**
 ```
 {
     count: "10"
@@ -45,44 +47,60 @@ The interface to search for help articles from a MindTouch site. Returns a promi
 }
 ```
 
-**Example Usage**
+**Sample**
 ```javascript
 GeniusLink.init('https://success.example.com');
 GeniusLink.search('example search query').then(response) {
 
     // get the search result count...
-    return response.count;
-}).then(count) {
+    return response.result;
+}).then(results) {
 
-    // do something with the search result count...
+    // do something with the search results...
+    results.forEach({ ... });
 });
 ```
 
-### GeniusLink.user
-The interface for working with users on a MindTouch site.
+### GeniusLink.user.getCurrentUser()
+Gets the MindTouch site user that GeniusLink requests will be performed as. NOTE: The MindTouch API currently does not allow authenticated requests over CORS (Cross-Origin Resource Sharing). As a result, all requests will be in the context of an anonymous site visitor.
 
-#### GeniusLink.user.getCurrentUser()
-...
-
-**Sample Result**
-
+**Returns {Promise\<Object\>}**
 ```
-dateCreated: "..."
-dateLastLogin: "..."
-email: "..."
-fullname: "..."
-href: "..."
-id: ...
-username: "..."
-wikiId: "..."
+{
+    dateCreated: "..."
+    dateLastLogin: "..."
+    email: "..."
+    fullname: "..."
+    href: "..."
+    id: ...
+    username: "..."
+    wikiId: "..."
+}
 ```
 
-#### GeniusLink.user.getLoginURL()
+**Sample**
+```javascript
+GeniusLink.init('https://success.example.com');
+GeniusLink.user.getCurrentUser().then(response) {
 
-Returns the path to your MindTouch sites primary login experience.  Returns a string.
+    // get the email address...
+    return response.email;
+}).then(email) {
 
-**Sample Result**
+    // do something with the email address...
+});
+```
 
+### GeniusLink.user.getLoginUrl()
+Gets the the URL to your MindTouch site primary login experience.
+
+**Returns {String}**
 ```
 ${host}/@app/login/redirect
+```
+
+**Sample**
+```javascript
+GeniusLink.init('https://success.example.com');
+window.location = GeniusLink.user.getLoginUrl();
 ```
