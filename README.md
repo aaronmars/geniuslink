@@ -92,7 +92,7 @@ GeniusLink.user.getCurrentUser().then(response) {
 ```
 
 ### GeniusLink.user.getLoginUrl()
-Gets the the URL to your MindTouch site primary login experience.
+Gets the the URL to the MindTouch site primary login experience.
 
 **Returns {String}**
 ```
