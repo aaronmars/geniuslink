@@ -5200,7 +5200,7 @@ System.register("npm:babel-runtime@5.8.34/core-js/promise", ["npm:core-js@0.9.18
   return module.exports;
 });
 
-System.register('github:MindTouch/martian@0.1.2/settings', [], function (_export) {
+System.register('github:MindTouch/martian@0.1.3/settings', [], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -5244,7 +5244,7 @@ System.register('github:MindTouch/martian@0.1.2/settings', [], function (_export
         }
     };
 });
-System.register('github:MindTouch/martian@0.1.2/lib/stringUtility', [], function (_export) {
+System.register('github:MindTouch/martian@0.1.3/lib/stringUtility', [], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -5316,7 +5316,7 @@ System.register('github:MindTouch/martian@0.1.2/lib/stringUtility', [], function
         }
     };
 });
-System.register("github:MindTouch/martian@0.1.2/errors/mtError", ["npm:babel-runtime@5.8.34/helpers/get", "npm:babel-runtime@5.8.34/helpers/inherits", "npm:babel-runtime@5.8.34/helpers/class-call-check"], function (_export) {
+System.register("github:MindTouch/martian@0.1.3/errors/mtError", ["npm:babel-runtime@5.8.34/helpers/get", "npm:babel-runtime@5.8.34/helpers/inherits", "npm:babel-runtime@5.8.34/helpers/class-call-check"], function (_export) {
   var _get, _inherits, _classCallCheck, MTError;
 
   return {
@@ -5372,7 +5372,7 @@ System.register("github:MindTouch/martian@0.1.2/errors/mtError", ["npm:babel-run
     }
   };
 });
-System.register('github:MindTouch/martian@0.1.2/models/pageRating.model', ['github:MindTouch/martian@0.1.2/models/modelHelper'], function (_export) {
+System.register('github:MindTouch/martian@0.1.3/models/pageRating.model', ['github:MindTouch/martian@0.1.3/models/modelHelper'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -5395,8 +5395,8 @@ System.register('github:MindTouch/martian@0.1.2/models/pageRating.model', ['gith
 
     var modelHelper, pageRatingModel;
     return {
-        setters: [function (_githubMindTouchMartian012ModelsModelHelper) {
-            modelHelper = _githubMindTouchMartian012ModelsModelHelper['default'];
+        setters: [function (_githubMindTouchMartian013ModelsModelHelper) {
+            modelHelper = _githubMindTouchMartian013ModelsModelHelper['default'];
         }],
         execute: function () {
             pageRatingModel = {
@@ -5444,7 +5444,7 @@ System.register('github:MindTouch/martian@0.1.2/models/pageRating.model', ['gith
         }
     };
 });
-System.register('github:MindTouch/martian@0.1.2/models/search.model', ['github:MindTouch/martian@0.1.2/models/modelHelper'], function (_export) {
+System.register('github:MindTouch/martian@0.1.3/models/search.model', ['github:MindTouch/martian@0.1.3/models/modelHelper'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -5467,8 +5467,8 @@ System.register('github:MindTouch/martian@0.1.2/models/search.model', ['github:M
 
     var modelHelper, searchModel;
     return {
-        setters: [function (_githubMindTouchMartian012ModelsModelHelper) {
-            modelHelper = _githubMindTouchMartian012ModelsModelHelper['default'];
+        setters: [function (_githubMindTouchMartian013ModelsModelHelper) {
+            modelHelper = _githubMindTouchMartian013ModelsModelHelper['default'];
         }],
         execute: function () {
             searchModel = {
@@ -5509,16 +5509,16 @@ System.register('github:MindTouch/martian@0.1.2/models/search.model', ['github:M
         }
     };
 });
-System.register('github:MindTouch/martian@0.1.2/lib/utility', ['npm:babel-runtime@5.8.34/core-js/object/keys', 'github:MindTouch/martian@0.1.2/lib/stringUtility', 'github:MindTouch/martian@0.1.2/settings'], function (_export) {
+System.register('github:MindTouch/martian@0.1.3/lib/utility', ['npm:babel-runtime@5.8.34/core-js/object/keys', 'github:MindTouch/martian@0.1.3/lib/stringUtility', 'github:MindTouch/martian@0.1.3/settings'], function (_export) {
     var _Object$keys, stringUtility, settings, utility;
 
     return {
         setters: [function (_npmBabelRuntime5834CoreJsObjectKeys) {
             _Object$keys = _npmBabelRuntime5834CoreJsObjectKeys['default'];
-        }, function (_githubMindTouchMartian012LibStringUtility) {
-            stringUtility = _githubMindTouchMartian012LibStringUtility['default'];
-        }, function (_githubMindTouchMartian012Settings) {
-            settings = _githubMindTouchMartian012Settings['default'];
+        }, function (_githubMindTouchMartian013LibStringUtility) {
+            stringUtility = _githubMindTouchMartian013LibStringUtility['default'];
+        }, function (_githubMindTouchMartian013Settings) {
+            settings = _githubMindTouchMartian013Settings['default'];
         }],
         execute: function () {
             /**
@@ -5581,7 +5581,7 @@ System.register('github:MindTouch/martian@0.1.2/lib/utility', ['npm:babel-runtim
         }
     };
 });
-System.register('github:MindTouch/martian@0.1.2/models/page.model', ['github:MindTouch/martian@0.1.2/models/modelHelper', 'github:MindTouch/martian@0.1.2/models/pageRating.model'], function (_export) {
+System.register('github:MindTouch/martian@0.1.3/models/page.model', ['github:MindTouch/martian@0.1.3/models/modelHelper', 'github:MindTouch/martian@0.1.3/models/pageRating.model'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -5604,10 +5604,10 @@ System.register('github:MindTouch/martian@0.1.2/models/page.model', ['github:Min
 
     var modelHelper, pageRatingModel, pageModel;
     return {
-        setters: [function (_githubMindTouchMartian012ModelsModelHelper) {
-            modelHelper = _githubMindTouchMartian012ModelsModelHelper['default'];
-        }, function (_githubMindTouchMartian012ModelsPageRatingModel) {
-            pageRatingModel = _githubMindTouchMartian012ModelsPageRatingModel['default'];
+        setters: [function (_githubMindTouchMartian013ModelsModelHelper) {
+            modelHelper = _githubMindTouchMartian013ModelsModelHelper['default'];
+        }, function (_githubMindTouchMartian013ModelsPageRatingModel) {
+            pageRatingModel = _githubMindTouchMartian013ModelsPageRatingModel['default'];
         }],
         execute: function () {
             pageModel = {
@@ -5662,7 +5662,7 @@ System.register('github:MindTouch/martian@0.1.2/models/page.model', ['github:Min
         }
     };
 });
-System.register('github:MindTouch/martian@0.1.2/site', ['npm:babel-runtime@5.8.34/helpers/create-class', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'npm:babel-runtime@5.8.34/core-js/promise', 'github:MindTouch/martian@0.1.2/settings', 'github:MindTouch/martian@0.1.2/lib/utility', 'github:MindTouch/martian@0.1.2/lib/stringUtility', 'github:MindTouch/martian@0.1.2/plug', 'github:MindTouch/martian@0.1.2/models/search.model'], function (_export) {
+System.register('github:MindTouch/martian@0.1.3/site', ['npm:babel-runtime@5.8.34/helpers/create-class', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'npm:babel-runtime@5.8.34/core-js/promise', 'github:MindTouch/martian@0.1.3/settings', 'github:MindTouch/martian@0.1.3/lib/utility', 'github:MindTouch/martian@0.1.3/lib/stringUtility', 'github:MindTouch/martian@0.1.3/plug', 'github:MindTouch/martian@0.1.3/models/search.model'], function (_export) {
     var _createClass, _classCallCheck, _Promise, settings, utility, stringUtility, Plug, SearchModel, sitePlug, Site;
 
     function _buildSearchConstraints(params) {
@@ -5696,16 +5696,16 @@ System.register('github:MindTouch/martian@0.1.2/site', ['npm:babel-runtime@5.8.3
             _classCallCheck = _npmBabelRuntime5834HelpersClassCallCheck['default'];
         }, function (_npmBabelRuntime5834CoreJsPromise) {
             _Promise = _npmBabelRuntime5834CoreJsPromise['default'];
-        }, function (_githubMindTouchMartian012Settings) {
-            settings = _githubMindTouchMartian012Settings['default'];
-        }, function (_githubMindTouchMartian012LibUtility) {
-            utility = _githubMindTouchMartian012LibUtility['default'];
-        }, function (_githubMindTouchMartian012LibStringUtility) {
-            stringUtility = _githubMindTouchMartian012LibStringUtility['default'];
-        }, function (_githubMindTouchMartian012Plug) {
-            Plug = _githubMindTouchMartian012Plug['default'];
-        }, function (_githubMindTouchMartian012ModelsSearchModel) {
-            SearchModel = _githubMindTouchMartian012ModelsSearchModel['default'];
+        }, function (_githubMindTouchMartian013Settings) {
+            settings = _githubMindTouchMartian013Settings['default'];
+        }, function (_githubMindTouchMartian013LibUtility) {
+            utility = _githubMindTouchMartian013LibUtility['default'];
+        }, function (_githubMindTouchMartian013LibStringUtility) {
+            stringUtility = _githubMindTouchMartian013LibStringUtility['default'];
+        }, function (_githubMindTouchMartian013Plug) {
+            Plug = _githubMindTouchMartian013Plug['default'];
+        }, function (_githubMindTouchMartian013ModelsSearchModel) {
+            SearchModel = _githubMindTouchMartian013ModelsSearchModel['default'];
         }],
         execute: function () {
             /**
@@ -5790,7 +5790,7 @@ System.register('github:MindTouch/martian@0.1.2/site', ['npm:babel-runtime@5.8.3
         }
     };
 });
-System.register('github:MindTouch/martian@0.1.2/uriHash', ['npm:babel-runtime@5.8.34/helpers/create-class', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'github:MindTouch/martian@0.1.2/lib/utility', 'github:MindTouch/martian@0.1.2/lib/stringUtility'], function (_export) {
+System.register('github:MindTouch/martian@0.1.3/uriHash', ['npm:babel-runtime@5.8.34/helpers/create-class', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'github:MindTouch/martian@0.1.3/lib/utility', 'github:MindTouch/martian@0.1.3/lib/stringUtility'], function (_export) {
     var _createClass, _classCallCheck, utility, stringUtility, UriHash;
 
     return {
@@ -5798,10 +5798,10 @@ System.register('github:MindTouch/martian@0.1.2/uriHash', ['npm:babel-runtime@5.
             _createClass = _npmBabelRuntime5834HelpersCreateClass['default'];
         }, function (_npmBabelRuntime5834HelpersClassCallCheck) {
             _classCallCheck = _npmBabelRuntime5834HelpersClassCallCheck['default'];
-        }, function (_githubMindTouchMartian012LibUtility) {
-            utility = _githubMindTouchMartian012LibUtility['default'];
-        }, function (_githubMindTouchMartian012LibStringUtility) {
-            stringUtility = _githubMindTouchMartian012LibStringUtility['default'];
+        }, function (_githubMindTouchMartian013LibUtility) {
+            utility = _githubMindTouchMartian013LibUtility['default'];
+        }, function (_githubMindTouchMartian013LibStringUtility) {
+            stringUtility = _githubMindTouchMartian013LibStringUtility['default'];
         }],
         execute: function () {
             /**
@@ -5878,7 +5878,7 @@ System.register('github:MindTouch/martian@0.1.2/uriHash', ['npm:babel-runtime@5.
         }
     };
 });
-System.register('github:MindTouch/martian@0.1.2/time', ['github:moment/moment@2.10.6'], function (_export) {
+System.register('github:MindTouch/martian@0.1.3/time', ['github:moment/moment@2.10.6'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -5952,7 +5952,7 @@ System.register('github:MindTouch/martian@0.1.2/time', ['github:moment/moment@2.
         }
     };
 });
-System.register('search', ['github:MindTouch/martian@0.1.2/site'], function (_export) {
+System.register('search', ['github:MindTouch/martian@0.1.3/site'], function (_export) {
   /**
    * MindTouch GeniusLink SDK
    * Copyright (C) 2006-2015 MindTouch, Inc.
@@ -5985,8 +5985,8 @@ System.register('search', ['github:MindTouch/martian@0.1.2/site'], function (_ex
 
   var Site;
   return {
-    setters: [function (_githubMindTouchMartian012Site) {
-      Site = _githubMindTouchMartian012Site['default'];
+    setters: [function (_githubMindTouchMartian013Site) {
+      Site = _githubMindTouchMartian013Site['default'];
     }],
     execute: function () {
       _export('default', function (q) {
@@ -6001,7 +6001,7 @@ System.register('search', ['github:MindTouch/martian@0.1.2/site'], function (_ex
     }
   };
 });
-System.register('github:MindTouch/martian@0.1.2/models/modelHelper', ['github:MindTouch/martian@0.1.2/time'], function (_export) {
+System.register('github:MindTouch/martian@0.1.3/models/modelHelper', ['github:MindTouch/martian@0.1.3/time'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -6024,8 +6024,8 @@ System.register('github:MindTouch/martian@0.1.2/models/modelHelper', ['github:Mi
 
     var Time, modelHelper;
     return {
-        setters: [function (_githubMindTouchMartian012Time) {
-            Time = _githubMindTouchMartian012Time['default'];
+        setters: [function (_githubMindTouchMartian013Time) {
+            Time = _githubMindTouchMartian013Time['default'];
         }],
         execute: function () {
             modelHelper = {
@@ -6060,7 +6060,7 @@ System.register('github:MindTouch/martian@0.1.2/models/modelHelper', ['github:Mi
         }
     };
 });
-System.register('github:MindTouch/martian@0.1.2/errors/xhrError', ['npm:babel-runtime@5.8.34/helpers/get', 'npm:babel-runtime@5.8.34/helpers/inherits', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'github:MindTouch/martian@0.1.2/errors/mtError'], function (_export) {
+System.register('github:MindTouch/martian@0.1.3/errors/xhrError', ['npm:babel-runtime@5.8.34/helpers/get', 'npm:babel-runtime@5.8.34/helpers/inherits', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'github:MindTouch/martian@0.1.3/errors/mtError'], function (_export) {
     var _get, _inherits, _classCallCheck, MTError, XhrError;
 
     return {
@@ -6070,8 +6070,8 @@ System.register('github:MindTouch/martian@0.1.2/errors/xhrError', ['npm:babel-ru
             _inherits = _npmBabelRuntime5834HelpersInherits['default'];
         }, function (_npmBabelRuntime5834HelpersClassCallCheck) {
             _classCallCheck = _npmBabelRuntime5834HelpersClassCallCheck['default'];
-        }, function (_githubMindTouchMartian012ErrorsMtError) {
-            MTError = _githubMindTouchMartian012ErrorsMtError['default'];
+        }, function (_githubMindTouchMartian013ErrorsMtError) {
+            MTError = _githubMindTouchMartian013ErrorsMtError['default'];
         }],
         execute: function () {
             /**
@@ -6120,7 +6120,7 @@ System.register('github:MindTouch/martian@0.1.2/errors/xhrError', ['npm:babel-ru
         }
     };
 });
-System.register('github:MindTouch/martian@0.1.2/models/user.model', ['github:MindTouch/martian@0.1.2/models/modelHelper', 'github:MindTouch/martian@0.1.2/models/page.model'], function (_export) {
+System.register('github:MindTouch/martian@0.1.3/models/user.model', ['github:MindTouch/martian@0.1.3/models/modelHelper', 'github:MindTouch/martian@0.1.3/models/page.model'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -6143,10 +6143,10 @@ System.register('github:MindTouch/martian@0.1.2/models/user.model', ['github:Min
 
     var modelHelper, pageModel, userModel;
     return {
-        setters: [function (_githubMindTouchMartian012ModelsModelHelper) {
-            modelHelper = _githubMindTouchMartian012ModelsModelHelper['default'];
-        }, function (_githubMindTouchMartian012ModelsPageModel) {
-            pageModel = _githubMindTouchMartian012ModelsPageModel['default'];
+        setters: [function (_githubMindTouchMartian013ModelsModelHelper) {
+            modelHelper = _githubMindTouchMartian013ModelsModelHelper['default'];
+        }, function (_githubMindTouchMartian013ModelsPageModel) {
+            pageModel = _githubMindTouchMartian013ModelsPageModel['default'];
         }],
         execute: function () {
             userModel = {
@@ -6173,7 +6173,7 @@ System.register('github:MindTouch/martian@0.1.2/models/user.model', ['github:Min
         }
     };
 });
-System.register('github:MindTouch/martian@0.1.2/uri', ['npm:babel-runtime@5.8.34/helpers/create-class', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'npm:babel-runtime@5.8.34/core-js/object/keys', 'github:jspm/nodelibs-url@0.1.0', 'github:MindTouch/martian@0.1.2/uriHash', 'github:MindTouch/martian@0.1.2/lib/stringUtility'], function (_export) {
+System.register('github:MindTouch/martian@0.1.3/uri', ['npm:babel-runtime@5.8.34/helpers/create-class', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'npm:babel-runtime@5.8.34/core-js/object/keys', 'github:jspm/nodelibs-url@0.1.0', 'github:MindTouch/martian@0.1.3/uriHash', 'github:MindTouch/martian@0.1.3/lib/stringUtility'], function (_export) {
     var _createClass, _classCallCheck, _Object$keys, Url, UriHash, stringUtility, Uri;
 
     return {
@@ -6185,10 +6185,10 @@ System.register('github:MindTouch/martian@0.1.2/uri', ['npm:babel-runtime@5.8.34
             _Object$keys = _npmBabelRuntime5834CoreJsObjectKeys['default'];
         }, function (_githubJspmNodelibsUrl010) {
             Url = _githubJspmNodelibsUrl010['default'];
-        }, function (_githubMindTouchMartian012UriHash) {
-            UriHash = _githubMindTouchMartian012UriHash['default'];
-        }, function (_githubMindTouchMartian012LibStringUtility) {
-            stringUtility = _githubMindTouchMartian012LibStringUtility['default'];
+        }, function (_githubMindTouchMartian013UriHash) {
+            UriHash = _githubMindTouchMartian013UriHash['default'];
+        }, function (_githubMindTouchMartian013LibStringUtility) {
+            stringUtility = _githubMindTouchMartian013LibStringUtility['default'];
         }],
         execute: function () {
             /**
@@ -6352,7 +6352,7 @@ System.register('github:MindTouch/martian@0.1.2/uri', ['npm:babel-runtime@5.8.34
         }
     };
 });
-System.register('github:MindTouch/martian@0.1.2/plug', ['npm:babel-runtime@5.8.34/helpers/create-class', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'npm:babel-runtime@5.8.34/core-js/promise', 'github:MindTouch/martian@0.1.2/settings', 'github:MindTouch/martian@0.1.2/uri', 'github:MindTouch/martian@0.1.2/errors/xhrError'], function (_export) {
+System.register('github:MindTouch/martian@0.1.3/plug', ['npm:babel-runtime@5.8.34/helpers/create-class', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'npm:babel-runtime@5.8.34/core-js/promise', 'github:MindTouch/martian@0.1.3/settings', 'github:MindTouch/martian@0.1.3/uri', 'github:MindTouch/martian@0.1.3/errors/xhrError'], function (_export) {
     var _createClass, _classCallCheck, _Promise, settings, Uri, XhrError, Plug;
 
     function _handleHttpError(xhr) {
@@ -6374,7 +6374,6 @@ System.register('github:MindTouch/martian@0.1.2/plug', ['npm:babel-runtime@5.8.3
 
         return new _Promise(function (resolve, reject) {
             var xhr = new XMLHttpRequest();
-            xhr.setRequestHeader('X-Deki-Client', 'mindtouch-martian');
             var requestParams = {
                 _: Date.now(),
                 origin: 'mt-web' // TODO: F1 req from settings module after 20150820
@@ -6384,6 +6383,7 @@ System.register('github:MindTouch/martian@0.1.2/plug', ['npm:babel-runtime@5.8.3
             }
             var url = _this.withParams(requestParams).getUrl();
             xhr.open(params.verb, url);
+            xhr.setRequestHeader('X-Deki-Client', 'mindtouch-martian');
             for (var i in _this.headers) {
                 if (_this.headers.hasOwnProperty(i)) {
                     xhr.setRequestHeader(i, _this.headers[i]);
@@ -6426,12 +6426,12 @@ System.register('github:MindTouch/martian@0.1.2/plug', ['npm:babel-runtime@5.8.3
             _classCallCheck = _npmBabelRuntime5834HelpersClassCallCheck['default'];
         }, function (_npmBabelRuntime5834CoreJsPromise) {
             _Promise = _npmBabelRuntime5834CoreJsPromise['default'];
-        }, function (_githubMindTouchMartian012Settings) {
-            settings = _githubMindTouchMartian012Settings['default'];
-        }, function (_githubMindTouchMartian012Uri) {
-            Uri = _githubMindTouchMartian012Uri['default'];
-        }, function (_githubMindTouchMartian012ErrorsXhrError) {
-            XhrError = _githubMindTouchMartian012ErrorsXhrError['default'];
+        }, function (_githubMindTouchMartian013Settings) {
+            settings = _githubMindTouchMartian013Settings['default'];
+        }, function (_githubMindTouchMartian013Uri) {
+            Uri = _githubMindTouchMartian013Uri['default'];
+        }, function (_githubMindTouchMartian013ErrorsXhrError) {
+            XhrError = _githubMindTouchMartian013ErrorsXhrError['default'];
         }],
         execute: function () {
             /**
@@ -6659,7 +6659,7 @@ System.register('github:MindTouch/martian@0.1.2/plug', ['npm:babel-runtime@5.8.3
         }
     };
 });
-System.register('github:MindTouch/martian@0.1.2/user', ['npm:babel-runtime@5.8.34/helpers/create-class', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'github:MindTouch/martian@0.1.2/plug', 'github:MindTouch/martian@0.1.2/settings', 'github:MindTouch/martian@0.1.2/models/user.model'], function (_export) {
+System.register('github:MindTouch/martian@0.1.3/user', ['npm:babel-runtime@5.8.34/helpers/create-class', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'github:MindTouch/martian@0.1.3/plug', 'github:MindTouch/martian@0.1.3/settings', 'github:MindTouch/martian@0.1.3/models/user.model'], function (_export) {
     var _createClass, _classCallCheck, Plug, settings, userModel, userPlug, User;
 
     return {
@@ -6667,12 +6667,12 @@ System.register('github:MindTouch/martian@0.1.2/user', ['npm:babel-runtime@5.8.3
             _createClass = _npmBabelRuntime5834HelpersCreateClass['default'];
         }, function (_npmBabelRuntime5834HelpersClassCallCheck) {
             _classCallCheck = _npmBabelRuntime5834HelpersClassCallCheck['default'];
-        }, function (_githubMindTouchMartian012Plug) {
-            Plug = _githubMindTouchMartian012Plug['default'];
-        }, function (_githubMindTouchMartian012Settings) {
-            settings = _githubMindTouchMartian012Settings['default'];
-        }, function (_githubMindTouchMartian012ModelsUserModel) {
-            userModel = _githubMindTouchMartian012ModelsUserModel['default'];
+        }, function (_githubMindTouchMartian013Plug) {
+            Plug = _githubMindTouchMartian013Plug['default'];
+        }, function (_githubMindTouchMartian013Settings) {
+            settings = _githubMindTouchMartian013Settings['default'];
+        }, function (_githubMindTouchMartian013ModelsUserModel) {
+            userModel = _githubMindTouchMartian013ModelsUserModel['default'];
         }],
         execute: function () {
             /**
@@ -6716,7 +6716,7 @@ System.register('github:MindTouch/martian@0.1.2/user', ['npm:babel-runtime@5.8.3
         }
     };
 });
-System.register('user', ['npm:babel-runtime@5.8.34/helpers/create-class', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'github:MindTouch/martian@0.1.2/user', 'github:MindTouch/martian@0.1.2/settings'], function (_export) {
+System.register('user', ['npm:babel-runtime@5.8.34/helpers/create-class', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'github:MindTouch/martian@0.1.3/user', 'github:MindTouch/martian@0.1.3/settings'], function (_export) {
   var _createClass, _classCallCheck, MartianUser, settings, User;
 
   return {
@@ -6724,10 +6724,10 @@ System.register('user', ['npm:babel-runtime@5.8.34/helpers/create-class', 'npm:b
       _createClass = _npmBabelRuntime5834HelpersCreateClass['default'];
     }, function (_npmBabelRuntime5834HelpersClassCallCheck) {
       _classCallCheck = _npmBabelRuntime5834HelpersClassCallCheck['default'];
-    }, function (_githubMindTouchMartian012User) {
-      MartianUser = _githubMindTouchMartian012User['default'];
-    }, function (_githubMindTouchMartian012Settings) {
-      settings = _githubMindTouchMartian012Settings['default'];
+    }, function (_githubMindTouchMartian013User) {
+      MartianUser = _githubMindTouchMartian013User['default'];
+    }, function (_githubMindTouchMartian013Settings) {
+      settings = _githubMindTouchMartian013Settings['default'];
     }],
     execute: function () {
       /**
@@ -6785,7 +6785,7 @@ System.register('user', ['npm:babel-runtime@5.8.34/helpers/create-class', 'npm:b
     }
   };
 });
-System.register('geniuslink', ['user', 'search', 'github:MindTouch/martian@0.1.2/settings'], function (_export) {
+System.register('geniuslink', ['user', 'search', 'github:MindTouch/martian@0.1.3/settings'], function (_export) {
     /**
      * MindTouch GeniusLink SDK
      * Copyright (C) 2006-2015 MindTouch, Inc.
@@ -6811,8 +6811,8 @@ System.register('geniuslink', ['user', 'search', 'github:MindTouch/martian@0.1.2
             User = _user['default'];
         }, function (_search) {
             search = _search['default'];
-        }, function (_githubMindTouchMartian012Settings) {
-            settings = _githubMindTouchMartian012Settings['default'];
+        }, function (_githubMindTouchMartian013Settings) {
+            settings = _githubMindTouchMartian013Settings['default'];
         }],
         execute: function () {
             _export('default', {

@@ -17,8 +17,8 @@ System.config({
     "babel": "npm:babel-core@5.8.34",
     "babel-runtime": "npm:babel-runtime@5.8.34",
     "core-js": "npm:core-js@0.9.18",
-    "martian": "github:MindTouch/martian@0.1.2",
-    "github:MindTouch/martian@0.1.2": {
+    "martian": "github:MindTouch/martian@0.1.3",
+    "github:MindTouch/martian@0.1.3": {
       "moment": "github:moment/moment@2.10.6",
       "url": "github:jspm/nodelibs-url@0.1.0"
     },
