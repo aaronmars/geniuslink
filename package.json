@@ -1,6 +1,6 @@
 {
   "name": "mindtouch-geniuslink",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MindTouch GeniusLink is an integration SDK for MindTouch customer success sites",
   "main": "index.js",
   "repository": {
@@ -39,7 +39,7 @@
       "test": "test"
     },
     "dependencies": {
-      "martian": "github:MindTouch/martian@^0.1.3"
+      "martian": "github:MindTouch/martian@^0.1.4"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.1.13",
