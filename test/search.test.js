@@ -15,29 +15,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import GeniusLink from '../geniuslink';
+import GeniusLink from 'geniuslink';
 import Site from 'martian/site';
-
 describe('search', () => {
     describe('operations', () => {
         beforeEach(() => {
+            spyOn(Site, 'search').and.returnValue(Promise.resolve({ success: true }));
             GeniusLink.init('http://mindtouch.example.com');
         });
-        afterEach(() => {
-        });
         it('can get search results', (done) => {
-
-            // arrange
-            let mock = sinon.mock(Site)
-                .expects('search')
-                .once();
-
-            // act
-            GeniusLink.search('foo bar baz', {});
-
-            // assert
-            mock.verify();
-            done();
+            GeniusLink.search('foo bar baz', {}).then(() => {
+                done();
+            });
+        });
+        it('can fail with invalid parameters', () => {
+            expect(() => {
+                GeniusLink.search();
+            }).toThrow();
         });
     });
 });

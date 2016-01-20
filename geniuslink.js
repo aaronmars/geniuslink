@@ -18,7 +18,6 @@
 import User from './user';
 import search from './search';
 import settings from 'martian/lib/settings';
-
 export default {
 
     /**
@@ -26,7 +25,7 @@ export default {
      *
      * @param {String} host - MindTouch host (e.g. https://example.mindtouch.us)
      */
-    init: (host) => {
+    init(host) {
         if(!host) {
             throw new Error('A MindTouch host (e.g. https://example.mindtouch.us) is required to initialize the GeniusLink connection.');
         }
@@ -41,5 +40,5 @@ export default {
         settings.set('host', host);
     },
     search: search,
-    user: User
+    User: User
 };

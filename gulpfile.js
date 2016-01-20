@@ -44,16 +44,15 @@ gulp.task('build', function(cb) {
 });
 
 gulp.task('test', function(done) {
-    var server = new KarmaServer({
+    new KarmaServer({
         configFile: __dirname + '/karma.conf.js',
         singleRun: true
-    }, done);
-    server.start();
+    }, done).start();
 });
 
 gulp.task('inspect', function() {
     var eslint = require('gulp-eslint');
-    return gulp.src('src/')
+    return gulp.src([ '*.js', 'test/*.js' ])
         .pipe(cached('inspect'))
         .pipe(eslint({ rulePaths: [ 'eslint-rules/' ], configFile: '.eslintrc' }))
         .pipe(eslint.format('stylish'));
