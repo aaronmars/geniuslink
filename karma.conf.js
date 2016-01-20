@@ -19,18 +19,14 @@ module.exports = function(config) {
     'use strict';
     config.set({
         basePath: './',
-        frameworks: [ 'jspm', 'jasmine', 'phantomjs-shim' ],
+        frameworks: [ 'jspm', 'jasmine' ],
         plugins: [
             'karma-jasmine',
-            'karma-phantomjs-launcher',
+            'karma-phantomjs2-launcher',
             'karma-babel-preprocessor',
             'karma-sourcemap-loader',
             'karma-coverage',
-            'karma-jspm',
-            'karma-phantomjs-shim'
-        ],
-        files: [
-            'node_modules/sinon/pkg/sinon.js'
+            'karma-jspm'
         ],
         jspm: {
             config: 'config.js',
@@ -49,10 +45,9 @@ module.exports = function(config) {
             'geniuslink.js': [ 'babel', 'sourcemap', 'coverage' ],
             'search.js': [ 'babel', 'sourcemap', 'coverage' ],
             'user.js': [ 'babel', 'sourcemap', 'coverage' ]
-        }, 
+        },
         babelPreprocessor: {
             options: {
-                modules: 'system',
                 sourceMap: 'inline'
             },
             sourceFileName: function(file) {
@@ -73,7 +68,7 @@ module.exports = function(config) {
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        browsers: [ 'PhantomJS' ],
-        singleRun: true 
+        browsers: [ 'PhantomJS2' ],
+        singleRun: true
     });
 };

@@ -23,7 +23,7 @@ var plumber = require('gulp-plumber');
 var cached = require('gulp-cached');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
-var karma = require('karma').server;
+var KarmaServer = require('karma').Server;
 
 /*** sub tasks ***/
 gulp.task('build', function(cb) {
@@ -44,10 +44,11 @@ gulp.task('build', function(cb) {
 });
 
 gulp.task('test', function(done) {
-    karma.start({
+    var server = new KarmaServer({
         configFile: __dirname + '/karma.conf.js',
         singleRun: true
     }, done);
+    server.start();
 });
 
 gulp.task('inspect', function() {

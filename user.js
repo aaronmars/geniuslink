@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 import MartianUser from 'martian/user';
-import settings from 'martian/settings';
+import settings from 'martian/lib/settings';
 
 export default class User {
 

@@ -17,7 +17,7 @@
  */
 import User from './user';
 import search from './search';
-import settings from 'martian/settings';
+import settings from 'martian/lib/settings';
 
 export default {
 
