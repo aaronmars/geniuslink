@@ -38,7 +38,7 @@
       "test": "test"
     },
     "dependencies": {
-      "martian": "github:MindTouch/martian@^0.2.0"
+      "martian": "github:mindtouch/martian@0.2.1"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",

@@ -264,7 +264,7 @@ $__System.register('6', ['3', '5'], function (_export) {
     };
 });
 $__System.register('7', ['5', '6', '8', '9', 'a', 'b'], function (_export) {
-    var userModel, userListModel, Plug, utility, _createClass, _classCallCheck, userPlug, User;
+    var userModel, userListModel, Plug, utility, _createClass, _classCallCheck, User;
 
     return {
         setters: [function (_3) {
@@ -301,23 +301,29 @@ $__System.register('7', ['5', '6', '8', '9', 'a', 'b'], function (_export) {
              */
             'use strict';
 
-            userPlug = new Plug().at('@api', 'deki', 'users');
-
             User = (function () {
                 _createClass(User, null, [{
+                    key: '_getPlug',
+                    value: function _getPlug() {
+                        if (!this.userPlug) {
+                            this.userPlug = new Plug().at('@api', 'deki', 'users');
+                        }
+                        return this.userPlug;
+                    }
+                }, {
                     key: 'getCurrentUser',
                     value: function getCurrentUser() {
-                        return userPlug.at('current').get().then(userModel.parse);
+                        return User._getPlug().at('current').get().then(userModel.parse);
                     }
                 }, {
                     key: 'getUsers',
                     value: function getUsers() {
-                        return userPlug.get().then(userListModel.parse);
+                        return User._getPlug().get().then(userListModel.parse);
                     }
                 }, {
                     key: 'searchUsers',
                     value: function searchUsers(constraints) {
-                        return userPlug.at('search').withParams(constraints).get().then(userListModel.parse);
+                        return User._getPlug().at('search').withParams(constraints).get().then(userListModel.parse);
                     }
                 }]);
 
@@ -327,7 +333,7 @@ $__System.register('7', ['5', '6', '8', '9', 'a', 'b'], function (_export) {
                     _classCallCheck(this, User);
 
                     this._id = utility.getResourceId(id, 'current');
-                    this._plug = userPlug.at(this._id);
+                    this._plug = User._getPlug().at(this._id);
                 }
 
                 _createClass(User, [{
@@ -3414,7 +3420,7 @@ $__System.register('5f', ['3'], function (_export) {
     };
 });
 $__System.register('60', ['8', '9', '47', '50', 'a', 'b', '5f'], function (_export) {
-    var Plug, utility, _Promise, stringUtility, _createClass, _classCallCheck, SearchModel, sitePlug, Site;
+    var Plug, utility, _Promise, stringUtility, _createClass, _classCallCheck, SearchModel, Site;
 
     function _buildSearchConstraints(params) {
         var constraints = [];
@@ -3475,14 +3481,20 @@ $__System.register('60', ['8', '9', '47', '50', 'a', 'b', '5f'], function (_expo
              */
             'use strict';
 
-            sitePlug = new Plug().at('@api', 'deki', 'site');
-
             Site = (function () {
                 function Site() {
                     _classCallCheck(this, Site);
                 }
 
                 _createClass(Site, null, [{
+                    key: '_getPlug',
+                    value: function _getPlug() {
+                        if (!this.sitePlug) {
+                            this.sitePlug = new Plug().at('@api', 'deki', 'site');
+                        }
+                        return this.sitePlug;
+                    }
+                }, {
                     key: 'getResourceString',
                     value: function getResourceString() {
                         var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
@@ -3490,7 +3502,7 @@ $__System.register('60', ['8', '9', '47', '50', 'a', 'b', '5f'], function (_expo
                         if (!('key' in options)) {
                             return _Promise.reject('No resource key was supplied');
                         }
-                        var locPlug = sitePlug.at('localization', options.key);
+                        var locPlug = Site._getPlug().at('localization', options.key);
                         if ('lang' in options) {
                             locPlug = locPlug.withParam('lang', options.lang);
                         }
@@ -3528,7 +3540,7 @@ $__System.register('60', ['8', '9', '47', '50', 'a', 'b', '5f'], function (_expo
                             summarypath: encodeURI(path),
                             constraint: _buildSearchConstraints(constraint)
                         };
-                        return sitePlug.at('query').withParams(searchParams).get().then(function (res) {
+                        return Site._getPlug().at('query').withParams(searchParams).get().then(function (res) {
                             return SearchModel.parse(res);
                         });
                     }

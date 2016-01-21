@@ -44,7 +44,7 @@ module.exports = function(config) {
             'geniuslink.js': [ 'babel', 'sourcemap', 'coverage' ],
             'search.js': [ 'babel', 'sourcemap', 'coverage' ],
             'user.js': [ 'babel', 'sourcemap', 'coverage' ],
-            'jspm_packages/github/MindTouch/martian*/**/*.js': [ 'babel' ],
+            'jspm_packages/github/mindtouch/martian*/**/*.js': [ 'babel' ],
             'test/*.test.js': [ 'babel' ]
         },
         babelPreprocessor: {
