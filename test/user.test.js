@@ -17,36 +17,24 @@
  */
 import GeniusLink from '../geniuslink';
 import User from 'martian/user';
-
 describe('user', () => {
     describe('operations', () => {
         beforeEach(() => {
             GeniusLink.init('http://mindtouch.example.com');
         });
-        afterEach(() => {
-        });
         it('can get current user', (done) => {
-
-            // arrange
-            let mock = sinon.mock(User)
-                .expects('getCurrentUser')
-                .once();
-
-            // act
-            GeniusLink.user.getCurrentUser();
-
-            // assert
-            mock.verify();
-            done();
+            spyOn(User, 'getCurrentUser').and.returnValue(Promise.resolve({ success: true }));
+            GeniusLink.User.getCurrentUser().then(() => {
+                done();
+            });
         });
-        it('can get login url', (done) => {
-
-            // act
-            var url = GeniusLink.user.getLoginUrl();
-
-            // assert
+        it('can get login url', () => {
+            var url = GeniusLink.User.getLoginUrl();
             expect(url).toBe('http://mindtouch.example.com/@app/login/redirect');
-            done();
+        });
+        it('can create a blank User', () => {
+            let u = new GeniusLink.User();
+            expect(u).toBeDefined();
         });
     });
 });

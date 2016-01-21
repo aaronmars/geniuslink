@@ -19,18 +19,14 @@ module.exports = function(config) {
     'use strict';
     config.set({
         basePath: './',
-        frameworks: [ 'jspm', 'jasmine', 'phantomjs-shim' ],
+        frameworks: [ 'jspm', 'jasmine' ],
         plugins: [
             'karma-jasmine',
             'karma-phantomjs-launcher',
             'karma-babel-preprocessor',
             'karma-sourcemap-loader',
             'karma-coverage',
-            'karma-jspm',
-            'karma-phantomjs-shim'
-        ],
-        files: [
-            'node_modules/sinon/pkg/sinon.js'
+            'karma-jspm'
         ],
         jspm: {
             config: 'config.js',
@@ -45,14 +41,15 @@ module.exports = function(config) {
             ]
         },
         preprocessors: {
-            'test/*.test.js': [ 'babel' ],
             'geniuslink.js': [ 'babel', 'sourcemap', 'coverage' ],
             'search.js': [ 'babel', 'sourcemap', 'coverage' ],
-            'user.js': [ 'babel', 'sourcemap', 'coverage' ]
-        }, 
+            'user.js': [ 'babel', 'sourcemap', 'coverage' ],
+            'jspm_packages/github/mindtouch/martian*/**/*.js': [ 'babel' ],
+            'test/*.test.js': [ 'babel' ]
+        },
         babelPreprocessor: {
             options: {
-                modules: 'system',
+                presets: [ 'es2015' ],
                 sourceMap: 'inline'
             },
             sourceFileName: function(file) {
@@ -66,7 +63,8 @@ module.exports = function(config) {
                 '*.js': 'isparta'
             },
             reporters: [
-                { type: 'text' }
+                { type: 'text' },
+                { type: 'html', dir: 'coverage/' }
             ]
         },
         port: 9876,
@@ -74,6 +72,6 @@ module.exports = function(config) {
         logLevel: config.LOG_INFO,
         autoWatch: true,
         browsers: [ 'PhantomJS' ],
-        singleRun: true 
+        singleRun: true
     });
 };
