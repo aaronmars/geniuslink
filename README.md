@@ -1,11 +1,24 @@
-# GeniusLink
-MindTouch GeniusLink is an integration SDK for MindTouch customer success sites. Integrate your MindTouch site's content, search, and usage data into your CRM, websites, and more!
+# GeniusLink SDK
+MindTouch GeniusLink SDK is an integration library for MindTouch customer success sites. Integrate your MindTouch site's content, search, and usage data into your CRM, websites, and more!
 
 ## Usage
 
 NOTE: The MindTouch API currently does not allow authenticated requests over CORS (Cross-Origin Resource Sharing). As a result, all requests will be in the context of an anonymous site visitor.
 
-### GeniusLink.init({String} host)
+### GeniusLink.configure({Object} configuration)
+Sets up the GeniusLink integration environment.
+
+**configuration** {Object} - An object containing other initialization values. The following parameters are supported:
+ Option | Required | Description
+:------:|:--------:|:-----------:
+ host   | true     | A MindTouch site homepage url or hostname *
+ token  | true     | The front-end token for the hostname's domain.
+
+*(e.g. `example.mindtouch.us`, `https://example.mindtouch.us`). Please note that HTTPS url's cannot be used on on non-HTTP origins. The system or website utilizing GeniusLink must be HTTPS for an HTTPS connection to a MindTouch site.
+
+### GeniusLink.init({String} host)  *Deprecated*
+*This function is deprecated.  Use `GeniusLink.configure()` instead.*
+
 Sets up the GeniusLink integration environment.
 
 **host** {String} - A MindTouch site homepage url or hostname (e.g. `example.mindtouch.us`, `https://example.mindtouch.us`). Please note that HTTPS url's cannot be used on on non-HTTP origins. The system or website utilizing GeniusLink must be HTTPS for an HTTPS connection to a MindTouch site.

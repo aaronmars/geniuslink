@@ -21,8 +21,28 @@ import settings from 'martian/lib/settings';
 export default {
 
     /**
-     * Initialize GeniusLink connection
+     * Configure the GeniusLink connection
      *
+     * @param {Object} configuration - An object containing other initialization values.
+     */
+    configure(configuration) {
+        this.init(configuration.host);
+        if(!('token' in configuration)) {
+            throw new Error('A front-end token must be supplied to configure the GeniusLink SDK.');
+        }
+        if(typeof configuration.token !== 'string') {
+            throw new Error('An invalid front-end token was supplied to the GeniusLink configure() function.');
+        }
+        let token = configuration.token.trim();
+        if(token === '') {
+            throw new Error('An invalid front-end token was supplied to the GeniusLink configure() function.');
+        }
+        settings.set('token', token);
+    },
+
+    /**
+     * Initialize GeniusLink connection
+     * @deprecated
      * @param {String} host - MindTouch host (e.g. https://example.mindtouch.us)
      */
     init(host) {
