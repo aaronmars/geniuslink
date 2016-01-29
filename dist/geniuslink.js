@@ -3021,6 +3021,9 @@ $__System.register('8', ['47', '51', 'a', 'b', '4c', 'd', '5e'], function (_expo
 
         return new _Promise(function (resolve, reject) {
             var xhr = new XMLHttpRequest();
+
+            // server will only respond with Access-Control-Allow-Credentials if valid developer token is provided
+            xhr.withCredentials = true;
             var requestParams = {
                 _: Date.now(),
                 origin: 'mt-web' // TODO: F1 req from settings module after 20150820
