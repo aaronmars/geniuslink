@@ -69,7 +69,7 @@ GeniusLink.search('example search query').then(function(response) {
 });
 ```
 
-### GeniusLink.user.getCurrentUser()
+### GeniusLink.User.getCurrentUser()
 Gets the MindTouch site user that GeniusLink requests will be performed as. NOTE: The MindTouch API currently does not allow authenticated requests over CORS (Cross-Origin Resource Sharing). As a result, all requests will be in the context of an anonymous site visitor.
 
 **Returns {Promise\<Object\>}**
@@ -92,7 +92,7 @@ GeniusLink.configure({
     host: 'https://success.example.com',
     token: '12345'
 });
-GeniusLink.user.getCurrentUser().then(function(response) {
+GeniusLink.User.getCurrentUser().then(function(response) {
 
     // get the email address...
     return response.email;
@@ -102,7 +102,7 @@ GeniusLink.user.getCurrentUser().then(function(response) {
 });
 ```
 
-### GeniusLink.user.getLoginUrl()
+### GeniusLink.User.getLoginUrl()
 Gets the the URL to the MindTouch site primary login experience.
 
 **Returns {String}**
@@ -116,5 +116,5 @@ GeniusLink.configure({
     host: 'https://success.example.com',
     token: '12345'
 });
-window.location = GeniusLink.user.getLoginUrl();
+window.location = GeniusLink.User.getLoginUrl();
 ```
