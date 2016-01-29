@@ -54,10 +54,10 @@ The interface to search for help articles from a MindTouch site. Returns a promi
 
 **Sample**
 ```javascript
-GeniusLink.configure(
+GeniusLink.configure({
     host: 'https://success.example.com',
     token: '12345'
-);
+});
 GeniusLink.search('example search query').then(function(response) {
 
     // get the search result count...
@@ -88,10 +88,10 @@ Gets the MindTouch site user that GeniusLink requests will be performed as. NOTE
 
 **Sample**
 ```javascript
-GeniusLink.configure(
+GeniusLink.configure({
     host: 'https://success.example.com',
     token: '12345'
-);
+});
 GeniusLink.user.getCurrentUser().then(function(response) {
 
     // get the email address...
@@ -112,9 +112,9 @@ ${host}/@app/login/redirect
 
 **Sample**
 ```javascript
-GeniusLink.configure(
+GeniusLink.configure({
     host: 'https://success.example.com',
     token: '12345'
-);
+});
 window.location = GeniusLink.user.getLoginUrl();
 ```
