@@ -28,14 +28,14 @@ export default {
     configure(configuration) {
         this.init(configuration.host);
         if(!('token' in configuration)) {
-            throw new Error('A front-end token must be supplied to configure the GeniusLink SDK.');
+            throw new Error('A browser developer token must be supplied to configure the GeniusLink SDK.');
         }
         if(typeof configuration.token !== 'string') {
-            throw new Error('An invalid front-end token was supplied to the GeniusLink configure() function.');
+            throw new Error('An invalid browser developer token was supplied to the GeniusLink configure() function.');
         }
         let token = configuration.token.trim();
         if(token === '') {
-            throw new Error('An invalid front-end token was supplied to the GeniusLink configure() function.');
+            throw new Error('An invalid browser developer token was supplied to the GeniusLink configure() function.');
         }
         settings.set('token', token);
     },
