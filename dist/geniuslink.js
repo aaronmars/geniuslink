@@ -3040,10 +3040,6 @@ $__System.register('8', ['47', '51', 'a', 'b', '4c', 'd', '5e'], function (_expo
             if ('mime' in params) {
                 xhr.setRequestHeader('Content-Type', params.mime);
             }
-            var protocol = _this.url.protocol;
-            if (protocol === 'https:') {
-                xhr.setRequestHeader('Front-End-Https', 'On');
-            }
             if (_this._timeout) {
                 xhr.timeout = _this._timeout;
             }
@@ -3693,14 +3689,14 @@ $__System.register('62', ['61', 'c', 'd'], function (_export) {
                 configure: function configure(configuration) {
                     this.init(configuration.host);
                     if (!('token' in configuration)) {
-                        throw new Error('A front-end token must be supplied to configure the GeniusLink SDK.');
+                        throw new Error('A browser developer token must be supplied to configure the GeniusLink SDK.');
                     }
                     if (typeof configuration.token !== 'string') {
-                        throw new Error('An invalid front-end token was supplied to the GeniusLink configure() function.');
+                        throw new Error('An invalid browser developer token was supplied to the GeniusLink configure() function.');
                     }
                     var token = configuration.token.trim();
                     if (token === '') {
-                        throw new Error('An invalid front-end token was supplied to the GeniusLink configure() function.');
+                        throw new Error('An invalid browser developer token was supplied to the GeniusLink configure() function.');
                     }
                     settings.set('token', token);
                 },
