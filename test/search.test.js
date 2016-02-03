@@ -15,23 +15,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import GeniusLink from 'geniuslink';
-import Site from 'martian/site';
+import {GeniusLink} from 'geniuslink';
+import {Site} from 'martian/site';
 describe('search', () => {
     describe('operations', () => {
+        let gl = null;
         beforeEach(() => {
-            spyOn(Site, 'search').and.returnValue(Promise.resolve({ success: true }));
-            GeniusLink.init('http://mindtouch.example.com');
+            gl = new GeniusLink({ host: 'http://mindtouch.example.com', token: 'abcd1234' });
+        });
+        afterEach(() => {
+            gl = null;
         });
         it('can get search results', (done) => {
-            GeniusLink.search('foo bar baz', {}).then(() => {
+            spyOn(Site.prototype, 'search').and.returnValue(Promise.resolve({ success: true }));
+            gl.search('foo bar baz', {}).then(() => {
                 done();
             });
         });
         it('can fail with invalid parameters', () => {
-            expect(() => {
-                GeniusLink.search();
-            }).toThrow();
+            expect(() => gl.search()).toThrow();
         });
     });
 });

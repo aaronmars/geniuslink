@@ -15,17 +15,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import MartianUser from 'martian/user';
-import settings from 'martian/lib/settings';
-export default class User {
+import {UserManager} from 'martian/user';
+export class User {
+    constructor(settings) {
+        this.settings = settings;
+        this.martianUser = new UserManager(settings);
+    }
 
     /**
      * The current MindTouch host user, or an anonymous user is unauthenticated
      *
      * @returns {Object}
      */
-    static getCurrentUser() {
-        return MartianUser.getCurrentUser();
+    getCurrentUser() {
+        return this.martianUser.getCurrentUser();
     }
 
     /**
@@ -33,7 +36,7 @@ export default class User {
      *
      * @returns {String}
      */
-    static getLoginUrl() {
-        return `${settings.get('host')}/@app/login/redirect`;
+    getLoginUrl() {
+        return `${this.settings.get('host')}/@app/login/redirect`;
     }
 }

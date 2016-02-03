@@ -15,22 +15,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import Site from 'martian/site';
-
-/**
- * @param {String} q - keywords or advanced search syntax
- * @param {Object} options - {
- *  page: paginated {page}
- *  limit: limit search results to {limit} items per paginated page
- *  tags: constrain search results to items tagged with {tag}
- *  path: constraint search results to items located in the {path} page hierarchy
- * }
- * @returns {Object}
- */
-export default function(q, options = {}) {
-    if(!q || q === '') {
-        throw new Error('Search requires keywords or advanced search syntax.');
+import {Site} from 'martian/site';
+export class Search {
+    constructor(settings) {
+        this.site = new Site(settings);
     }
-    options.q = q;
-    return Site.search(options);
+
+    /**
+     * @param {String} q - keywords or advanced search syntax
+     * @param {Object} options - {
+     *  page: paginated {page}
+     *  limit: limit search results to {limit} items per paginated page
+     *  tags: constrain search results to items tagged with {tag}
+     *  path: constraint search results to items located in the {path} page hierarchy
+     * }
+     * @returns {Object}
+     */
+    search(q, options = {}) {
+        if(!q || q === '') {
+            throw new Error('Search requires keywords or advanced search syntax.');
+        }
+        options.q = q;
+        return this.site.search(options);
+    }
 }

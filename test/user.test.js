@@ -15,26 +15,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import GeniusLink from '../geniuslink';
-import User from 'martian/user';
+import {GeniusLink} from '../geniuslink';
+import {UserManager} from 'martian/user';
 describe('user', () => {
     describe('operations', () => {
+        let gl = null;
         beforeEach(() => {
-            GeniusLink.init('http://mindtouch.example.com');
+            gl = new GeniusLink({ host: 'http://mindtouch.example.com', token: 'abcd1234' });
+        });
+        afterEach(() => {
+            gl = null;
         });
         it('can get current user', (done) => {
-            spyOn(User, 'getCurrentUser').and.returnValue(Promise.resolve({ success: true }));
-            GeniusLink.User.getCurrentUser().then(() => {
+            spyOn(UserManager.prototype, 'getCurrentUser').and.returnValue(Promise.resolve({ success: true }));
+            gl.User.getCurrentUser().then(() => {
                 done();
             });
         });
         it('can get login url', () => {
-            var url = GeniusLink.User.getLoginUrl();
+            var url = gl.User.getLoginUrl();
             expect(url).toBe('http://mindtouch.example.com/@app/login/redirect');
-        });
-        it('can create a blank User', () => {
-            let u = new GeniusLink.User();
-            expect(u).toBeDefined();
         });
     });
 });
