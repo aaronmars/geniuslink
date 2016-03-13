@@ -1,10 +1,13 @@
 # GeniusLink SDK
 MindTouch GeniusLink SDK is an integration library for MindTouch customer success sites. Integrate your MindTouch site's content, search, and usage data into your CRM, websites, and more!
 
+[![travis-ci.org](https://travis-ci.org/MindTouch/geniuslink.svg?branch=master)](https://travis-ci.org/MindTouch/martian)
+[![codecov.io](https://codecov.io/github/MindTouch/geniuslink/coverage.svg?branch=master)](https://codecov.io/github/MindTouch/martian?branch=master)
+
 ## Usage
 
-### GeniusLink.configure({Object} configuration)
-Sets up the GeniusLink integration environment.
+### new GeniusLink({Object} configuration)
+Initializes a GeniusLink integration object.
 
 **configuration** {Object} - An object containing other initialization values. The following parameters are supported:
 
@@ -54,11 +57,11 @@ The interface to search for help articles from a MindTouch site. Returns a promi
 
 **Sample**
 ```javascript
-GeniusLink.configure({
+var gl = new GeniusLink({
     host: 'https://success.example.com',
     token: '12345'
 });
-GeniusLink.search('example search query').then(function(response) {
+gl.search('example search query').then(function(response) {
 
     // get the search result count...
     return response.result;
@@ -88,11 +91,11 @@ Gets the MindTouch site user that GeniusLink requests will be performed as. NOTE
 
 **Sample**
 ```javascript
-GeniusLink.configure({
+var gl = new GeniusLink({
     host: 'https://success.example.com',
     token: '12345'
 });
-GeniusLink.User.getCurrentUser().then(function(response) {
+gl.User.getCurrentUser().then(function(response) {
 
     // get the email address...
     return response.email;
@@ -112,9 +115,9 @@ ${host}/@app/login/redirect
 
 **Sample**
 ```javascript
-GeniusLink.configure({
+var gl = new GeniusLink({
     host: 'https://success.example.com',
     token: '12345'
 });
-window.location = GeniusLink.User.getLoginUrl();
+window.location = gl.User.getLoginUrl();
 ```
