@@ -17,4 +17,10 @@ before_install:
   - jspm config registries.github.auth $JSPM_GITHUB_AUTH_TOKEN
   - jspm install
 
+before_script:
+  - pip install --user codecov
+
 script: gulp
+
+after_success:
+  - cat coverage/*/lcov.info | codecov

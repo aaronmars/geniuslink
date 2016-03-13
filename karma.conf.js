@@ -64,7 +64,8 @@ module.exports = function(config) {
             },
             reporters: [
                 { type: 'text' },
-                { type: 'html', dir: 'coverage/' }
+                { type: 'html', dir: 'coverage/' },
+                { type: 'lcov' }
             ]
         },
         port: 9876,
