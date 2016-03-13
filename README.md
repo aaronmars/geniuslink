@@ -3,6 +3,7 @@ MindTouch GeniusLink SDK is an integration library for MindTouch customer succes
 
 [![travis-ci.org](https://travis-ci.org/MindTouch/geniuslink.svg?branch=master)](https://travis-ci.org/MindTouch/martian)
 [![codecov.io](https://codecov.io/github/MindTouch/geniuslink/coverage.svg?branch=master)](https://codecov.io/github/MindTouch/martian?branch=master)
+[![GitHub license](https://img.shields.io/github/license/MindTouch/geniuslink.svg)]()
 
 ## Usage
 
