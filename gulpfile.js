@@ -29,12 +29,11 @@ var KarmaServer = require('karma').Server;
 gulp.task('build', function(cb) {
     var out = 'dist/geniuslink.js';
     jspm.bundleSFX('index', out, {
-        minify: false,
+        minify: true,
         sourceMaps: true
     }).then(function() {
         gulp.src(out)
             .pipe(plumber())
-            .pipe(uglify())
             .pipe(rename({ extname: '.min.js' }))
             .pipe(gulp.dest('dist'));
         cb();
