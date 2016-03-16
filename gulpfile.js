@@ -19,21 +19,27 @@
 
 var jspm = require('jspm');
 var gulp = require('gulp');
-var plumber = require('gulp-plumber');
 var cached = require('gulp-cached');
+var plumber = require('gulp-plumber');
+var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
+var sourcemaps = require('gulp-sourcemaps');
 var KarmaServer = require('karma').Server;
 
 /*** sub tasks ***/
 gulp.task('build', function(cb) {
     var out = 'dist/geniuslink.js';
     jspm.bundleSFX('index', out, {
-        minify: true,
-        sourceMaps: true
+        minify: false,
+        sourceMaps: true,
+        sourceMapContents: true
     }).then(function() {
         gulp.src(out)
             .pipe(plumber())
+            .pipe(sourcemaps.init({ loadMaps: true }))
+            .pipe(uglify())
             .pipe(rename({ extname: '.min.js' }))
+            .pipe(sourcemaps.write('/'))
             .pipe(gulp.dest('dist'));
         cb();
     }).catch(function(err) {
