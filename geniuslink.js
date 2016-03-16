@@ -27,12 +27,12 @@ export class GeniusLink {
      */
     constructor(configuration = {}) {
         if(!('host' in configuration)) {
-            throw new Error('A MindTouch host (e.g. https://example.mindtouch.us) is required to initialize the GeniusLink connection.');
+            throw new Error('A MindTouch host (e.g. https://example.mindtouch.us) is required to initialize the GeniusLink SDK connection.');
         }
         if(!('token' in configuration)) {
-            throw new Error('A browser developer token must be supplied to configure the GeniusLink SDK.');
+            throw new Error('A browser developer token must be supplied to initialize the GeniusLink SDK connection.');
         } else if(typeof configuration.token !== 'string') {
-            throw new Error('An invalid browser developer token was supplied to the GeniusLink configure() function.');
+            throw new Error('An invalid browser developer token was used to initialize the GeniusLink SDK connection.');
         }
         let host = configuration.host;
         let protocolArr = host.match(/^http(s?):/);
@@ -40,12 +40,12 @@ export class GeniusLink {
         if(!protocolArr) {
             host = `${protocol}//${host}`;
         }
-        if(protocol === 'https:' && window.location.protocol === 'http:') {
-            throw new Error('A secure HTTPS connection cannot be made from an insecure web page.');
+        if(protocol === 'http:' && window.location.protocol === 'https:') {
+            throw new Error('An insecure GeniusLink SDK connection (http) cannot be made from a secure web page (https).');
         }
         let token = configuration.token.trim();
         if(token === '') {
-            throw new Error('An invalid browser developer token was supplied to the GeniusLink configure() function.');
+            throw new Error('An invalid browser developer token was used to initialize the GeniusLink SDK connection.');
         }
         this.settings = new Settings({ host: host, token: token });
         this.userLib = new User(this.settings);

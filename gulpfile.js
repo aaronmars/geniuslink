@@ -21,7 +21,6 @@ var jspm = require('jspm');
 var gulp = require('gulp');
 var plumber = require('gulp-plumber');
 var cached = require('gulp-cached');
-var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var KarmaServer = require('karma').Server;
 
