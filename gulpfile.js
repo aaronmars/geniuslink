@@ -41,11 +41,11 @@ gulp.task('build', function(cb) {
     });
 });
 
-gulp.task('test', function(done) {
+gulp.task('test', function() {
     new KarmaServer({
         configFile: __dirname + '/karma.conf.js',
         singleRun: true
-    }, done).start();
+    }).start();
 });
 
 gulp.task('inspect', function() {

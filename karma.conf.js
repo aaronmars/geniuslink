@@ -15,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+var fs = require('fs');
 module.exports = function(config) {
     'use strict';
     config.set({
@@ -66,6 +67,20 @@ module.exports = function(config) {
                 { type: 'text' },
                 { type: 'html', dir: 'coverage/' },
                 { type: 'lcov' }
+            ]
+        },
+        protocol: 'https:',
+        httpsServerOptions: {
+            key: fs.readFileSync('test/mysitename.key', 'utf8'),
+            cert: fs.readFileSync('test/mysitename.crt', 'utf8')
+        },
+        phantomjsLauncher: {
+            exitOnResourceError: true,
+            base: 'PhantomJS',
+            flags: [
+                '--web-security=false',
+                '--load-images=true',
+                '--ignore-ssl-errors=true'
             ]
         },
         port: 9876,

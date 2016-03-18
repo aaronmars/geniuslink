@@ -17,11 +17,12 @@
  */
 import {GeniusLink} from '../geniuslink';
 import {UserManager} from 'martian/user';
+import {UserEvents} from 'martian/userEvents';
 describe('user', () => {
     describe('operations', () => {
         let gl = null;
         beforeEach(() => {
-            gl = new GeniusLink({ host: 'http://mindtouch.example.com', token: 'abcd1234' });
+            gl = new GeniusLink({ host: 'https://mindtouch.example.com', token: 'abcd1234' });
         });
         afterEach(() => {
             gl = null;
@@ -34,7 +35,14 @@ describe('user', () => {
         });
         it('can get login url', () => {
             var url = gl.User.getLoginUrl();
-            expect(url).toBe('http://mindtouch.example.com/@app/login/redirect');
+            expect(url).toBe('https://mindtouch.example.com/@app/login/redirect');
+        });
+        it('can fetch the user activity as Insights', (done) => {
+            spyOn(UserEvents.prototype, 'getActivity').and.returnValue(Promise.resolve({ foo: 'bar' }));
+            gl.User.getInsights('abcd1234').then((r) => {
+                expect(r).toEqual({ foo: 'bar' });
+                done();
+            });
         });
     });
 });
