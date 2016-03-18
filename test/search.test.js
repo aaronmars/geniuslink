@@ -21,7 +21,7 @@ describe('search', () => {
     describe('operations', () => {
         let gl = null;
         beforeEach(() => {
-            gl = new GeniusLink({ host: 'http://mindtouch.example.com', token: 'abcd1234' });
+            gl = new GeniusLink({ host: 'https://mindtouch.example.com', token: 'abcd1234' });
         });
         afterEach(() => {
             gl = null;

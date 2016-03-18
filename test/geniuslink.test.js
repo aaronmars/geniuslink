@@ -3,12 +3,12 @@ describe('GeniusLink', () => {
     describe('construction', () => {
         it('can successfully construct a GL object', () => {
             let gl = new GeniusLink({
-                host: 'http://www.example.com',
+                host: 'https://www.example.com',
                 token: 'abcd1234'
             });
             expect(gl).toBeDefined();
             expect(gl.configuration).toEqual({
-                host: 'http://www.example.com',
+                host: 'https://www.example.com',
                 token: 'abcd1234'
             });
         });
@@ -19,49 +19,47 @@ describe('GeniusLink', () => {
             });
             expect(gl).toBeDefined();
             expect(gl.configuration).toEqual({
-                host: 'http://www.example.com',
+                host: 'https://www.example.com',
                 token: 'abcd1234'
             });
         });
         it('can construct 2 GL objects with distinct configuration', () => {
             let gl1 = new GeniusLink({
-                host: 'http://example.mindtouch.us',
+                host: 'https://example.mindtouch.us',
                 token: 'abcd1234'
             });
             let gl2 = new GeniusLink({
-                host: 'http://www.example.com',
+                host: 'https://www.example.com',
                 token: 'efgh5678'
             });
             expect(gl1.configuration).toEqual({
-                host: 'http://example.mindtouch.us',
+                host: 'https://example.mindtouch.us',
                 token: 'abcd1234'
             });
             expect(gl2.configuration).toEqual({
-                host: 'http://www.example.com',
+                host: 'https://www.example.com',
                 token: 'efgh5678'
             });
         });
         it('can fail if invalid configuration is used in the constructor', () => {
             expect(() => new GeniusLink()).toThrow();
             expect(() => GeniusLink()).toThrow();
-            expect(() => new GeniusLink({ host: 'http://www.example.com' })).toThrow();
+            expect(() => new GeniusLink({ host: 'https://www.example.com' })).toThrow();
             expect(() => new GeniusLink({ token: 'thisisatoken' })).toThrow();
-            expect(() => new GeniusLink({ host: 'http://www.example.com', token: '' })).toThrow();
+            expect(() => new GeniusLink({ host: 'https://www.example.com', token: '' })).toThrow();
             expect(() => new GeniusLink({ host: 'www.example.com', token: 123 })).toThrow();
         });
-
-        // @TODO (andyv, 20160315): enable when we can mock window.location.protocol
-        /*it('can fail if https in http window.location', () => {
+        it('can fail if https in http window.location', () => {
             expect(() => new GeniusLink({
-                host: 'https://www.example.com',
+                host: 'http://www.example.com',
                 token: 'abcd1234'
             })).toThrow();
-        });*/
+        });
     });
     describe('GL members', () => {
         let gl = null;
         beforeEach(() => {
-            gl = new GeniusLink({ host: 'http://example.mindtouch.us', token: 'abcd1234' });
+            gl = new GeniusLink({ host: 'https://example.mindtouch.us', token: 'abcd1234' });
         });
         afterEach(() => {
             gl = null;

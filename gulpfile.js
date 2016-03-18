@@ -47,18 +47,18 @@ gulp.task('build', function(cb) {
     });
 });
 
-gulp.task('test', function(done) {
+gulp.task('test', function() {
     new KarmaServer({
         configFile: __dirname + '/karma.conf.js',
         singleRun: true
-    }, done).start();
+    }).start();
 });
 
 gulp.task('inspect', function() {
     var eslint = require('gulp-eslint');
     return gulp.src([ '*.js', 'test/*.js' ])
         .pipe(cached('inspect'))
-        .pipe(eslint({ rulePaths: [ 'eslint-rules/' ], configFile: '.eslintrc' }))
+        .pipe(eslint({ configFile: '.eslintrc' }))
         .pipe(eslint.format('stylish'));
 });
 

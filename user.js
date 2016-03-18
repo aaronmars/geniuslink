@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 import {UserManager} from 'martian/user';
+import {UserEvents} from 'martian/userEvents';
 export class User {
     constructor(settings) {
         this.settings = settings;
@@ -38,5 +39,14 @@ export class User {
      */
     getLoginUrl() {
         return `${this.settings.get('host')}/@app/login/redirect`;
+    }
+
+    /**
+     * Gets the activity of a user based on a system-defined token. Currently,
+     * page views and search attempts are returned in the listing of the user activity.
+     */
+    getInsights(userToken) {
+        let ue = new UserEvents(this.settings);
+        return ue.getActivity(userToken);
     }
 }
