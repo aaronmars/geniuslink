@@ -1,8 +1,8 @@
 # GeniusLink SDK
 MindTouch GeniusLink SDK is an integration library for MindTouch customer success sites. Integrate your MindTouch site's content, search, and usage data into your CRM, websites, and more!
 
-[![travis-ci.org](https://travis-ci.org/MindTouch/geniuslink.svg?branch=master)](https://travis-ci.org/MindTouch/martian)
-[![codecov.io](https://codecov.io/github/MindTouch/geniuslink/coverage.svg?branch=master)](https://codecov.io/github/MindTouch/martian?branch=master)
+[![travis-ci.org](https://travis-ci.org/MindTouch/geniuslink.svg?branch=master)](https://travis-ci.org/MindTouch/geniuslink)
+[![codecov.io](https://codecov.io/github/MindTouch/geniuslink/coverage.svg?branch=master)](https://codecov.io/github/MindTouch/geniuslink?branch=master)
 
 ## Usage
 
@@ -16,7 +16,7 @@ Initializes a GeniusLink integration object.
 | host   | true     | A MindTouch site homepage url or hostname * |
 | token  | true     | The browser developer token for the hostname's domain |
 
-*(e.g. `example.mindtouch.us`, `https://example.mindtouch.us`). Please note that HTTPS url's cannot be used on on non-HTTP origins. The system or website utilizing GeniusLink must be HTTPS for an HTTPS connection to a MindTouch site.
+*(e.g. `example.mindtouch.us`, `https://example.mindtouch.us`). Please note that an insecure HTTP connection cannot be invoked from a secure HTTPS origin.
 
 ### GeniusLink.search({String} query, {Object} options)
 The interface to search for help articles from a MindTouch site. Returns a promised object for asynchronous JavaScript programming.
