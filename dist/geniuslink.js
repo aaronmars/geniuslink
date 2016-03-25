@@ -2,7 +2,7 @@
 
 (["1","1"], [], function($__System) {
 
-$__System.register('2', ['3'], function (_export) {
+$__System.register('2', ['3', '4'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -21,253 +21,6 @@ $__System.register('2', ['3'], function (_export) {
      * See the License for the specific language governing permissions and
      * limitations under the License.
      */
-    'use strict';
-
-    var modelHelper, pageRatingModel;
-    return {
-        setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }],
-        execute: function () {
-            pageRatingModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        count: modelHelper.getInt(obj['@count']),
-                        date: modelHelper.getDate(obj['@date']),
-                        seatedCount: modelHelper.getInt(obj['@seated.count']),
-                        unseatedCount: modelHelper.getInt(obj['@unseated.count'])
-                    };
-                    if ('@score' in obj && obj['@score'] !== '') {
-                        parsed.score = modelHelper.getInt(obj['@score']);
-                    }
-                    if ('@seated.score' in obj && obj['@seated.score'] !== '') {
-                        parsed.seatedScore = modelHelper.getInt(obj['@seated.score']);
-                    }
-                    if ('@unseated.score' in obj && obj['@unseated.score'] !== '') {
-                        parsed.unseatedScore = modelHelper.getInt(obj['@unseated.score']);
-                    }
-                    if ('@score.trend' in obj) {
-                        parsed.scoreTrend = modelHelper.getInt(obj['@score.trend']);
-                    }
-                    if ('@seated.score.trend' in obj) {
-                        parsed.seatedScoreTrend = modelHelper.getInt(obj['@seated.score.trend']);
-                    }
-                    if ('@unseated.score.trend' in obj) {
-                        parsed.unseatedScoreTrend = modelHelper.getInt(obj['@unseated.score.trend']);
-                    }
-                    if ('user.ratedby' in obj) {
-                        var ratedBy = obj['user.ratedby'];
-                        parsed.userRatedBy = {
-                            id: modelHelper.getInt(ratedBy['@id']),
-                            score: modelHelper.getInt(ratedBy['@score']),
-                            date: modelHelper.getDate(ratedBy['@date']),
-                            href: ratedBy['@href'],
-                            seated: modelHelper.getBool(ratedBy['@seated'])
-                        };
-                    }
-                    return parsed;
-                }
-            };
-
-            _export('pageRatingModel', pageRatingModel);
-        }
-    };
-});
-$__System.register('4', ['2', '3', '5'], function (_export) {
-    /**
-     * Martian - Core JavaScript API for MindTouch
-     *
-     * Copyright (c) 2015 MindTouch Inc.
-     * www.mindtouch.com  oss@mindtouch.com
-     *
-     * Licensed under the Apache License, Version 2.0 (the "License");
-     * you may not use this file except in compliance with the License.
-     * You may obtain a copy of the License at
-     *
-     *     http://www.apache.org/licenses/LICENSE-2.0
-     *
-     * Unless required by applicable law or agreed to in writing, software
-     * distributed under the License is distributed on an "AS IS" BASIS,
-     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     * See the License for the specific language governing permissions and
-     * limitations under the License.
-     */
-    'use strict';
-
-    var pageRatingModel, modelHelper, userModel, pageModel;
-    return {
-        setters: [function (_2) {
-            pageRatingModel = _2.pageRatingModel;
-        }, function (_) {
-            modelHelper = _.modelHelper;
-        }, function (_3) {
-            userModel = _3.userModel;
-        }],
-        execute: function () {
-            pageModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        id: modelHelper.getInt(obj['@id']),
-                        deleted: modelHelper.getBool(obj['@deleted']),
-                        dateCreated: modelHelper.getDate(obj['date.created']),
-                        language: obj.language,
-                        namespace: obj.namespace,
-                        path: modelHelper.getString(obj.path),
-                        title: obj.title,
-                        uriUi: obj['uri.ui']
-                    };
-                    modelHelper.addIfDefined(obj['@href'], 'href', parsed);
-                    modelHelper.addIfDefined(obj['@revision'], 'revision', parsed);
-                    modelHelper.addIfDefined(obj['@draft.state'], 'draftState', parsed);
-                    modelHelper.addIfDefined(obj.article, 'article', parsed);
-                    modelHelper.addIfDefined(obj['language.effective'], 'languageEffective', parsed);
-                    modelHelper.addIfDefined(obj.timeuuid, 'timeuuid', parsed);
-                    if ('@unpublish' in obj) {
-                        parsed.unpublish = modelHelper.getBool(obj['@unpublish']);
-                    }
-                    if ('@virtual' in obj) {
-                        parsed.virtual = modelHelper.getBool(obj['@virtual']);
-                    }
-                    if ('date.modified' in obj) {
-                        parsed.dateModified = modelHelper.getDate(obj['date.modified']);
-                    }
-                    if ('date.edited' in obj) {
-                        parsed.dateEdited = modelHelper.getDate(obj['date.edited']);
-                    }
-                    if ('page.parent' in obj) {
-                        parsed.pageParent = pageModel._getParents(obj['page.parent']);
-                    }
-                    if ('rating' in obj) {
-                        parsed.rating = pageRatingModel.parse(obj.rating);
-                    }
-                    if ('user.author' in obj) {
-                        parsed.userAuthor = userModel.parse(obj['user.author']);
-                    }
-
-                    // Only parse subpages if the property exists, and it has a 'page'
-                    //  sub-property.
-                    if ('subpages' in obj && typeof obj.subpages !== 'string' && 'page' in obj.subpages) {
-                        parsed.subpages = pageModel._getSubpages(obj.subpages);
-                    }
-                    return parsed;
-                },
-                _getParents: function _getParents(parent) {
-                    return pageModel.parse(parent);
-                },
-                _getSubpages: function _getSubpages(subpages) {
-                    var pageDef = subpages.page;
-                    var parsed = [];
-                    pageDef = modelHelper.getArray(pageDef);
-                    pageDef.forEach(function (sp) {
-                        parsed.push(pageModel.parse(sp));
-                    });
-                    return parsed;
-                }
-            };
-
-            _export('pageModel', pageModel);
-        }
-    };
-});
-$__System.register('6', ['3'], function (_export) {
-    'use strict';
-
-    var modelHelper, permissionsModel;
-    return {
-        setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }],
-        execute: function () {
-            permissionsModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        operations: modelHelper.getString(obj.operations).split(','),
-                        role: {
-                            id: modelHelper.getInt(obj.role['@id']),
-                            name: modelHelper.getString(obj.role)
-                        }
-                    };
-                    return parsed;
-                }
-            };
-
-            _export('permissionsModel', permissionsModel);
-        }
-    };
-});
-$__System.register('5', ['3', '4', '6'], function (_export) {
-    /**
-     * Martian - Core JavaScript API for MindTouch
-     *
-     * Copyright (c) 2015 MindTouch Inc.
-     * www.mindtouch.com  oss@mindtouch.com
-     *
-     * Licensed under the Apache License, Version 2.0 (the "License");
-     * you may not use this file except in compliance with the License.
-     * You may obtain a copy of the License at
-     *
-     *     http://www.apache.org/licenses/LICENSE-2.0
-     *
-     * Unless required by applicable law or agreed to in writing, software
-     * distributed under the License is distributed on an "AS IS" BASIS,
-     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     * See the License for the specific language governing permissions and
-     * limitations under the License.
-     */
-    'use strict';
-
-    var modelHelper, pageModel, permissionsModel, userModel;
-    return {
-        setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }, function (_2) {
-            pageModel = _2.pageModel;
-        }, function (_3) {
-            permissionsModel = _3.permissionsModel;
-        }],
-        execute: function () {
-            userModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        id: modelHelper.getInt(obj['@id']),
-                        wikiId: obj['@wikiid'],
-                        href: obj['@href'],
-                        dateCreated: modelHelper.getDate(obj['date.created']),
-                        email: obj.email,
-                        fullname: obj.fullname,
-                        username: obj.username,
-                        nick: obj.nick,
-                        status: obj.status
-                    };
-                    if (typeof obj['license.seat'] === 'string') {
-                        parsed.seated = modelHelper.getBool(obj['license.seat']);
-                        parsed.siteOwner = false;
-                    } else {
-                        parsed.seated = modelHelper.getBool(modelHelper.getString(obj['license.seat']));
-                        parsed.siteOwner = modelHelper.getBool(obj['license.seat']['@owner']);
-                    }
-                    if ('date.lastlogin' in obj) {
-                        parsed.dateLastLogin = modelHelper.getDate(obj['date.lastlogin']);
-                    }
-                    if ('page.home' in obj) {
-                        parsed.pageHome = pageModel.parse(obj['page.home']);
-                    }
-                    if ('permissions.user' in obj) {
-                        parsed.userPermissions = permissionsModel.parse(obj['permissions.user']);
-                    }
-                    return parsed;
-                }
-            };
-
-            _export('userModel', userModel);
-        }
-    };
-});
-$__System.register('7', ['3', '5'], function (_export) {
     'use strict';
 
     var modelHelper, userModel, userListModel;
@@ -302,22 +55,22 @@ $__System.register('7', ['3', '5'], function (_export) {
         }
     };
 });
-$__System.register('8', ['5', '7', '9', 'b', 'c', 'a'], function (_export) {
-    var userModel, userListModel, Plug, _createClass, _classCallCheck, utility, User, UserManager;
+$__System.register('5', ['2', '4', '6', '7', '8', '9'], function (_export) {
+    var userListModel, userModel, Plug, utility, _createClass, _classCallCheck, User, UserManager;
 
     return {
-        setters: [function (_2) {
-            userModel = _2.userModel;
+        setters: [function (_6) {
+            userListModel = _6.userListModel;
+        }, function (_5) {
+            userModel = _5.userModel;
         }, function (_3) {
-            userListModel = _3.userListModel;
+            Plug = _3.Plug;
+        }, function (_4) {
+            utility = _4.utility;
         }, function (_) {
-            Plug = _.Plug;
-        }, function (_b) {
-            _createClass = _b['default'];
-        }, function (_c) {
-            _classCallCheck = _c['default'];
-        }, function (_a) {
-            utility = _a.utility;
+            _createClass = _['default'];
+        }, function (_2) {
+            _classCallCheck = _2['default'];
         }],
         execute: function () {
             /**
@@ -401,15 +154,33 @@ $__System.register('8', ['5', '7', '9', 'b', 'c', 'a'], function (_export) {
         }
     };
 });
-$__System.register('d', ['3', 'e'], function (_export) {
+$__System.register('a', ['3', 'b'], function (_export) {
+    /**
+     * Martian - Core JavaScript API for MindTouch
+     *
+     * Copyright (c) 2015 MindTouch Inc.
+     * www.mindtouch.com  oss@mindtouch.com
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *     http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
     'use strict';
 
     var modelHelper, eventModel, userActivityModel;
     return {
         setters: [function (_) {
             modelHelper = _.modelHelper;
-        }, function (_e) {
-            eventModel = _e.eventModel;
+        }, function (_b) {
+            eventModel = _b.eventModel;
         }],
         execute: function () {
             userActivityModel = {
@@ -433,15 +204,33 @@ $__System.register('d', ['3', 'e'], function (_export) {
         }
     };
 });
-$__System.register('f', ['3', 'e'], function (_export) {
+$__System.register('c', ['3', 'b'], function (_export) {
+    /**
+     * Martian - Core JavaScript API for MindTouch
+     *
+     * Copyright (c) 2015 MindTouch Inc.
+     * www.mindtouch.com  oss@mindtouch.com
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *     http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
     'use strict';
 
     var modelHelper, eventModel, eventListModel;
     return {
         setters: [function (_) {
             modelHelper = _.modelHelper;
-        }, function (_e) {
-            eventModel = _e.eventModel;
+        }, function (_b) {
+            eventModel = _b.eventModel;
         }],
         execute: function () {
             eventListModel = {
@@ -473,7 +262,25 @@ $__System.register('f', ['3', 'e'], function (_export) {
         }
     };
 });
-$__System.register('e', ['3'], function (_export) {
+$__System.register('b', ['3'], function (_export) {
+    /**
+     * Martian - Core JavaScript API for MindTouch
+     *
+     * Copyright (c) 2015 MindTouch Inc.
+     * www.mindtouch.com  oss@mindtouch.com
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *     http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
     'use strict';
 
     var modelHelper, eventModel;
@@ -540,15 +347,33 @@ $__System.register('e', ['3'], function (_export) {
         }
     };
 });
-$__System.register('10', ['3', 'e'], function (_export) {
+$__System.register('d', ['3', 'b'], function (_export) {
+    /**
+     * Martian - Core JavaScript API for MindTouch
+     *
+     * Copyright (c) 2015 MindTouch Inc.
+     * www.mindtouch.com  oss@mindtouch.com
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *     http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
     'use strict';
 
     var modelHelper, eventModel, eventDetailModel;
     return {
         setters: [function (_) {
             modelHelper = _.modelHelper;
-        }, function (_e) {
-            eventModel = _e.eventModel;
+        }, function (_b) {
+            eventModel = _b.eventModel;
         }],
         execute: function () {
             eventDetailModel = {
@@ -573,26 +398,44 @@ $__System.register('10', ['3', 'e'], function (_export) {
         }
     };
 });
-$__System.register('11', ['9', '10', 'b', 'c', 'a', 'd', 'f'], function (_export) {
-    var Plug, eventDetailModel, _createClass, _classCallCheck, utility, userActivityModel, eventListModel, UserEvents;
+$__System.register('e', ['6', '7', '8', '9', 'a', 'c', 'd'], function (_export) {
+    var Plug, utility, _createClass, _classCallCheck, userActivityModel, eventListModel, eventDetailModel, UserEvents;
 
     return {
-        setters: [function (_) {
-            Plug = _.Plug;
+        setters: [function (_3) {
+            Plug = _3.Plug;
+        }, function (_4) {
+            utility = _4.utility;
+        }, function (_) {
+            _createClass = _['default'];
         }, function (_2) {
-            eventDetailModel = _2.eventDetailModel;
-        }, function (_b) {
-            _createClass = _b['default'];
-        }, function (_c) {
-            _classCallCheck = _c['default'];
+            _classCallCheck = _2['default'];
         }, function (_a) {
-            utility = _a.utility;
+            userActivityModel = _a.userActivityModel;
+        }, function (_c) {
+            eventListModel = _c.eventListModel;
         }, function (_d) {
-            userActivityModel = _d.userActivityModel;
-        }, function (_f) {
-            eventListModel = _f.eventListModel;
+            eventDetailModel = _d.eventDetailModel;
         }],
         execute: function () {
+            /**
+             * Martian - Core JavaScript API for MindTouch
+             *
+             * Copyright (c) 2015 MindTouch Inc.
+             * www.mindtouch.com  oss@mindtouch.com
+             *
+             * Licensed under the Apache License, Version 2.0 (the "License");
+             * you may not use this file except in compliance with the License.
+             * You may obtain a copy of the License at
+             *
+             *     http://www.apache.org/licenses/LICENSE-2.0
+             *
+             * Unless required by applicable law or agreed to in writing, software
+             * distributed under the License is distributed on an "AS IS" BASIS,
+             * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+             * See the License for the specific language governing permissions and
+             * limitations under the License.
+             */
             'use strict';
 
             UserEvents = (function () {
@@ -632,18 +475,18 @@ $__System.register('11', ['9', '10', 'b', 'c', 'a', 'd', 'f'], function (_export
         }
     };
 });
-$__System.register('12', ['8', '11', 'b', 'c'], function (_export) {
-    var UserManager, UserEvents, _createClass, _classCallCheck, User;
+$__System.register('f', ['5', '8', '9', 'e'], function (_export) {
+    var UserManager, _createClass, _classCallCheck, UserEvents, User;
 
     return {
-        setters: [function (_) {
-            UserManager = _.UserManager;
+        setters: [function (_3) {
+            UserManager = _3.UserManager;
+        }, function (_) {
+            _createClass = _['default'];
         }, function (_2) {
-            UserEvents = _2.UserEvents;
-        }, function (_b) {
-            _createClass = _b['default'];
-        }, function (_c) {
-            _classCallCheck = _c['default'];
+            _classCallCheck = _2['default'];
+        }, function (_e) {
+            UserEvents = _e.UserEvents;
         }],
         execute: function () {
             /**
@@ -715,7 +558,7 @@ $__System.register('12', ['8', '11', 'b', 'c'], function (_export) {
         }
     };
 });
-$__System.register('a', [], function (_export) {
+$__System.register('10', ['3'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -736,1317 +579,380 @@ $__System.register('a', [], function (_export) {
      */
     'use strict';
 
-    var utility;
+    var modelHelper, searchModel;
     return {
-        setters: [],
+        setters: [function (_) {
+            modelHelper = _.modelHelper;
+        }],
         execute: function () {
-            utility = {
-                xmlRequestType: 'application/xml; charset=utf-8',
-                textRequestType: 'text/plain; charset=utf-8',
-                jsonRequestType: 'application/json; charset=utf-8',
-                searchEscape: function searchEscape(query) {
-                    var result = query.toString();
-                    var charArr = ['\\', '+', '-', '&', '|', '!', '(', ')', '{', '}', '[', ']', '^', '"', '~', '*', '?', ':'];
-                    charArr.forEach(function (c) {
-                        var regex = new RegExp('\\' + c, 'g');
-                        result = result.replace(regex, '\\' + c);
-                    });
-                    return result;
-                },
-                getResourceId: function getResourceId(id) {
-                    var defaultId = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
-
-                    var resourceId = null;
-                    if (typeof id === 'string' && id !== defaultId) {
-                        resourceId = '=' + encodeURIComponent(encodeURIComponent(id));
-                    } else {
-                        resourceId = id;
+            searchModel = {
+                parse: function parse(data) {
+                    var obj = modelHelper.fromJson(data);
+                    var search = {
+                        ranking: obj['@ranking'],
+                        queryId: obj['@queryid'],
+                        queryCount: modelHelper.getInt(obj['@querycount']),
+                        recommendationCount: modelHelper.getInt(obj['@count.recommendations']),
+                        count: modelHelper.getInt(obj['@count']),
+                        result: []
+                    };
+                    if ('result' in obj) {
+                        var results = modelHelper.getArray(obj.result);
+                        results.forEach(function (result) {
+                            search.result.push({
+                                author: result.author,
+                                content: result.content,
+                                dateModified: modelHelper.getDate(result['date.modified']),
+                                id: result.id,
+                                mime: result.mime,
+                                rank: result.rank,
+                                title: result.title,
+                                uri: result.uri,
+                                uriTrack: result['uri.track'],
+                                page: {
+                                    path: result.page.path,
+                                    rating: result.page.rating,
+                                    title: result.page.title,
+                                    uriUi: result.page['uri.ui']
+                                }
+                            });
+                        });
                     }
-                    return resourceId;
+                    if ('summary' in obj) {
+                        search.summary = {
+                            path: obj.summary['@path'],
+                            results: []
+                        };
+                        if ('results' in obj.summary) {
+                            var results = modelHelper.getArray(obj.summary.results);
+                            results.forEach(function (result) {
+                                search.summary.results.push({
+                                    path: result['@path'],
+                                    count: modelHelper.getInt(result['@count']),
+                                    title: result['@title']
+                                });
+                            });
+                        }
+                    }
+                    return search;
                 }
             };
 
-            _export('utility', utility);
+            _export('searchModel', searchModel);
         }
     };
 });
-$__System.registerDynamic("13", [], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  "format cjs";
-  return module.exports;
-});
+$__System.register('11', ['6', '7', '8', '9', '10', '12', '13'], function (_export) {
+    var Plug, utility, _createClass, _classCallCheck, searchModel, stringUtility, _Promise, Site;
 
-$__System.registerDynamic("14", ["15", "16"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var toInteger = $__require('15'),
-      defined = $__require('16');
-  module.exports = function(TO_STRING) {
-    return function(that, pos) {
-      var s = String(defined(that)),
-          i = toInteger(pos),
-          l = s.length,
-          a,
-          b;
-      if (i < 0 || i >= l)
-        return TO_STRING ? '' : undefined;
-      a = s.charCodeAt(i);
-      return a < 0xd800 || a > 0xdbff || i + 1 === l || (b = s.charCodeAt(i + 1)) < 0xdc00 || b > 0xdfff ? TO_STRING ? s.charAt(i) : a : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
-    };
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("17", ["14", "18"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var $at = $__require('14')(true);
-  $__require('18')(String, 'String', function(iterated) {
-    this._t = String(iterated);
-    this._i = 0;
-  }, function() {
-    var O = this._t,
-        index = this._i,
-        point;
-    if (index >= O.length)
-      return {
-        value: undefined,
-        done: true
-      };
-    point = $at(O, index);
-    this._i += point.length;
-    return {
-      value: point,
-      done: false
-    };
-  });
-  return module.exports;
-});
-
-$__System.registerDynamic("19", [], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  module.exports = function() {};
-  return module.exports;
-});
-
-$__System.registerDynamic("1a", [], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  module.exports = function(done, value) {
-    return {
-      value: value,
-      done: !!done
-    };
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("1b", ["1c", "1d", "1e", "1f", "20"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var $ = $__require('1c'),
-      descriptor = $__require('1d'),
-      setToStringTag = $__require('1e'),
-      IteratorPrototype = {};
-  $__require('1f')(IteratorPrototype, $__require('20')('iterator'), function() {
-    return this;
-  });
-  module.exports = function(Constructor, NAME, next) {
-    Constructor.prototype = $.create(IteratorPrototype, {next: descriptor(1, next)});
-    setToStringTag(Constructor, NAME + ' Iterator');
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("18", ["21", "22", "23", "1f", "24", "25", "1b", "1e", "1c", "20"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var LIBRARY = $__require('21'),
-      $export = $__require('22'),
-      redefine = $__require('23'),
-      hide = $__require('1f'),
-      has = $__require('24'),
-      Iterators = $__require('25'),
-      $iterCreate = $__require('1b'),
-      setToStringTag = $__require('1e'),
-      getProto = $__require('1c').getProto,
-      ITERATOR = $__require('20')('iterator'),
-      BUGGY = !([].keys && 'next' in [].keys()),
-      FF_ITERATOR = '@@iterator',
-      KEYS = 'keys',
-      VALUES = 'values';
-  var returnThis = function() {
-    return this;
-  };
-  module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED) {
-    $iterCreate(Constructor, NAME, next);
-    var getMethod = function(kind) {
-      if (!BUGGY && kind in proto)
-        return proto[kind];
-      switch (kind) {
-        case KEYS:
-          return function keys() {
-            return new Constructor(this, kind);
-          };
-        case VALUES:
-          return function values() {
-            return new Constructor(this, kind);
-          };
-      }
-      return function entries() {
-        return new Constructor(this, kind);
-      };
-    };
-    var TAG = NAME + ' Iterator',
-        DEF_VALUES = DEFAULT == VALUES,
-        VALUES_BUG = false,
-        proto = Base.prototype,
-        $native = proto[ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT],
-        $default = $native || getMethod(DEFAULT),
-        methods,
-        key;
-    if ($native) {
-      var IteratorPrototype = getProto($default.call(new Base));
-      setToStringTag(IteratorPrototype, TAG, true);
-      if (!LIBRARY && has(proto, FF_ITERATOR))
-        hide(IteratorPrototype, ITERATOR, returnThis);
-      if (DEF_VALUES && $native.name !== VALUES) {
-        VALUES_BUG = true;
-        $default = function values() {
-          return $native.call(this);
-        };
-      }
-    }
-    if ((!LIBRARY || FORCED) && (BUGGY || VALUES_BUG || !proto[ITERATOR])) {
-      hide(proto, ITERATOR, $default);
-    }
-    Iterators[NAME] = $default;
-    Iterators[TAG] = returnThis;
-    if (DEFAULT) {
-      methods = {
-        values: DEF_VALUES ? $default : getMethod(VALUES),
-        keys: IS_SET ? $default : getMethod(KEYS),
-        entries: !DEF_VALUES ? $default : getMethod('entries')
-      };
-      if (FORCED)
-        for (key in methods) {
-          if (!(key in proto))
-            redefine(proto, key, methods[key]);
-        }
-      else
-        $export($export.P + $export.F * (BUGGY || VALUES_BUG), NAME, methods);
-    }
-    return methods;
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("26", ["19", "1a", "25", "27", "18"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var addToUnscopables = $__require('19'),
-      step = $__require('1a'),
-      Iterators = $__require('25'),
-      toIObject = $__require('27');
-  module.exports = $__require('18')(Array, 'Array', function(iterated, kind) {
-    this._t = toIObject(iterated);
-    this._i = 0;
-    this._k = kind;
-  }, function() {
-    var O = this._t,
-        kind = this._k,
-        index = this._i++;
-    if (!O || index >= O.length) {
-      this._t = undefined;
-      return step(1);
-    }
-    if (kind == 'keys')
-      return step(0, index);
-    if (kind == 'values')
-      return step(0, O[index]);
-    return step(0, [index, O[index]]);
-  }, 'values');
-  Iterators.Arguments = Iterators.Array;
-  addToUnscopables('keys');
-  addToUnscopables('values');
-  addToUnscopables('entries');
-  return module.exports;
-});
-
-$__System.registerDynamic("28", ["26", "25"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  $__require('26');
-  var Iterators = $__require('25');
-  Iterators.NodeList = Iterators.HTMLCollection = Iterators.Array;
-  return module.exports;
-});
-
-$__System.registerDynamic("21", [], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  module.exports = true;
-  return module.exports;
-});
-
-$__System.registerDynamic("29", [], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  module.exports = function(it, Constructor, name) {
-    if (!(it instanceof Constructor))
-      throw TypeError(name + ": use the 'new' operator!");
-    return it;
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("2a", ["2b"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var anObject = $__require('2b');
-  module.exports = function(iterator, fn, value, entries) {
-    try {
-      return entries ? fn(anObject(value)[0], value[1]) : fn(value);
-    } catch (e) {
-      var ret = iterator['return'];
-      if (ret !== undefined)
-        anObject(ret.call(iterator));
-      throw e;
-    }
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("2c", ["25", "20"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var Iterators = $__require('25'),
-      ITERATOR = $__require('20')('iterator'),
-      ArrayProto = Array.prototype;
-  module.exports = function(it) {
-    return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("15", [], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var ceil = Math.ceil,
-      floor = Math.floor;
-  module.exports = function(it) {
-    return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("2d", ["15"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var toInteger = $__require('15'),
-      min = Math.min;
-  module.exports = function(it) {
-    return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0;
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("2e", ["2f", "20"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var cof = $__require('2f'),
-      TAG = $__require('20')('toStringTag'),
-      ARG = cof(function() {
-        return arguments;
-      }()) == 'Arguments';
-  module.exports = function(it) {
-    var O,
-        T,
-        B;
-    return it === undefined ? 'Undefined' : it === null ? 'Null' : typeof(T = (O = Object(it))[TAG]) == 'string' ? T : ARG ? cof(O) : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("25", [], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  module.exports = {};
-  return module.exports;
-});
-
-$__System.registerDynamic("30", ["2e", "20", "25", "31"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var classof = $__require('2e'),
-      ITERATOR = $__require('20')('iterator'),
-      Iterators = $__require('25');
-  module.exports = $__require('31').getIteratorMethod = function(it) {
-    if (it != undefined)
-      return it[ITERATOR] || it['@@iterator'] || Iterators[classof(it)];
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("32", ["33", "2a", "2c", "2b", "2d", "30"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var ctx = $__require('33'),
-      call = $__require('2a'),
-      isArrayIter = $__require('2c'),
-      anObject = $__require('2b'),
-      toLength = $__require('2d'),
-      getIterFn = $__require('30');
-  module.exports = function(iterable, entries, fn, that) {
-    var iterFn = getIterFn(iterable),
-        f = ctx(fn, that, entries ? 2 : 1),
-        index = 0,
-        length,
-        step,
-        iterator;
-    if (typeof iterFn != 'function')
-      throw TypeError(iterable + ' is not iterable!');
-    if (isArrayIter(iterFn))
-      for (length = toLength(iterable.length); length > index; index++) {
-        entries ? f(anObject(step = iterable[index])[0], step[1]) : f(iterable[index]);
-      }
-    else
-      for (iterator = iterFn.call(iterable); !(step = iterator.next()).done; ) {
-        call(iterator, f, step.value, entries);
-      }
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("34", [], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  module.exports = Object.is || function is(x, y) {
-    return x === y ? x !== 0 || 1 / x === 1 / y : x != x && y != y;
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("35", ["2b", "36", "20"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var anObject = $__require('2b'),
-      aFunction = $__require('36'),
-      SPECIES = $__require('20')('species');
-  module.exports = function(O, D) {
-    var C = anObject(O).constructor,
-        S;
-    return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("37", [], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  module.exports = function(fn, args, that) {
-    var un = that === undefined;
-    switch (args.length) {
-      case 0:
-        return un ? fn() : fn.call(that);
-      case 1:
-        return un ? fn(args[0]) : fn.call(that, args[0]);
-      case 2:
-        return un ? fn(args[0], args[1]) : fn.call(that, args[0], args[1]);
-      case 3:
-        return un ? fn(args[0], args[1], args[2]) : fn.call(that, args[0], args[1], args[2]);
-      case 4:
-        return un ? fn(args[0], args[1], args[2], args[3]) : fn.call(that, args[0], args[1], args[2], args[3]);
-    }
-    return fn.apply(that, args);
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("38", ["39"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  module.exports = $__require('39').document && document.documentElement;
-  return module.exports;
-});
-
-$__System.registerDynamic("3a", ["3b", "39"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var isObject = $__require('3b'),
-      document = $__require('39').document,
-      is = isObject(document) && isObject(document.createElement);
-  module.exports = function(it) {
-    return is ? document.createElement(it) : {};
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("3c", ["33", "37", "38", "3a", "39", "2f", "3d"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  (function(process) {
-    var ctx = $__require('33'),
-        invoke = $__require('37'),
-        html = $__require('38'),
-        cel = $__require('3a'),
-        global = $__require('39'),
-        process = global.process,
-        setTask = global.setImmediate,
-        clearTask = global.clearImmediate,
-        MessageChannel = global.MessageChannel,
-        counter = 0,
-        queue = {},
-        ONREADYSTATECHANGE = 'onreadystatechange',
-        defer,
-        channel,
-        port;
-    var run = function() {
-      var id = +this;
-      if (queue.hasOwnProperty(id)) {
-        var fn = queue[id];
-        delete queue[id];
-        fn();
-      }
-    };
-    var listner = function(event) {
-      run.call(event.data);
-    };
-    if (!setTask || !clearTask) {
-      setTask = function setImmediate(fn) {
-        var args = [],
-            i = 1;
-        while (arguments.length > i)
-          args.push(arguments[i++]);
-        queue[++counter] = function() {
-          invoke(typeof fn == 'function' ? fn : Function(fn), args);
-        };
-        defer(counter);
-        return counter;
-      };
-      clearTask = function clearImmediate(id) {
-        delete queue[id];
-      };
-      if ($__require('2f')(process) == 'process') {
-        defer = function(id) {
-          process.nextTick(ctx(run, id, 1));
-        };
-      } else if (MessageChannel) {
-        channel = new MessageChannel;
-        port = channel.port2;
-        channel.port1.onmessage = listner;
-        defer = ctx(port.postMessage, port, 1);
-      } else if (global.addEventListener && typeof postMessage == 'function' && !global.importScripts) {
-        defer = function(id) {
-          global.postMessage(id + '', '*');
-        };
-        global.addEventListener('message', listner, false);
-      } else if (ONREADYSTATECHANGE in cel('script')) {
-        defer = function(id) {
-          html.appendChild(cel('script'))[ONREADYSTATECHANGE] = function() {
-            html.removeChild(this);
-            run.call(id);
-          };
-        };
-      } else {
-        defer = function(id) {
-          setTimeout(ctx(run, id, 1), 0);
-        };
-      }
-    }
-    module.exports = {
-      set: setTask,
-      clear: clearTask
-    };
-  })($__require('3d'));
-  return module.exports;
-});
-
-$__System.registerDynamic("3e", ["39", "3c", "2f", "3d"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  (function(process) {
-    var global = $__require('39'),
-        macrotask = $__require('3c').set,
-        Observer = global.MutationObserver || global.WebKitMutationObserver,
-        process = global.process,
-        Promise = global.Promise,
-        isNode = $__require('2f')(process) == 'process',
-        head,
-        last,
-        notify;
-    var flush = function() {
-      var parent,
-          domain,
-          fn;
-      if (isNode && (parent = process.domain)) {
-        process.domain = null;
-        parent.exit();
-      }
-      while (head) {
-        domain = head.domain;
-        fn = head.fn;
-        if (domain)
-          domain.enter();
-        fn();
-        if (domain)
-          domain.exit();
-        head = head.next;
-      }
-      last = undefined;
-      if (parent)
-        parent.enter();
-    };
-    if (isNode) {
-      notify = function() {
-        process.nextTick(flush);
-      };
-    } else if (Observer) {
-      var toggle = 1,
-          node = document.createTextNode('');
-      new Observer(flush).observe(node, {characterData: true});
-      notify = function() {
-        node.data = toggle = -toggle;
-      };
-    } else if (Promise && Promise.resolve) {
-      notify = function() {
-        Promise.resolve().then(flush);
-      };
-    } else {
-      notify = function() {
-        macrotask.call(global, flush);
-      };
-    }
-    module.exports = function asap(fn) {
-      var task = {
-        fn: fn,
-        next: undefined,
-        domain: isNode && process.domain
-      };
-      if (last)
-        last.next = task;
-      if (!head) {
-        head = task;
-        notify();
-      }
-      last = task;
-    };
-  })($__require('3d'));
-  return module.exports;
-});
-
-$__System.registerDynamic("1d", [], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  module.exports = function(bitmap, value) {
-    return {
-      enumerable: !(bitmap & 1),
-      configurable: !(bitmap & 2),
-      writable: !(bitmap & 4),
-      value: value
-    };
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("1f", ["1c", "1d", "3f"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var $ = $__require('1c'),
-      createDesc = $__require('1d');
-  module.exports = $__require('3f') ? function(object, key, value) {
-    return $.setDesc(object, key, createDesc(1, value));
-  } : function(object, key, value) {
-    object[key] = value;
-    return object;
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("23", ["1f"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  module.exports = $__require('1f');
-  return module.exports;
-});
-
-$__System.registerDynamic("40", ["23"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var redefine = $__require('23');
-  module.exports = function(target, src) {
-    for (var key in src)
-      redefine(target, key, src[key]);
-    return target;
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("24", [], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var hasOwnProperty = {}.hasOwnProperty;
-  module.exports = function(it, key) {
-    return hasOwnProperty.call(it, key);
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("1e", ["1c", "24", "20"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var def = $__require('1c').setDesc,
-      has = $__require('24'),
-      TAG = $__require('20')('toStringTag');
-  module.exports = function(it, tag, stat) {
-    if (it && !has(it = stat ? it : it.prototype, TAG))
-      def(it, TAG, {
-        configurable: true,
-        value: tag
-      });
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("3f", ["41"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  module.exports = !$__require('41')(function() {
-    return Object.defineProperty({}, 'a', {get: function() {
-        return 7;
-      }}).a != 7;
-  });
-  return module.exports;
-});
-
-$__System.registerDynamic("42", ["31", "1c", "3f", "20"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var core = $__require('31'),
-      $ = $__require('1c'),
-      DESCRIPTORS = $__require('3f'),
-      SPECIES = $__require('20')('species');
-  module.exports = function(KEY) {
-    var C = core[KEY];
-    if (DESCRIPTORS && C && !C[SPECIES])
-      $.setDesc(C, SPECIES, {
-        configurable: true,
-        get: function() {
-          return this;
-        }
-      });
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("43", ["39"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var global = $__require('39'),
-      SHARED = '__core-js_shared__',
-      store = global[SHARED] || (global[SHARED] = {});
-  module.exports = function(key) {
-    return store[key] || (store[key] = {});
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("44", [], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var id = 0,
-      px = Math.random();
-  module.exports = function(key) {
-    return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("20", ["43", "44", "39"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var store = $__require('43')('wks'),
-      uid = $__require('44'),
-      Symbol = $__require('39').Symbol;
-  module.exports = function(name) {
-    return store[name] || (store[name] = Symbol && Symbol[name] || (Symbol || uid)('Symbol.' + name));
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("45", ["20"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var ITERATOR = $__require('20')('iterator'),
-      SAFE_CLOSING = false;
-  try {
-    var riter = [7][ITERATOR]();
-    riter['return'] = function() {
-      SAFE_CLOSING = true;
-    };
-    Array.from(riter, function() {
-      throw 2;
-    });
-  } catch (e) {}
-  module.exports = function(exec, skipClosing) {
-    if (!skipClosing && !SAFE_CLOSING)
-      return false;
-    var safe = false;
-    try {
-      var arr = [7],
-          iter = arr[ITERATOR]();
-      iter.next = function() {
-        safe = true;
-      };
-      arr[ITERATOR] = function() {
-        return iter;
-      };
-      exec(arr);
-    } catch (e) {}
-    return safe;
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("46", [], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var process = module.exports = {};
-  var queue = [];
-  var draining = false;
-  var currentQueue;
-  var queueIndex = -1;
-  function cleanUpNextTick() {
-    draining = false;
-    if (currentQueue.length) {
-      queue = currentQueue.concat(queue);
-    } else {
-      queueIndex = -1;
-    }
-    if (queue.length) {
-      drainQueue();
-    }
-  }
-  function drainQueue() {
-    if (draining) {
-      return;
-    }
-    var timeout = setTimeout(cleanUpNextTick);
-    draining = true;
-    var len = queue.length;
-    while (len) {
-      currentQueue = queue;
-      queue = [];
-      while (++queueIndex < len) {
-        if (currentQueue) {
-          currentQueue[queueIndex].run();
-        }
-      }
-      queueIndex = -1;
-      len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    clearTimeout(timeout);
-  }
-  process.nextTick = function(fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-      for (var i = 1; i < arguments.length; i++) {
-        args[i - 1] = arguments[i];
-      }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-      setTimeout(drainQueue, 0);
-    }
-  };
-  function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-  }
-  Item.prototype.run = function() {
-    this.fun.apply(null, this.array);
-  };
-  process.title = 'browser';
-  process.browser = true;
-  process.env = {};
-  process.argv = [];
-  process.version = '';
-  process.versions = {};
-  function noop() {}
-  process.on = noop;
-  process.addListener = noop;
-  process.once = noop;
-  process.off = noop;
-  process.removeListener = noop;
-  process.removeAllListeners = noop;
-  process.emit = noop;
-  process.binding = function(name) {
-    throw new Error('process.binding is not supported');
-  };
-  process.cwd = function() {
-    return '/';
-  };
-  process.chdir = function(dir) {
-    throw new Error('process.chdir is not supported');
-  };
-  process.umask = function() {
-    return 0;
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("47", ["46"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  module.exports = $__require('46');
-  return module.exports;
-});
-
-$__System.registerDynamic("48", ["47"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  module.exports = $__System._nodeRequire ? process : $__require('47');
-  return module.exports;
-});
-
-$__System.registerDynamic("3d", ["48"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  module.exports = $__require('48');
-  return module.exports;
-});
-
-$__System.registerDynamic("49", ["1c", "21", "39", "33", "2e", "22", "3b", "2b", "36", "29", "32", "4a", "34", "20", "35", "3e", "3f", "40", "1e", "42", "31", "45", "3d"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  (function(process) {
-    'use strict';
-    var $ = $__require('1c'),
-        LIBRARY = $__require('21'),
-        global = $__require('39'),
-        ctx = $__require('33'),
-        classof = $__require('2e'),
-        $export = $__require('22'),
-        isObject = $__require('3b'),
-        anObject = $__require('2b'),
-        aFunction = $__require('36'),
-        strictNew = $__require('29'),
-        forOf = $__require('32'),
-        setProto = $__require('4a').set,
-        same = $__require('34'),
-        SPECIES = $__require('20')('species'),
-        speciesConstructor = $__require('35'),
-        asap = $__require('3e'),
-        PROMISE = 'Promise',
-        process = global.process,
-        isNode = classof(process) == 'process',
-        P = global[PROMISE],
-        Wrapper;
-    var testResolve = function(sub) {
-      var test = new P(function() {});
-      if (sub)
-        test.constructor = Object;
-      return P.resolve(test) === test;
-    };
-    var USE_NATIVE = function() {
-      var works = false;
-      function P2(x) {
-        var self = new P(x);
-        setProto(self, P2.prototype);
-        return self;
-      }
-      try {
-        works = P && P.resolve && testResolve();
-        setProto(P2, P);
-        P2.prototype = $.create(P.prototype, {constructor: {value: P2}});
-        if (!(P2.resolve(5).then(function() {}) instanceof P2)) {
-          works = false;
-        }
-        if (works && $__require('3f')) {
-          var thenableThenGotten = false;
-          P.resolve($.setDesc({}, 'then', {get: function() {
-              thenableThenGotten = true;
-            }}));
-          works = thenableThenGotten;
-        }
-      } catch (e) {
-        works = false;
-      }
-      return works;
-    }();
-    var sameConstructor = function(a, b) {
-      if (LIBRARY && a === P && b === Wrapper)
-        return true;
-      return same(a, b);
-    };
-    var getConstructor = function(C) {
-      var S = anObject(C)[SPECIES];
-      return S != undefined ? S : C;
-    };
-    var isThenable = function(it) {
-      var then;
-      return isObject(it) && typeof(then = it.then) == 'function' ? then : false;
-    };
-    var PromiseCapability = function(C) {
-      var resolve,
-          reject;
-      this.promise = new C(function($$resolve, $$reject) {
-        if (resolve !== undefined || reject !== undefined)
-          throw TypeError('Bad Promise constructor');
-        resolve = $$resolve;
-        reject = $$reject;
-      });
-      this.resolve = aFunction(resolve), this.reject = aFunction(reject);
-    };
-    var perform = function(exec) {
-      try {
-        exec();
-      } catch (e) {
-        return {error: e};
-      }
-    };
-    var notify = function(record, isReject) {
-      if (record.n)
-        return;
-      record.n = true;
-      var chain = record.c;
-      asap(function() {
-        var value = record.v,
-            ok = record.s == 1,
-            i = 0;
-        var run = function(reaction) {
-          var handler = ok ? reaction.ok : reaction.fail,
-              resolve = reaction.resolve,
-              reject = reaction.reject,
-              result,
-              then;
-          try {
-            if (handler) {
-              if (!ok)
-                record.h = true;
-              result = handler === true ? value : handler(value);
-              if (result === reaction.promise) {
-                reject(TypeError('Promise-chain cycle'));
-              } else if (then = isThenable(result)) {
-                then.call(result, resolve, reject);
-              } else
-                resolve(result);
-            } else
-              reject(value);
-          } catch (e) {
-            reject(e);
-          }
-        };
-        while (chain.length > i)
-          run(chain[i++]);
-        chain.length = 0;
-        record.n = false;
-        if (isReject)
-          setTimeout(function() {
-            var promise = record.p,
-                handler,
-                console;
-            if (isUnhandled(promise)) {
-              if (isNode) {
-                process.emit('unhandledRejection', value, promise);
-              } else if (handler = global.onunhandledrejection) {
-                handler({
-                  promise: promise,
-                  reason: value
-                });
-              } else if ((console = global.console) && console.error) {
-                console.error('Unhandled promise rejection', value);
-              }
+    function _buildSearchConstraints(params) {
+        var constraints = [];
+        params.namespace = 'main';
+        constraints.push('+namespace:' + utility.searchEscape(params.namespace));
+        if ('path' in params) {
+            var path = params.path;
+            if (stringUtility.startsWith(path, '/')) {
+                path = stringUtility.leftTrim(path, '/');
             }
-            record.a = undefined;
-          }, 1);
-      });
-    };
-    var isUnhandled = function(promise) {
-      var record = promise._d,
-          chain = record.a || record.c,
-          i = 0,
-          reaction;
-      if (record.h)
-        return false;
-      while (chain.length > i) {
-        reaction = chain[i++];
-        if (reaction.fail || !isUnhandled(reaction.promise))
-          return false;
-      }
-      return true;
-    };
-    var $reject = function(value) {
-      var record = this;
-      if (record.d)
-        return;
-      record.d = true;
-      record = record.r || record;
-      record.v = value;
-      record.s = 2;
-      record.a = record.c.slice();
-      notify(record, true);
-    };
-    var $resolve = function(value) {
-      var record = this,
-          then;
-      if (record.d)
-        return;
-      record.d = true;
-      record = record.r || record;
-      try {
-        if (record.p === value)
-          throw TypeError("Promise can't be resolved itself");
-        if (then = isThenable(value)) {
-          asap(function() {
-            var wrapper = {
-              r: record,
-              d: false
-            };
-            try {
-              then.call(value, ctx($resolve, wrapper, 1), ctx($reject, wrapper, 1));
-            } catch (e) {
-              $reject.call(wrapper, e);
+            constraints.push('+path.ancestor:' + utility.searchEscape(path));
+        }
+        if ('tags' in params) {
+            var tags = params.tags;
+            if (typeof tags === 'string' && tags) {
+                tags = tags.split(',');
             }
-          });
-        } else {
-          record.v = value;
-          record.s = 1;
-          notify(record, false);
-        }
-      } catch (e) {
-        $reject.call({
-          r: record,
-          d: false
-        }, e);
-      }
-    };
-    if (!USE_NATIVE) {
-      P = function Promise(executor) {
-        aFunction(executor);
-        var record = this._d = {
-          p: strictNew(this, P, PROMISE),
-          c: [],
-          a: undefined,
-          s: 0,
-          d: false,
-          v: undefined,
-          h: false,
-          n: false
-        };
-        try {
-          executor(ctx($resolve, record, 1), ctx($reject, record, 1));
-        } catch (err) {
-          $reject.call(record, err);
-        }
-      };
-      $__require('40')(P.prototype, {
-        then: function then(onFulfilled, onRejected) {
-          var reaction = new PromiseCapability(speciesConstructor(this, P)),
-              promise = reaction.promise,
-              record = this._d;
-          reaction.ok = typeof onFulfilled == 'function' ? onFulfilled : true;
-          reaction.fail = typeof onRejected == 'function' && onRejected;
-          record.c.push(reaction);
-          if (record.a)
-            record.a.push(reaction);
-          if (record.s)
-            notify(record, false);
-          return promise;
-        },
-        'catch': function(onRejected) {
-          return this.then(undefined, onRejected);
-        }
-      });
-    }
-    $export($export.G + $export.W + $export.F * !USE_NATIVE, {Promise: P});
-    $__require('1e')(P, PROMISE);
-    $__require('42')(PROMISE);
-    Wrapper = $__require('31')[PROMISE];
-    $export($export.S + $export.F * !USE_NATIVE, PROMISE, {reject: function reject(r) {
-        var capability = new PromiseCapability(this),
-            $$reject = capability.reject;
-        $$reject(r);
-        return capability.promise;
-      }});
-    $export($export.S + $export.F * (!USE_NATIVE || testResolve(true)), PROMISE, {resolve: function resolve(x) {
-        if (x instanceof P && sameConstructor(x.constructor, this))
-          return x;
-        var capability = new PromiseCapability(this),
-            $$resolve = capability.resolve;
-        $$resolve(x);
-        return capability.promise;
-      }});
-    $export($export.S + $export.F * !(USE_NATIVE && $__require('45')(function(iter) {
-      P.all(iter)['catch'](function() {});
-    })), PROMISE, {
-      all: function all(iterable) {
-        var C = getConstructor(this),
-            capability = new PromiseCapability(C),
-            resolve = capability.resolve,
-            reject = capability.reject,
-            values = [];
-        var abrupt = perform(function() {
-          forOf(iterable, false, values.push, values);
-          var remaining = values.length,
-              results = Array(remaining);
-          if (remaining)
-            $.each.call(values, function(promise, index) {
-              var alreadyCalled = false;
-              C.resolve(promise).then(function(value) {
-                if (alreadyCalled)
-                  return;
-                alreadyCalled = true;
-                results[index] = value;
-                --remaining || resolve(results);
-              }, reject);
+            tags.forEach(function (tag) {
+                constraints.push('+tag:"' + utility.searchEscape(tag) + '"');
             });
-          else
-            resolve(results);
-        });
-        if (abrupt)
-          reject(abrupt.error);
-        return capability.promise;
-      },
-      race: function race(iterable) {
-        var C = getConstructor(this),
-            capability = new PromiseCapability(C),
-            reject = capability.reject;
-        var abrupt = perform(function() {
-          forOf(iterable, false, function(promise) {
-            C.resolve(promise).then(capability.resolve, reject);
-          });
-        });
-        if (abrupt)
-          reject(abrupt.error);
-        return capability.promise;
-      }
-    });
-  })($__require('3d'));
-  return module.exports;
-});
+        }
+        if ('type' in params) {
+            var types = params.type;
+            if (typeof types === 'string' && types) {
+                types = types.split(',');
+            }
+            types.forEach(function (type) {
+                constraints.push('+type:' + utility.searchEscape(type));
+            });
+        }
+        return '+(' + constraints.join(' ') + ')';
+    }
+    return {
+        setters: [function (_6) {
+            Plug = _6.Plug;
+        }, function (_4) {
+            utility = _4.utility;
+        }, function (_) {
+            _createClass = _['default'];
+        }, function (_2) {
+            _classCallCheck = _2['default'];
+        }, function (_7) {
+            searchModel = _7.searchModel;
+        }, function (_5) {
+            stringUtility = _5.stringUtility;
+        }, function (_3) {
+            _Promise = _3['default'];
+        }],
+        execute: function () {
+            /**
+             * Martian - Core JavaScript API for MindTouch
+             *
+             * Copyright (c) 2015 MindTouch Inc.
+             * www.mindtouch.com  oss@mindtouch.com
+             *
+             * Licensed under the Apache License, Version 2.0 (the "License");
+             * you may not use this file except in compliance with the License.
+             * You may obtain a copy of the License at
+             *
+             *     http://www.apache.org/licenses/LICENSE-2.0
+             *
+             * Unless required by applicable law or agreed to in writing, software
+             * distributed under the License is distributed on an "AS IS" BASIS,
+             * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+             * See the License for the specific language governing permissions and
+             * limitations under the License.
+             */
+            'use strict';
 
-$__System.registerDynamic("4b", ["13", "17", "28", "49", "31"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  $__require('13');
-  $__require('17');
-  $__require('28');
-  $__require('49');
-  module.exports = $__require('31').Promise;
-  return module.exports;
-});
+            Site = (function () {
+                function Site(settings) {
+                    _classCallCheck(this, Site);
 
-$__System.registerDynamic("4c", ["4b"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  module.exports = {
-    "default": $__require('4b'),
-    __esModule: true
-  };
-  return module.exports;
-});
+                    this.plug = new Plug(settings).at('@api', 'deki', 'site');
+                }
 
-$__System.register('4d', ['b', 'c'], function (_export) {
+                _createClass(Site, [{
+                    key: 'getResourceString',
+                    value: function getResourceString() {
+                        var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+                        if (!('key' in options)) {
+                            return _Promise.reject('No resource key was supplied');
+                        }
+                        var locPlug = this.plug.at('localization', options.key);
+                        if ('lang' in options) {
+                            locPlug = locPlug.withParam('lang', options.lang);
+                        }
+                        return locPlug.get();
+                    }
+                }, {
+                    key: 'search',
+                    value: function search() {
+                        var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+                        var _ref$page = _ref.page;
+                        var page = _ref$page === undefined ? 1 : _ref$page;
+                        var _ref$limit = _ref.limit;
+                        var limit = _ref$limit === undefined ? 10 : _ref$limit;
+                        var _ref$tags = _ref.tags;
+                        var tags = _ref$tags === undefined ? '' : _ref$tags;
+                        var _ref$type = _ref.type;
+                        var type = _ref$type === undefined ? '' : _ref$type;
+                        var _ref$q = _ref.q;
+                        var q = _ref$q === undefined ? '' : _ref$q;
+                        var _ref$path = _ref.path;
+                        var path = _ref$path === undefined ? '' : _ref$path;
+                        var _ref$recommendations = _ref.recommendations;
+                        var recommendations = _ref$recommendations === undefined ? true : _ref$recommendations;
+
+                        var constraint = {};
+                        if (path !== '') {
+                            constraint.path = path;
+                        }
+                        if (tags !== '') {
+                            constraint.tags = tags;
+                        }
+                        if (type !== '') {
+                            constraint.type = type;
+                        }
+                        var searchParams = {
+                            limit: limit,
+                            page: page,
+                            offset: parseInt(limit, 10) * (parseInt(page, 10) - 1),
+                            sortBy: '-date,-rank',
+                            q: q,
+                            summarypath: encodeURI(path),
+                            constraint: _buildSearchConstraints(constraint),
+                            recommendations: recommendations
+                        };
+                        return this.plug.at('query').withParams(searchParams).get().then(searchModel.parse);
+                    }
+                }]);
+
+                return Site;
+            })();
+
+            _export('Site', Site);
+        }
+    };
+});
+$__System.register('14', ['8', '9', '11'], function (_export) {
+    var _createClass, _classCallCheck, Site, Search;
+
+    return {
+        setters: [function (_) {
+            _createClass = _['default'];
+        }, function (_2) {
+            _classCallCheck = _2['default'];
+        }, function (_3) {
+            Site = _3.Site;
+        }],
+        execute: function () {
+            /**
+             * MindTouch GeniusLink SDK
+             * Copyright (C) 2006-2015 MindTouch, Inc.
+             * www.mindtouch.com  oss@mindtouch.com
+             *
+             * Licensed under the Apache License, Version 2.0 (the "License");
+             * you may not use this file except in compliance with the License.
+             * You may obtain a copy of the License at
+             *
+             *     http://www.apache.org/licenses/LICENSE-2.0
+             *
+             * Unless required by applicable law or agreed to in writing, software
+             * distributed under the License is distributed on an "AS IS" BASIS,
+             * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+             * See the License for the specific language governing permissions and
+             * limitations under the License.
+             */
+            'use strict';
+
+            Search = (function () {
+                function Search(settings) {
+                    _classCallCheck(this, Search);
+
+                    this.site = new Site(settings);
+                }
+
+                /**
+                 * @param {String} q - keywords or advanced search syntax
+                 * @param {Object} options - {
+                 *  page: paginated {page}
+                 *  limit: limit search results to {limit} items per paginated page
+                 *  tags: constrain search results to items tagged with {tag}
+                 *  path: constraint search results to items located in the {path} page hierarchy
+                 * }
+                 * @returns {Object}
+                 */
+
+                _createClass(Search, [{
+                    key: 'search',
+                    value: function search(q) {
+                        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+                        if (!q || q === '') {
+                            throw new Error('Search requires keywords or advanced search syntax.');
+                        }
+                        options.q = q;
+                        return this.site.search(options);
+                    }
+                }]);
+
+                return Search;
+            })();
+
+            _export('Search', Search);
+        }
+    };
+});
+$__System.register('15', ['6', '7', '8', '9', '16', '17', '18', '19'], function (_export) {
+    var Plug, utility, _createClass, _classCallCheck, PageBase, pageModel, _get, _inherits, Draft, DraftManager;
+
+    return {
+        setters: [function (_5) {
+            Plug = _5.Plug;
+        }, function (_6) {
+            utility = _6.utility;
+        }, function (_3) {
+            _createClass = _3['default'];
+        }, function (_4) {
+            _classCallCheck = _4['default'];
+        }, function (_7) {
+            PageBase = _7.PageBase;
+        }, function (_8) {
+            pageModel = _8.pageModel;
+        }, function (_) {
+            _get = _['default'];
+        }, function (_2) {
+            _inherits = _2['default'];
+        }],
+        execute: function () {
+            /**
+             * Martian - Core JavaScript API for MindTouch
+             *
+             * Copyright (c) 2015 MindTouch Inc.
+             * www.mindtouch.com  oss@mindtouch.com
+             *
+             * Licensed under the Apache License, Version 2.0 (the "License");
+             * you may not use this file except in compliance with the License.
+             * You may obtain a copy of the License at
+             *
+             *     http://www.apache.org/licenses/LICENSE-2.0
+             *
+             * Unless required by applicable law or agreed to in writing, software
+             * distributed under the License is distributed on an "AS IS" BASIS,
+             * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+             * See the License for the specific language governing permissions and
+             * limitations under the License.
+             */
+            'use strict';
+
+            Draft = (function (_PageBase) {
+                _inherits(Draft, _PageBase);
+
+                function Draft(id, settings) {
+                    if (id === undefined) id = 'home';
+
+                    _classCallCheck(this, Draft);
+
+                    _get(Object.getPrototypeOf(Draft.prototype), 'constructor', this).call(this, id);
+                    this._plug = new Plug(settings).at('@api', 'deki', 'drafts', this._id);
+                }
+
+                _createClass(Draft, [{
+                    key: 'deactivate',
+                    value: function deactivate() {
+                        return this._plug.at('deactivate').post().then(pageModel.parse);
+                    }
+                }, {
+                    key: 'publish',
+                    value: function publish() {
+                        return this._plug.at('publish').post();
+                    }
+                }]);
+
+                return Draft;
+            })(PageBase);
+
+            _export('Draft', Draft);
+
+            DraftManager = (function () {
+                function DraftManager(settings) {
+                    _classCallCheck(this, DraftManager);
+
+                    this._settings = settings;
+                }
+
+                _createClass(DraftManager, [{
+                    key: 'createDraft',
+                    value: function createDraft(newPath) {
+                        var plug = new Plug(this._settings).at('@api', 'deki', 'drafts', utility.getResourceId(newPath), 'create');
+                        return plug.post().then(pageModel.parse);
+                    }
+                }, {
+                    key: 'getDraft',
+                    value: function getDraft(id) {
+                        return new Draft(id, this._settings);
+                    }
+                }]);
+
+                return DraftManager;
+            })();
+
+            _export('DraftManager', DraftManager);
+        }
+    };
+});
+$__System.register('1a', ['8', '9'], function (_export) {
     var _createClass, _classCallCheck, uriParser, UriSearchParams, UriParser;
 
     function _parseUri(str) {
@@ -2068,12 +974,30 @@ $__System.register('4d', ['b', 'c'], function (_export) {
         return params;
     }
     return {
-        setters: [function (_b) {
-            _createClass = _b['default'];
-        }, function (_c) {
-            _classCallCheck = _c['default'];
+        setters: [function (_) {
+            _createClass = _['default'];
+        }, function (_2) {
+            _classCallCheck = _2['default'];
         }],
         execute: function () {
+            /**
+             * Martian - Core JavaScript API for MindTouch
+             *
+             * Copyright (c) 2015 MindTouch Inc.
+             * www.mindtouch.com  oss@mindtouch.com
+             *
+             * Licensed under the Apache License, Version 2.0 (the "License");
+             * you may not use this file except in compliance with the License.
+             * You may obtain a copy of the License at
+             *
+             *     http://www.apache.org/licenses/LICENSE-2.0
+             *
+             * Unless required by applicable law or agreed to in writing, software
+             * distributed under the License is distributed on an "AS IS" BASIS,
+             * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+             * See the License for the specific language governing permissions and
+             * limitations under the License.
+             */
             'use strict';
 
             uriParser = /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+:))?(?:\/\/)?(?:([^:@\/]*)(?::([^:@\/]*))?@)?(\[[0-9a-fA-F.]+\]|[^:\/?#]*)(?::(\d+|(?=:)))?((?:[^?#](?![^?#\/]*\.(?:[?#]|$)))*\/?)?[^?#\/]*(?:(\?[^#]*))?(?:(#.*))?/;
@@ -2341,7 +1265,7 @@ $__System.register('4d', ['b', 'c'], function (_export) {
         }
     };
 });
-$__System.register('4e', [], function (_export) {
+$__System.register('12', [], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -2421,20 +1345,20 @@ $__System.register('4e', [], function (_export) {
         }
     };
 });
-$__System.register('4f', ['50', 'b', 'c', '4d', '4e'], function (_export) {
-    var _Object$keys, _createClass, _classCallCheck, UriParser, stringUtility, Uri;
+$__System.register('1b', ['8', '9', '12', '1c', '1a'], function (_export) {
+    var _createClass, _classCallCheck, stringUtility, _Object$keys, UriParser, Uri;
 
     return {
         setters: [function (_) {
-            _Object$keys = _['default'];
-        }, function (_b) {
-            _createClass = _b['default'];
+            _createClass = _['default'];
+        }, function (_2) {
+            _classCallCheck = _2['default'];
+        }, function (_3) {
+            stringUtility = _3.stringUtility;
         }, function (_c) {
-            _classCallCheck = _c['default'];
-        }, function (_d) {
-            UriParser = _d.UriParser;
-        }, function (_e) {
-            stringUtility = _e.stringUtility;
+            _Object$keys = _c['default'];
+        }, function (_a) {
+            UriParser = _a.UriParser;
         }],
         execute: function () {
             /**
@@ -2539,50 +1463,13 @@ $__System.register('4f', ['50', 'b', 'c', '4d', '4e'], function (_export) {
         }
     };
 });
-$__System.registerDynamic("2f", [], true, function($__require, exports, module) {
+$__System.registerDynamic("1d", ["1e", "1f"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var toString = {}.toString;
-  module.exports = function(it) {
-    return toString.call(it).slice(8, -1);
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("51", ["2f"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var cof = $__require('2f');
-  module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it) {
-    return cof(it) == 'String' ? it.split('') : Object(it);
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("27", ["51", "16"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var IObject = $__require('51'),
-      defined = $__require('16');
-  module.exports = function(it) {
-    return IObject(defined(it));
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("52", ["27", "53"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var toIObject = $__require('27');
-  $__require('53')('getOwnPropertyDescriptor', function($getOwnPropertyDescriptor) {
+  var toIObject = $__require('1e');
+  $__require('1f')('getOwnPropertyDescriptor', function($getOwnPropertyDescriptor) {
     return function getOwnPropertyDescriptor(it, key) {
       return $getOwnPropertyDescriptor(toIObject(it), key);
     };
@@ -2590,38 +1477,38 @@ $__System.registerDynamic("52", ["27", "53"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("54", ["1c", "52"], true, function($__require, exports, module) {
+$__System.registerDynamic("20", ["21", "1d"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $ = $__require('1c');
-  $__require('52');
+  var $ = $__require('21');
+  $__require('1d');
   module.exports = function getOwnPropertyDescriptor(it, key) {
     return $.getDesc(it, key);
   };
   return module.exports;
 });
 
-$__System.registerDynamic("55", ["54"], true, function($__require, exports, module) {
+$__System.registerDynamic("22", ["20"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('54'),
+    "default": $__require('20'),
     __esModule: true
   };
   return module.exports;
 });
 
-$__System.registerDynamic("56", ["55"], true, function($__require, exports, module) {
+$__System.registerDynamic("18", ["22"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var _Object$getOwnPropertyDescriptor = $__require('55')["default"];
+  var _Object$getOwnPropertyDescriptor = $__require('22')["default"];
   exports["default"] = function get(_x, _x2, _x3) {
     var _again = true;
     _function: while (_again) {
@@ -2659,131 +1546,70 @@ $__System.registerDynamic("56", ["55"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("57", ["1c"], true, function($__require, exports, module) {
+$__System.registerDynamic("23", ["21"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $ = $__require('1c');
+  var $ = $__require('21');
   module.exports = function create(P, D) {
     return $.create(P, D);
   };
   return module.exports;
 });
 
-$__System.registerDynamic("58", ["57"], true, function($__require, exports, module) {
+$__System.registerDynamic("24", ["23"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('57'),
+    "default": $__require('23'),
     __esModule: true
   };
   return module.exports;
 });
 
-$__System.registerDynamic("3b", [], true, function($__require, exports, module) {
+$__System.registerDynamic("25", ["26", "27"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  module.exports = function(it) {
-    return typeof it === 'object' ? it !== null : typeof it === 'function';
-  };
+  var $export = $__require('26');
+  $export($export.S, 'Object', {setPrototypeOf: $__require('27').set});
   return module.exports;
 });
 
-$__System.registerDynamic("2b", ["3b"], true, function($__require, exports, module) {
+$__System.registerDynamic("28", ["25", "29"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var isObject = $__require('3b');
-  module.exports = function(it) {
-    if (!isObject(it))
-      throw TypeError(it + ' is not an object!');
-    return it;
-  };
+  $__require('25');
+  module.exports = $__require('29').Object.setPrototypeOf;
   return module.exports;
 });
 
-$__System.registerDynamic("4a", ["1c", "3b", "2b", "33"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var getDesc = $__require('1c').getDesc,
-      isObject = $__require('3b'),
-      anObject = $__require('2b');
-  var check = function(O, proto) {
-    anObject(O);
-    if (!isObject(proto) && proto !== null)
-      throw TypeError(proto + ": can't set as prototype!");
-  };
-  module.exports = {
-    set: Object.setPrototypeOf || ('__proto__' in {} ? function(test, buggy, set) {
-      try {
-        set = $__require('33')(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
-        set(test, []);
-        buggy = !(test instanceof Array);
-      } catch (e) {
-        buggy = true;
-      }
-      return function setPrototypeOf(O, proto) {
-        check(O, proto);
-        if (buggy)
-          O.__proto__ = proto;
-        else
-          set(O, proto);
-        return O;
-      };
-    }({}, false) : undefined),
-    check: check
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("59", ["22", "4a"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var $export = $__require('22');
-  $export($export.S, 'Object', {setPrototypeOf: $__require('4a').set});
-  return module.exports;
-});
-
-$__System.registerDynamic("5a", ["59", "31"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  $__require('59');
-  module.exports = $__require('31').Object.setPrototypeOf;
-  return module.exports;
-});
-
-$__System.registerDynamic("5b", ["5a"], true, function($__require, exports, module) {
+$__System.registerDynamic("2a", ["28"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('5a'),
+    "default": $__require('28'),
     __esModule: true
   };
   return module.exports;
 });
 
-$__System.registerDynamic("5c", ["58", "5b"], true, function($__require, exports, module) {
+$__System.registerDynamic("19", ["24", "2a"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var _Object$create = $__require('58')["default"];
-  var _Object$setPrototypeOf = $__require('5b')["default"];
+  var _Object$create = $__require('24')["default"];
+  var _Object$setPrototypeOf = $__require('2a')["default"];
   exports["default"] = function(subClass, superClass) {
     if (typeof superClass !== "function" && superClass !== null) {
       throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
@@ -2801,16 +1627,16 @@ $__System.registerDynamic("5c", ["58", "5b"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.register("5d", ["56", "5c", "c"], function (_export) {
-  var _get, _inherits, _classCallCheck, MTError;
+$__System.register("2b", ["9", "18", "19"], function (_export) {
+  var _classCallCheck, _get, _inherits, MTError;
 
   return {
-    setters: [function (_) {
+    setters: [function (_3) {
+      _classCallCheck = _3["default"];
+    }, function (_) {
       _get = _["default"];
-    }, function (_c) {
-      _inherits = _c["default"];
-    }, function (_c2) {
-      _classCallCheck = _c2["default"];
+    }, function (_2) {
+      _inherits = _2["default"];
     }],
     execute: function () {
       /**
@@ -2853,22 +1679,22 @@ $__System.register("5d", ["56", "5c", "c"], function (_export) {
         return MTError;
       })(Error);
 
-      _export("default", MTError);
+      _export("MTError", MTError);
     }
   };
 });
-$__System.register('5e', ['56', '5c', 'c', '5d'], function (_export) {
-    var _get, _inherits, _classCallCheck, MTError, XhrError;
+$__System.register('2c', ['9', '18', '19', '2b'], function (_export) {
+    var _classCallCheck, _get, _inherits, MTError, XhrError;
 
     return {
-        setters: [function (_) {
+        setters: [function (_3) {
+            _classCallCheck = _3['default'];
+        }, function (_) {
             _get = _['default'];
-        }, function (_c) {
-            _inherits = _c['default'];
-        }, function (_c2) {
-            _classCallCheck = _c2['default'];
-        }, function (_d) {
-            MTError = _d['default'];
+        }, function (_2) {
+            _inherits = _2['default'];
+        }, function (_b) {
+            MTError = _b.MTError;
         }],
         execute: function () {
             /**
@@ -2918,12 +1744,12 @@ $__System.register('5e', ['56', '5c', 'c', '5d'], function (_export) {
                 return XhrError;
             })(MTError);
 
-            _export('default', XhrError);
+            _export('XhrError', XhrError);
         }
     };
 });
-$__System.register('9', ['50', 'b', 'c', '4c', '5f', '4f', '5e'], function (_export) {
-    var _Object$keys, _createClass, _classCallCheck, _Promise, Settings, Uri, XhrError, Plug;
+$__System.register('6', ['8', '9', '13', '1c', '2d', '1b', '2c'], function (_export) {
+    var _createClass, _classCallCheck, _Promise, _Object$keys, Settings, Uri, XhrError, Plug;
 
     function _handleHttpError(xhr) {
         return new _Promise(function (resolve, reject) {
@@ -2993,19 +1819,19 @@ $__System.register('9', ['50', 'b', 'c', '4c', '5f', '4f', '5e'], function (_exp
     }
     return {
         setters: [function (_) {
-            _Object$keys = _['default'];
-        }, function (_b) {
-            _createClass = _b['default'];
+            _createClass = _['default'];
+        }, function (_2) {
+            _classCallCheck = _2['default'];
+        }, function (_3) {
+            _Promise = _3['default'];
         }, function (_c) {
-            _classCallCheck = _c['default'];
+            _Object$keys = _c['default'];
+        }, function (_d) {
+            Settings = _d.Settings;
+        }, function (_b) {
+            Uri = _b.Uri;
         }, function (_c2) {
-            _Promise = _c2['default'];
-        }, function (_f) {
-            Settings = _f.Settings;
-        }, function (_f2) {
-            Uri = _f2.Uri;
-        }, function (_e) {
-            XhrError = _e['default'];
+            XhrError = _c2.XhrError;
         }],
         execute: function () {
             /**
@@ -3242,6 +2068,2132 @@ $__System.register('9', ['50', 'b', 'c', '4c', '5f', '4f', '5e'], function (_exp
         }
     };
 });
+$__System.registerDynamic("2e", [], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  "format cjs";
+  return module.exports;
+});
+
+$__System.registerDynamic("2f", ["30", "31"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var toInteger = $__require('30'),
+      defined = $__require('31');
+  module.exports = function(TO_STRING) {
+    return function(that, pos) {
+      var s = String(defined(that)),
+          i = toInteger(pos),
+          l = s.length,
+          a,
+          b;
+      if (i < 0 || i >= l)
+        return TO_STRING ? '' : undefined;
+      a = s.charCodeAt(i);
+      return a < 0xd800 || a > 0xdbff || i + 1 === l || (b = s.charCodeAt(i + 1)) < 0xdc00 || b > 0xdfff ? TO_STRING ? s.charAt(i) : a : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
+    };
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("32", ["2f", "33"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var $at = $__require('2f')(true);
+  $__require('33')(String, 'String', function(iterated) {
+    this._t = String(iterated);
+    this._i = 0;
+  }, function() {
+    var O = this._t,
+        index = this._i,
+        point;
+    if (index >= O.length)
+      return {
+        value: undefined,
+        done: true
+      };
+    point = $at(O, index);
+    this._i += point.length;
+    return {
+      value: point,
+      done: false
+    };
+  });
+  return module.exports;
+});
+
+$__System.registerDynamic("34", [], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  module.exports = function() {};
+  return module.exports;
+});
+
+$__System.registerDynamic("35", [], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  module.exports = function(done, value) {
+    return {
+      value: value,
+      done: !!done
+    };
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("36", ["37"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var cof = $__require('37');
+  module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it) {
+    return cof(it) == 'String' ? it.split('') : Object(it);
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("1e", ["36", "31"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var IObject = $__require('36'),
+      defined = $__require('31');
+  module.exports = function(it) {
+    return IObject(defined(it));
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("38", ["21", "39", "3a", "3b", "3c"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var $ = $__require('21'),
+      descriptor = $__require('39'),
+      setToStringTag = $__require('3a'),
+      IteratorPrototype = {};
+  $__require('3b')(IteratorPrototype, $__require('3c')('iterator'), function() {
+    return this;
+  });
+  module.exports = function(Constructor, NAME, next) {
+    Constructor.prototype = $.create(IteratorPrototype, {next: descriptor(1, next)});
+    setToStringTag(Constructor, NAME + ' Iterator');
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("33", ["3d", "26", "3e", "3b", "3f", "40", "38", "3a", "21", "3c"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var LIBRARY = $__require('3d'),
+      $export = $__require('26'),
+      redefine = $__require('3e'),
+      hide = $__require('3b'),
+      has = $__require('3f'),
+      Iterators = $__require('40'),
+      $iterCreate = $__require('38'),
+      setToStringTag = $__require('3a'),
+      getProto = $__require('21').getProto,
+      ITERATOR = $__require('3c')('iterator'),
+      BUGGY = !([].keys && 'next' in [].keys()),
+      FF_ITERATOR = '@@iterator',
+      KEYS = 'keys',
+      VALUES = 'values';
+  var returnThis = function() {
+    return this;
+  };
+  module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED) {
+    $iterCreate(Constructor, NAME, next);
+    var getMethod = function(kind) {
+      if (!BUGGY && kind in proto)
+        return proto[kind];
+      switch (kind) {
+        case KEYS:
+          return function keys() {
+            return new Constructor(this, kind);
+          };
+        case VALUES:
+          return function values() {
+            return new Constructor(this, kind);
+          };
+      }
+      return function entries() {
+        return new Constructor(this, kind);
+      };
+    };
+    var TAG = NAME + ' Iterator',
+        DEF_VALUES = DEFAULT == VALUES,
+        VALUES_BUG = false,
+        proto = Base.prototype,
+        $native = proto[ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT],
+        $default = $native || getMethod(DEFAULT),
+        methods,
+        key;
+    if ($native) {
+      var IteratorPrototype = getProto($default.call(new Base));
+      setToStringTag(IteratorPrototype, TAG, true);
+      if (!LIBRARY && has(proto, FF_ITERATOR))
+        hide(IteratorPrototype, ITERATOR, returnThis);
+      if (DEF_VALUES && $native.name !== VALUES) {
+        VALUES_BUG = true;
+        $default = function values() {
+          return $native.call(this);
+        };
+      }
+    }
+    if ((!LIBRARY || FORCED) && (BUGGY || VALUES_BUG || !proto[ITERATOR])) {
+      hide(proto, ITERATOR, $default);
+    }
+    Iterators[NAME] = $default;
+    Iterators[TAG] = returnThis;
+    if (DEFAULT) {
+      methods = {
+        values: DEF_VALUES ? $default : getMethod(VALUES),
+        keys: IS_SET ? $default : getMethod(KEYS),
+        entries: !DEF_VALUES ? $default : getMethod('entries')
+      };
+      if (FORCED)
+        for (key in methods) {
+          if (!(key in proto))
+            redefine(proto, key, methods[key]);
+        }
+      else
+        $export($export.P + $export.F * (BUGGY || VALUES_BUG), NAME, methods);
+    }
+    return methods;
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("41", ["34", "35", "40", "1e", "33"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var addToUnscopables = $__require('34'),
+      step = $__require('35'),
+      Iterators = $__require('40'),
+      toIObject = $__require('1e');
+  module.exports = $__require('33')(Array, 'Array', function(iterated, kind) {
+    this._t = toIObject(iterated);
+    this._i = 0;
+    this._k = kind;
+  }, function() {
+    var O = this._t,
+        kind = this._k,
+        index = this._i++;
+    if (!O || index >= O.length) {
+      this._t = undefined;
+      return step(1);
+    }
+    if (kind == 'keys')
+      return step(0, index);
+    if (kind == 'values')
+      return step(0, O[index]);
+    return step(0, [index, O[index]]);
+  }, 'values');
+  Iterators.Arguments = Iterators.Array;
+  addToUnscopables('keys');
+  addToUnscopables('values');
+  addToUnscopables('entries');
+  return module.exports;
+});
+
+$__System.registerDynamic("42", ["41", "40"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  $__require('41');
+  var Iterators = $__require('40');
+  Iterators.NodeList = Iterators.HTMLCollection = Iterators.Array;
+  return module.exports;
+});
+
+$__System.registerDynamic("3d", [], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  module.exports = true;
+  return module.exports;
+});
+
+$__System.registerDynamic("43", [], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  module.exports = function(it, Constructor, name) {
+    if (!(it instanceof Constructor))
+      throw TypeError(name + ": use the 'new' operator!");
+    return it;
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("44", ["45"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var anObject = $__require('45');
+  module.exports = function(iterator, fn, value, entries) {
+    try {
+      return entries ? fn(anObject(value)[0], value[1]) : fn(value);
+    } catch (e) {
+      var ret = iterator['return'];
+      if (ret !== undefined)
+        anObject(ret.call(iterator));
+      throw e;
+    }
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("46", ["40", "3c"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var Iterators = $__require('40'),
+      ITERATOR = $__require('3c')('iterator'),
+      ArrayProto = Array.prototype;
+  module.exports = function(it) {
+    return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("30", [], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var ceil = Math.ceil,
+      floor = Math.floor;
+  module.exports = function(it) {
+    return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("47", ["30"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var toInteger = $__require('30'),
+      min = Math.min;
+  module.exports = function(it) {
+    return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0;
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("48", ["37", "3c"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var cof = $__require('37'),
+      TAG = $__require('3c')('toStringTag'),
+      ARG = cof(function() {
+        return arguments;
+      }()) == 'Arguments';
+  module.exports = function(it) {
+    var O,
+        T,
+        B;
+    return it === undefined ? 'Undefined' : it === null ? 'Null' : typeof(T = (O = Object(it))[TAG]) == 'string' ? T : ARG ? cof(O) : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("40", [], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  module.exports = {};
+  return module.exports;
+});
+
+$__System.registerDynamic("49", ["48", "3c", "40", "29"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var classof = $__require('48'),
+      ITERATOR = $__require('3c')('iterator'),
+      Iterators = $__require('40');
+  module.exports = $__require('29').getIteratorMethod = function(it) {
+    if (it != undefined)
+      return it[ITERATOR] || it['@@iterator'] || Iterators[classof(it)];
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("4a", ["4b", "44", "46", "45", "47", "49"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var ctx = $__require('4b'),
+      call = $__require('44'),
+      isArrayIter = $__require('46'),
+      anObject = $__require('45'),
+      toLength = $__require('47'),
+      getIterFn = $__require('49');
+  module.exports = function(iterable, entries, fn, that) {
+    var iterFn = getIterFn(iterable),
+        f = ctx(fn, that, entries ? 2 : 1),
+        index = 0,
+        length,
+        step,
+        iterator;
+    if (typeof iterFn != 'function')
+      throw TypeError(iterable + ' is not iterable!');
+    if (isArrayIter(iterFn))
+      for (length = toLength(iterable.length); length > index; index++) {
+        entries ? f(anObject(step = iterable[index])[0], step[1]) : f(iterable[index]);
+      }
+    else
+      for (iterator = iterFn.call(iterable); !(step = iterator.next()).done; ) {
+        call(iterator, f, step.value, entries);
+      }
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("27", ["21", "4c", "45", "4b"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var getDesc = $__require('21').getDesc,
+      isObject = $__require('4c'),
+      anObject = $__require('45');
+  var check = function(O, proto) {
+    anObject(O);
+    if (!isObject(proto) && proto !== null)
+      throw TypeError(proto + ": can't set as prototype!");
+  };
+  module.exports = {
+    set: Object.setPrototypeOf || ('__proto__' in {} ? function(test, buggy, set) {
+      try {
+        set = $__require('4b')(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
+        set(test, []);
+        buggy = !(test instanceof Array);
+      } catch (e) {
+        buggy = true;
+      }
+      return function setPrototypeOf(O, proto) {
+        check(O, proto);
+        if (buggy)
+          O.__proto__ = proto;
+        else
+          set(O, proto);
+        return O;
+      };
+    }({}, false) : undefined),
+    check: check
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("4d", [], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  module.exports = Object.is || function is(x, y) {
+    return x === y ? x !== 0 || 1 / x === 1 / y : x != x && y != y;
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("45", ["4c"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var isObject = $__require('4c');
+  module.exports = function(it) {
+    if (!isObject(it))
+      throw TypeError(it + ' is not an object!');
+    return it;
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("4e", ["45", "4f", "3c"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var anObject = $__require('45'),
+      aFunction = $__require('4f'),
+      SPECIES = $__require('3c')('species');
+  module.exports = function(O, D) {
+    var C = anObject(O).constructor,
+        S;
+    return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("50", [], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  module.exports = function(fn, args, that) {
+    var un = that === undefined;
+    switch (args.length) {
+      case 0:
+        return un ? fn() : fn.call(that);
+      case 1:
+        return un ? fn(args[0]) : fn.call(that, args[0]);
+      case 2:
+        return un ? fn(args[0], args[1]) : fn.call(that, args[0], args[1]);
+      case 3:
+        return un ? fn(args[0], args[1], args[2]) : fn.call(that, args[0], args[1], args[2]);
+      case 4:
+        return un ? fn(args[0], args[1], args[2], args[3]) : fn.call(that, args[0], args[1], args[2], args[3]);
+    }
+    return fn.apply(that, args);
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("51", ["52"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  module.exports = $__require('52').document && document.documentElement;
+  return module.exports;
+});
+
+$__System.registerDynamic("4c", [], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  module.exports = function(it) {
+    return typeof it === 'object' ? it !== null : typeof it === 'function';
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("53", ["4c", "52"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var isObject = $__require('4c'),
+      document = $__require('52').document,
+      is = isObject(document) && isObject(document.createElement);
+  module.exports = function(it) {
+    return is ? document.createElement(it) : {};
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("54", ["4b", "50", "51", "53", "52", "37", "55"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  (function(process) {
+    var ctx = $__require('4b'),
+        invoke = $__require('50'),
+        html = $__require('51'),
+        cel = $__require('53'),
+        global = $__require('52'),
+        process = global.process,
+        setTask = global.setImmediate,
+        clearTask = global.clearImmediate,
+        MessageChannel = global.MessageChannel,
+        counter = 0,
+        queue = {},
+        ONREADYSTATECHANGE = 'onreadystatechange',
+        defer,
+        channel,
+        port;
+    var run = function() {
+      var id = +this;
+      if (queue.hasOwnProperty(id)) {
+        var fn = queue[id];
+        delete queue[id];
+        fn();
+      }
+    };
+    var listner = function(event) {
+      run.call(event.data);
+    };
+    if (!setTask || !clearTask) {
+      setTask = function setImmediate(fn) {
+        var args = [],
+            i = 1;
+        while (arguments.length > i)
+          args.push(arguments[i++]);
+        queue[++counter] = function() {
+          invoke(typeof fn == 'function' ? fn : Function(fn), args);
+        };
+        defer(counter);
+        return counter;
+      };
+      clearTask = function clearImmediate(id) {
+        delete queue[id];
+      };
+      if ($__require('37')(process) == 'process') {
+        defer = function(id) {
+          process.nextTick(ctx(run, id, 1));
+        };
+      } else if (MessageChannel) {
+        channel = new MessageChannel;
+        port = channel.port2;
+        channel.port1.onmessage = listner;
+        defer = ctx(port.postMessage, port, 1);
+      } else if (global.addEventListener && typeof postMessage == 'function' && !global.importScripts) {
+        defer = function(id) {
+          global.postMessage(id + '', '*');
+        };
+        global.addEventListener('message', listner, false);
+      } else if (ONREADYSTATECHANGE in cel('script')) {
+        defer = function(id) {
+          html.appendChild(cel('script'))[ONREADYSTATECHANGE] = function() {
+            html.removeChild(this);
+            run.call(id);
+          };
+        };
+      } else {
+        defer = function(id) {
+          setTimeout(ctx(run, id, 1), 0);
+        };
+      }
+    }
+    module.exports = {
+      set: setTask,
+      clear: clearTask
+    };
+  })($__require('55'));
+  return module.exports;
+});
+
+$__System.registerDynamic("37", [], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var toString = {}.toString;
+  module.exports = function(it) {
+    return toString.call(it).slice(8, -1);
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("56", ["52", "54", "37", "55"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  (function(process) {
+    var global = $__require('52'),
+        macrotask = $__require('54').set,
+        Observer = global.MutationObserver || global.WebKitMutationObserver,
+        process = global.process,
+        Promise = global.Promise,
+        isNode = $__require('37')(process) == 'process',
+        head,
+        last,
+        notify;
+    var flush = function() {
+      var parent,
+          domain,
+          fn;
+      if (isNode && (parent = process.domain)) {
+        process.domain = null;
+        parent.exit();
+      }
+      while (head) {
+        domain = head.domain;
+        fn = head.fn;
+        if (domain)
+          domain.enter();
+        fn();
+        if (domain)
+          domain.exit();
+        head = head.next;
+      }
+      last = undefined;
+      if (parent)
+        parent.enter();
+    };
+    if (isNode) {
+      notify = function() {
+        process.nextTick(flush);
+      };
+    } else if (Observer) {
+      var toggle = 1,
+          node = document.createTextNode('');
+      new Observer(flush).observe(node, {characterData: true});
+      notify = function() {
+        node.data = toggle = -toggle;
+      };
+    } else if (Promise && Promise.resolve) {
+      notify = function() {
+        Promise.resolve().then(flush);
+      };
+    } else {
+      notify = function() {
+        macrotask.call(global, flush);
+      };
+    }
+    module.exports = function asap(fn) {
+      var task = {
+        fn: fn,
+        next: undefined,
+        domain: isNode && process.domain
+      };
+      if (last)
+        last.next = task;
+      if (!head) {
+        head = task;
+        notify();
+      }
+      last = task;
+    };
+  })($__require('55'));
+  return module.exports;
+});
+
+$__System.registerDynamic("39", [], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  module.exports = function(bitmap, value) {
+    return {
+      enumerable: !(bitmap & 1),
+      configurable: !(bitmap & 2),
+      writable: !(bitmap & 4),
+      value: value
+    };
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("3b", ["21", "39", "57"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var $ = $__require('21'),
+      createDesc = $__require('39');
+  module.exports = $__require('57') ? function(object, key, value) {
+    return $.setDesc(object, key, createDesc(1, value));
+  } : function(object, key, value) {
+    object[key] = value;
+    return object;
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("3e", ["3b"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  module.exports = $__require('3b');
+  return module.exports;
+});
+
+$__System.registerDynamic("58", ["3e"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var redefine = $__require('3e');
+  module.exports = function(target, src) {
+    for (var key in src)
+      redefine(target, key, src[key]);
+    return target;
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("3f", [], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var hasOwnProperty = {}.hasOwnProperty;
+  module.exports = function(it, key) {
+    return hasOwnProperty.call(it, key);
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("3a", ["21", "3f", "3c"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var def = $__require('21').setDesc,
+      has = $__require('3f'),
+      TAG = $__require('3c')('toStringTag');
+  module.exports = function(it, tag, stat) {
+    if (it && !has(it = stat ? it : it.prototype, TAG))
+      def(it, TAG, {
+        configurable: true,
+        value: tag
+      });
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("57", ["59"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  module.exports = !$__require('59')(function() {
+    return Object.defineProperty({}, 'a', {get: function() {
+        return 7;
+      }}).a != 7;
+  });
+  return module.exports;
+});
+
+$__System.registerDynamic("5a", ["29", "21", "57", "3c"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var core = $__require('29'),
+      $ = $__require('21'),
+      DESCRIPTORS = $__require('57'),
+      SPECIES = $__require('3c')('species');
+  module.exports = function(KEY) {
+    var C = core[KEY];
+    if (DESCRIPTORS && C && !C[SPECIES])
+      $.setDesc(C, SPECIES, {
+        configurable: true,
+        get: function() {
+          return this;
+        }
+      });
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("5b", ["52"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var global = $__require('52'),
+      SHARED = '__core-js_shared__',
+      store = global[SHARED] || (global[SHARED] = {});
+  module.exports = function(key) {
+    return store[key] || (store[key] = {});
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("5c", [], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var id = 0,
+      px = Math.random();
+  module.exports = function(key) {
+    return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("3c", ["5b", "5c", "52"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var store = $__require('5b')('wks'),
+      uid = $__require('5c'),
+      Symbol = $__require('52').Symbol;
+  module.exports = function(name) {
+    return store[name] || (store[name] = Symbol && Symbol[name] || (Symbol || uid)('Symbol.' + name));
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("5d", ["3c"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var ITERATOR = $__require('3c')('iterator'),
+      SAFE_CLOSING = false;
+  try {
+    var riter = [7][ITERATOR]();
+    riter['return'] = function() {
+      SAFE_CLOSING = true;
+    };
+    Array.from(riter, function() {
+      throw 2;
+    });
+  } catch (e) {}
+  module.exports = function(exec, skipClosing) {
+    if (!skipClosing && !SAFE_CLOSING)
+      return false;
+    var safe = false;
+    try {
+      var arr = [7],
+          iter = arr[ITERATOR]();
+      iter.next = function() {
+        safe = true;
+      };
+      arr[ITERATOR] = function() {
+        return iter;
+      };
+      exec(arr);
+    } catch (e) {}
+    return safe;
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("5e", [], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var process = module.exports = {};
+  var queue = [];
+  var draining = false;
+  var currentQueue;
+  var queueIndex = -1;
+  function cleanUpNextTick() {
+    draining = false;
+    if (currentQueue.length) {
+      queue = currentQueue.concat(queue);
+    } else {
+      queueIndex = -1;
+    }
+    if (queue.length) {
+      drainQueue();
+    }
+  }
+  function drainQueue() {
+    if (draining) {
+      return;
+    }
+    var timeout = setTimeout(cleanUpNextTick);
+    draining = true;
+    var len = queue.length;
+    while (len) {
+      currentQueue = queue;
+      queue = [];
+      while (++queueIndex < len) {
+        if (currentQueue) {
+          currentQueue[queueIndex].run();
+        }
+      }
+      queueIndex = -1;
+      len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    clearTimeout(timeout);
+  }
+  process.nextTick = function(fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+      for (var i = 1; i < arguments.length; i++) {
+        args[i - 1] = arguments[i];
+      }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+      setTimeout(drainQueue, 0);
+    }
+  };
+  function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+  }
+  Item.prototype.run = function() {
+    this.fun.apply(null, this.array);
+  };
+  process.title = 'browser';
+  process.browser = true;
+  process.env = {};
+  process.argv = [];
+  process.version = '';
+  process.versions = {};
+  function noop() {}
+  process.on = noop;
+  process.addListener = noop;
+  process.once = noop;
+  process.off = noop;
+  process.removeListener = noop;
+  process.removeAllListeners = noop;
+  process.emit = noop;
+  process.binding = function(name) {
+    throw new Error('process.binding is not supported');
+  };
+  process.cwd = function() {
+    return '/';
+  };
+  process.chdir = function(dir) {
+    throw new Error('process.chdir is not supported');
+  };
+  process.umask = function() {
+    return 0;
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("5f", ["5e"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  module.exports = $__require('5e');
+  return module.exports;
+});
+
+$__System.registerDynamic("60", ["5f"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  module.exports = $__System._nodeRequire ? process : $__require('5f');
+  return module.exports;
+});
+
+$__System.registerDynamic("55", ["60"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  module.exports = $__require('60');
+  return module.exports;
+});
+
+$__System.registerDynamic("61", ["21", "3d", "52", "4b", "48", "26", "4c", "45", "4f", "43", "4a", "27", "4d", "3c", "4e", "56", "57", "58", "3a", "5a", "29", "5d", "55"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  (function(process) {
+    'use strict';
+    var $ = $__require('21'),
+        LIBRARY = $__require('3d'),
+        global = $__require('52'),
+        ctx = $__require('4b'),
+        classof = $__require('48'),
+        $export = $__require('26'),
+        isObject = $__require('4c'),
+        anObject = $__require('45'),
+        aFunction = $__require('4f'),
+        strictNew = $__require('43'),
+        forOf = $__require('4a'),
+        setProto = $__require('27').set,
+        same = $__require('4d'),
+        SPECIES = $__require('3c')('species'),
+        speciesConstructor = $__require('4e'),
+        asap = $__require('56'),
+        PROMISE = 'Promise',
+        process = global.process,
+        isNode = classof(process) == 'process',
+        P = global[PROMISE],
+        Wrapper;
+    var testResolve = function(sub) {
+      var test = new P(function() {});
+      if (sub)
+        test.constructor = Object;
+      return P.resolve(test) === test;
+    };
+    var USE_NATIVE = function() {
+      var works = false;
+      function P2(x) {
+        var self = new P(x);
+        setProto(self, P2.prototype);
+        return self;
+      }
+      try {
+        works = P && P.resolve && testResolve();
+        setProto(P2, P);
+        P2.prototype = $.create(P.prototype, {constructor: {value: P2}});
+        if (!(P2.resolve(5).then(function() {}) instanceof P2)) {
+          works = false;
+        }
+        if (works && $__require('57')) {
+          var thenableThenGotten = false;
+          P.resolve($.setDesc({}, 'then', {get: function() {
+              thenableThenGotten = true;
+            }}));
+          works = thenableThenGotten;
+        }
+      } catch (e) {
+        works = false;
+      }
+      return works;
+    }();
+    var sameConstructor = function(a, b) {
+      if (LIBRARY && a === P && b === Wrapper)
+        return true;
+      return same(a, b);
+    };
+    var getConstructor = function(C) {
+      var S = anObject(C)[SPECIES];
+      return S != undefined ? S : C;
+    };
+    var isThenable = function(it) {
+      var then;
+      return isObject(it) && typeof(then = it.then) == 'function' ? then : false;
+    };
+    var PromiseCapability = function(C) {
+      var resolve,
+          reject;
+      this.promise = new C(function($$resolve, $$reject) {
+        if (resolve !== undefined || reject !== undefined)
+          throw TypeError('Bad Promise constructor');
+        resolve = $$resolve;
+        reject = $$reject;
+      });
+      this.resolve = aFunction(resolve), this.reject = aFunction(reject);
+    };
+    var perform = function(exec) {
+      try {
+        exec();
+      } catch (e) {
+        return {error: e};
+      }
+    };
+    var notify = function(record, isReject) {
+      if (record.n)
+        return;
+      record.n = true;
+      var chain = record.c;
+      asap(function() {
+        var value = record.v,
+            ok = record.s == 1,
+            i = 0;
+        var run = function(reaction) {
+          var handler = ok ? reaction.ok : reaction.fail,
+              resolve = reaction.resolve,
+              reject = reaction.reject,
+              result,
+              then;
+          try {
+            if (handler) {
+              if (!ok)
+                record.h = true;
+              result = handler === true ? value : handler(value);
+              if (result === reaction.promise) {
+                reject(TypeError('Promise-chain cycle'));
+              } else if (then = isThenable(result)) {
+                then.call(result, resolve, reject);
+              } else
+                resolve(result);
+            } else
+              reject(value);
+          } catch (e) {
+            reject(e);
+          }
+        };
+        while (chain.length > i)
+          run(chain[i++]);
+        chain.length = 0;
+        record.n = false;
+        if (isReject)
+          setTimeout(function() {
+            var promise = record.p,
+                handler,
+                console;
+            if (isUnhandled(promise)) {
+              if (isNode) {
+                process.emit('unhandledRejection', value, promise);
+              } else if (handler = global.onunhandledrejection) {
+                handler({
+                  promise: promise,
+                  reason: value
+                });
+              } else if ((console = global.console) && console.error) {
+                console.error('Unhandled promise rejection', value);
+              }
+            }
+            record.a = undefined;
+          }, 1);
+      });
+    };
+    var isUnhandled = function(promise) {
+      var record = promise._d,
+          chain = record.a || record.c,
+          i = 0,
+          reaction;
+      if (record.h)
+        return false;
+      while (chain.length > i) {
+        reaction = chain[i++];
+        if (reaction.fail || !isUnhandled(reaction.promise))
+          return false;
+      }
+      return true;
+    };
+    var $reject = function(value) {
+      var record = this;
+      if (record.d)
+        return;
+      record.d = true;
+      record = record.r || record;
+      record.v = value;
+      record.s = 2;
+      record.a = record.c.slice();
+      notify(record, true);
+    };
+    var $resolve = function(value) {
+      var record = this,
+          then;
+      if (record.d)
+        return;
+      record.d = true;
+      record = record.r || record;
+      try {
+        if (record.p === value)
+          throw TypeError("Promise can't be resolved itself");
+        if (then = isThenable(value)) {
+          asap(function() {
+            var wrapper = {
+              r: record,
+              d: false
+            };
+            try {
+              then.call(value, ctx($resolve, wrapper, 1), ctx($reject, wrapper, 1));
+            } catch (e) {
+              $reject.call(wrapper, e);
+            }
+          });
+        } else {
+          record.v = value;
+          record.s = 1;
+          notify(record, false);
+        }
+      } catch (e) {
+        $reject.call({
+          r: record,
+          d: false
+        }, e);
+      }
+    };
+    if (!USE_NATIVE) {
+      P = function Promise(executor) {
+        aFunction(executor);
+        var record = this._d = {
+          p: strictNew(this, P, PROMISE),
+          c: [],
+          a: undefined,
+          s: 0,
+          d: false,
+          v: undefined,
+          h: false,
+          n: false
+        };
+        try {
+          executor(ctx($resolve, record, 1), ctx($reject, record, 1));
+        } catch (err) {
+          $reject.call(record, err);
+        }
+      };
+      $__require('58')(P.prototype, {
+        then: function then(onFulfilled, onRejected) {
+          var reaction = new PromiseCapability(speciesConstructor(this, P)),
+              promise = reaction.promise,
+              record = this._d;
+          reaction.ok = typeof onFulfilled == 'function' ? onFulfilled : true;
+          reaction.fail = typeof onRejected == 'function' && onRejected;
+          record.c.push(reaction);
+          if (record.a)
+            record.a.push(reaction);
+          if (record.s)
+            notify(record, false);
+          return promise;
+        },
+        'catch': function(onRejected) {
+          return this.then(undefined, onRejected);
+        }
+      });
+    }
+    $export($export.G + $export.W + $export.F * !USE_NATIVE, {Promise: P});
+    $__require('3a')(P, PROMISE);
+    $__require('5a')(PROMISE);
+    Wrapper = $__require('29')[PROMISE];
+    $export($export.S + $export.F * !USE_NATIVE, PROMISE, {reject: function reject(r) {
+        var capability = new PromiseCapability(this),
+            $$reject = capability.reject;
+        $$reject(r);
+        return capability.promise;
+      }});
+    $export($export.S + $export.F * (!USE_NATIVE || testResolve(true)), PROMISE, {resolve: function resolve(x) {
+        if (x instanceof P && sameConstructor(x.constructor, this))
+          return x;
+        var capability = new PromiseCapability(this),
+            $$resolve = capability.resolve;
+        $$resolve(x);
+        return capability.promise;
+      }});
+    $export($export.S + $export.F * !(USE_NATIVE && $__require('5d')(function(iter) {
+      P.all(iter)['catch'](function() {});
+    })), PROMISE, {
+      all: function all(iterable) {
+        var C = getConstructor(this),
+            capability = new PromiseCapability(C),
+            resolve = capability.resolve,
+            reject = capability.reject,
+            values = [];
+        var abrupt = perform(function() {
+          forOf(iterable, false, values.push, values);
+          var remaining = values.length,
+              results = Array(remaining);
+          if (remaining)
+            $.each.call(values, function(promise, index) {
+              var alreadyCalled = false;
+              C.resolve(promise).then(function(value) {
+                if (alreadyCalled)
+                  return;
+                alreadyCalled = true;
+                results[index] = value;
+                --remaining || resolve(results);
+              }, reject);
+            });
+          else
+            resolve(results);
+        });
+        if (abrupt)
+          reject(abrupt.error);
+        return capability.promise;
+      },
+      race: function race(iterable) {
+        var C = getConstructor(this),
+            capability = new PromiseCapability(C),
+            reject = capability.reject;
+        var abrupt = perform(function() {
+          forOf(iterable, false, function(promise) {
+            C.resolve(promise).then(capability.resolve, reject);
+          });
+        });
+        if (abrupt)
+          reject(abrupt.error);
+        return capability.promise;
+      }
+    });
+  })($__require('55'));
+  return module.exports;
+});
+
+$__System.registerDynamic("62", ["2e", "32", "42", "61", "29"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  $__require('2e');
+  $__require('32');
+  $__require('42');
+  $__require('61');
+  module.exports = $__require('29').Promise;
+  return module.exports;
+});
+
+$__System.registerDynamic("13", ["62"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  module.exports = {
+    "default": $__require('62'),
+    __esModule: true
+  };
+  return module.exports;
+});
+
+$__System.register('7', [], function (_export) {
+    /**
+     * Martian - Core JavaScript API for MindTouch
+     *
+     * Copyright (c) 2015 MindTouch Inc.
+     * www.mindtouch.com  oss@mindtouch.com
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *     http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
+    'use strict';
+
+    var utility;
+    return {
+        setters: [],
+        execute: function () {
+            utility = {
+                xmlRequestType: 'application/xml; charset=utf-8',
+                textRequestType: 'text/plain; charset=utf-8',
+                jsonRequestType: 'application/json; charset=utf-8',
+                searchEscape: function searchEscape(query) {
+                    var result = query.toString();
+                    var charArr = ['\\', '+', '-', '&', '|', '!', '(', ')', '{', '}', '[', ']', '^', '"', '~', '*', '?', ':'];
+                    charArr.forEach(function (c) {
+                        var regex = new RegExp('\\' + c, 'g');
+                        result = result.replace(regex, '\\' + c);
+                    });
+                    return result;
+                },
+                getResourceId: function getResourceId(id) {
+                    var defaultId = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+
+                    var resourceId = null;
+                    if (typeof id === 'string' && id !== defaultId) {
+                        resourceId = '=' + encodeURIComponent(encodeURIComponent(id));
+                    } else {
+                        resourceId = id;
+                    }
+                    return resourceId;
+                },
+                getFilenameId: function getFilenameId(filename) {
+                    if (typeof filename !== 'string') {
+                        throw new Error('The filename must be a string');
+                    }
+                    var encodedName = encodeURIComponent(encodeURIComponent(filename));
+                    if (filename.indexOf('.') <= 0) {
+
+                        // File name has no dot (or the dot is at the first position).
+                        // Assume that means it doesn't have an extension.
+                        encodedName = '=' + encodedName;
+                    }
+                    return encodedName;
+                }
+            };
+
+            _export('utility', utility);
+        }
+    };
+});
+$__System.register('63', ['3'], function (_export) {
+    /**
+     * Martian - Core JavaScript API for MindTouch
+     *
+     * Copyright (c) 2015 MindTouch Inc.
+     * www.mindtouch.com  oss@mindtouch.com
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *     http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
+    'use strict';
+
+    var modelHelper, pageTagsModel;
+    return {
+        setters: [function (_) {
+            modelHelper = _.modelHelper;
+        }],
+        execute: function () {
+            pageTagsModel = {
+                parse: function parse(data) {
+                    var obj = modelHelper.fromJson(data);
+                    var parsed = {
+                        count: modelHelper.getInt(obj['@count']),
+                        href: obj['@href']
+                    };
+                    if ('tag' in obj) {
+                        parsed.tags = [];
+                        var tags = modelHelper.getArray(obj.tag);
+                        tags.forEach(function (tag) {
+                            parsed.tags.push({
+                                value: tag['@value'],
+                                id: modelHelper.getInt(tag['@id']),
+                                href: tag['@href'],
+                                title: tag.title,
+                                type: tag.type,
+                                uri: tag.uri
+                            });
+                        });
+                    }
+                    return parsed;
+                }
+            };
+
+            _export('pageTagsModel', pageTagsModel);
+        }
+    };
+});
+$__System.register('64', ['3', '4', '17'], function (_export) {
+    /**
+     * Martian - Core JavaScript API for MindTouch
+     *
+     * Copyright (c) 2015 MindTouch Inc.
+     * www.mindtouch.com  oss@mindtouch.com
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *     http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
+    'use strict';
+
+    var modelHelper, userModel, pageModel, fileModel;
+    return {
+        setters: [function (_) {
+            modelHelper = _.modelHelper;
+        }, function (_2) {
+            userModel = _2.userModel;
+        }, function (_3) {
+            pageModel = _3.pageModel;
+        }],
+        execute: function () {
+            fileModel = {
+                parse: function parse(data) {
+                    var obj = modelHelper.fromJson(data);
+                    var parsed = {
+                        id: modelHelper.getInt(obj['@id']),
+                        revision: modelHelper.getInt(obj['@revision']),
+                        resId: modelHelper.getInt(obj['@res-id']),
+                        href: obj['@href'],
+                        resIsHead: modelHelper.getBool(obj['@res-is-head']),
+                        resIsDeleted: modelHelper.getBool(obj['@res-is-deleted']),
+                        resRevIsDeleted: modelHelper.getBool(obj['@res-rev-is-head']),
+                        resContentsId: modelHelper.getInt(obj['@res-contents-id']),
+                        dateCreated: modelHelper.getDate(obj['date.created']),
+                        description: obj.description,
+                        filename: obj.filename,
+                        contents: {
+                            type: obj.contents['@type'],
+                            size: modelHelper.getInt(obj.contents['@size']),
+                            href: obj.contents['@href']
+                        }
+                    };
+                    if ('user.createdby' in obj) {
+                        parsed.userCreatedBy = userModel.parse(obj['user.createdby']);
+                    }
+                    if ('page.parent' in obj) {
+                        parsed.pageParent = pageModel.parse(obj['page.parent']);
+                    }
+                    return parsed;
+                }
+            };
+
+            _export('fileModel', fileModel);
+        }
+    };
+});
+$__System.register('65', ['3', '64'], function (_export) {
+    /**
+     * Martian - Core JavaScript API for MindTouch
+     *
+     * Copyright (c) 2015 MindTouch Inc.
+     * www.mindtouch.com  oss@mindtouch.com
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *     http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
+    'use strict';
+
+    var modelHelper, fileModel, pageFilesModel;
+    return {
+        setters: [function (_) {
+            modelHelper = _.modelHelper;
+        }, function (_2) {
+            fileModel = _2.fileModel;
+        }],
+        execute: function () {
+            pageFilesModel = {
+                parse: function parse(data) {
+                    var obj = modelHelper.fromJson(data);
+                    var parsed = {
+                        count: modelHelper.getInt(obj['@count']),
+                        offset: modelHelper.getInt(obj['@offset']),
+                        totalcount: modelHelper.getInt(obj['@totalcount']),
+                        href: obj['@href']
+                    };
+                    if ('file' in obj) {
+                        parsed.file = [];
+                        var files = modelHelper.getArray(obj.file);
+                        files.forEach(function (f) {
+                            parsed.file.push(fileModel.parse(f));
+                        });
+                    }
+                    return parsed;
+                }
+            };
+
+            _export('pageFilesModel', pageFilesModel);
+        }
+    };
+});
+$__System.register('66', ['3', '17'], function (_export) {
+    /**
+     * Martian - Core JavaScript API for MindTouch
+     *
+     * Copyright (c) 2015 MindTouch Inc.
+     * www.mindtouch.com  oss@mindtouch.com
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *     http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
+    'use strict';
+
+    var modelHelper, pageModel, pageEditModel;
+    return {
+        setters: [function (_) {
+            modelHelper = _.modelHelper;
+        }, function (_2) {
+            pageModel = _2.pageModel;
+        }],
+        execute: function () {
+            pageEditModel = {
+                parse: function parse(data) {
+                    var obj = modelHelper.fromJson(data);
+                    var parsed = {
+                        status: obj['@status']
+                    };
+                    if ('page' in obj) {
+                        parsed.page = pageModel.parse(obj.page);
+                    }
+                    if ('draft' in obj) {
+                        parsed.draft = pageModel.parse(obj.draft);
+                    }
+                    if ('page.base' in obj) {
+                        parsed.pageBase = pageModel.parse(obj['page.base']);
+                    }
+                    if ('page.overwritten' in obj) {
+                        parsed.pageOverwritten = pageModel.parse(obj['page.overwritten']);
+                    }
+                    return parsed;
+                }
+            };
+
+            _export('pageEditModel', pageEditModel);
+        }
+    };
+});
+$__System.register('67', ['3', '17'], function (_export) {
+    /**
+     * Martian - Core JavaScript API for MindTouch
+     *
+     * Copyright (c) 2015 MindTouch Inc.
+     * www.mindtouch.com  oss@mindtouch.com
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *     http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
+    'use strict';
+
+    var modelHelper, pageModel, relatedPagesModel;
+    return {
+        setters: [function (_) {
+            modelHelper = _.modelHelper;
+        }, function (_2) {
+            pageModel = _2.pageModel;
+        }],
+        execute: function () {
+            relatedPagesModel = {
+                parse: function parse(data) {
+                    var obj = modelHelper.fromJson(data);
+                    var parsed = {
+                        count: modelHelper.getInt(obj['@count']),
+                        href: obj['@href'],
+                        pages: []
+                    };
+                    var pages = modelHelper.getArray(obj.page);
+                    pages.forEach(function (page) {
+                        parsed.pages.push(pageModel.parse(page));
+                    });
+                    return parsed;
+                }
+            };
+
+            _export('relatedPagesModel', relatedPagesModel);
+        }
+    };
+});
+$__System.register('16', ['3', '7', '8', '9', '13', '17', '63', '65', '66', '67', '68', '1c'], function (_export) {
+    var modelHelper, utility, _createClass, _classCallCheck, _Promise, pageModel, pageTagsModel, pageFilesModel, pageEditModel, relatedPagesModel, pageContentsModel, _Object$keys, PageBase;
+
+    function _handleVirtualPage(error) {
+        if (error.errorCode === 404 && error.response && error.response['@virtual']) {
+            return _Promise.resolve(pageModel.parse(error.response));
+        }
+        throw error;
+    }
+    return {
+        setters: [function (_5) {
+            modelHelper = _5.modelHelper;
+        }, function (_4) {
+            utility = _4.utility;
+        }, function (_) {
+            _createClass = _['default'];
+        }, function (_2) {
+            _classCallCheck = _2['default'];
+        }, function (_3) {
+            _Promise = _3['default'];
+        }, function (_6) {
+            pageModel = _6.pageModel;
+        }, function (_8) {
+            pageTagsModel = _8.pageTagsModel;
+        }, function (_9) {
+            pageFilesModel = _9.pageFilesModel;
+        }, function (_10) {
+            pageEditModel = _10.pageEditModel;
+        }, function (_11) {
+            relatedPagesModel = _11.relatedPagesModel;
+        }, function (_7) {
+            pageContentsModel = _7.pageContentsModel;
+        }, function (_c) {
+            _Object$keys = _c['default'];
+        }],
+        execute: function () {
+            /**
+             * Martian - Core JavaScript API for MindTouch
+             *
+             * Copyright (c) 2015 MindTouch Inc.
+             * www.mindtouch.com  oss@mindtouch.com
+             *
+             * Licensed under the Apache License, Version 2.0 (the "License");
+             * you may not use this file except in compliance with the License.
+             * You may obtain a copy of the License at
+             *
+             *     http://www.apache.org/licenses/LICENSE-2.0
+             *
+             * Unless required by applicable law or agreed to in writing, software
+             * distributed under the License is distributed on an "AS IS" BASIS,
+             * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+             * See the License for the specific language governing permissions and
+             * limitations under the License.
+             */
+            'use strict';
+
+            PageBase = (function () {
+                function PageBase(id) {
+                    _classCallCheck(this, PageBase);
+
+                    if (this.constructor.name === 'PageBase') {
+                        throw new TypeError('PageBase must not be constructed directly.  Use one of Page() or Draft()');
+                    }
+                    this._id = utility.getResourceId(id, 'home');
+                }
+
+                _createClass(PageBase, [{
+                    key: 'getFullInfo',
+                    value: function getFullInfo() {
+                        return this._plug.get().then(pageModel.parse)['catch'](_handleVirtualPage);
+                    }
+                }, {
+                    key: 'getContents',
+                    value: function getContents(params) {
+                        return this._plug.at('contents').withParams(params).get().then(pageContentsModel.parse);
+                    }
+                }, {
+                    key: 'setContents',
+                    value: function setContents(contents) {
+                        var params = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+                        if (typeof contents !== 'string') {
+                            return _Promise.reject(new Error('Contents should be string.'));
+                        }
+                        var contentsParams = {
+                            edittime: 'now'
+                        };
+                        _Object$keys(params).forEach(function (key) {
+                            contentsParams[key] = params[key];
+                        });
+                        return this._plug.at('contents').withParams(contentsParams).post(contents, 'text/plain; charset=utf-8').then(pageEditModel.parse);
+                    }
+                }, {
+                    key: 'getFiles',
+                    value: function getFiles() {
+                        var params = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+                        return this._plug.at('files').withParams(params).get().then(pageFilesModel.parse);
+                    }
+                }, {
+                    key: 'getOverview',
+                    value: function getOverview() {
+                        return this._plug.at('overview').get().then(JSON.parse).then(function (overview) {
+                            return _Promise.resolve({ overview: modelHelper.getString(overview) });
+                        })['catch'](function () {
+                            return _Promise.reject('Unable to parse the page overview response');
+                        });
+                    }
+                }, {
+                    key: 'setOverview',
+                    value: function setOverview() {
+                        var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+                        if (!('body' in options)) {
+                            return _Promise.reject(new Error('No overview body was supplied'));
+                        }
+                        var request = '<overview>' + options.body + '</overview>';
+                        return this._plug.at('overview').put(request);
+                    }
+                }, {
+                    key: 'getTags',
+                    value: function getTags() {
+                        return this._plug.at('tags').get().then(pageTagsModel.parse);
+                    }
+                }, {
+                    key: 'getDiff',
+                    value: function getDiff() {
+                        throw new Error('Page.getDiff() is not impmemented');
+                    }
+                }, {
+                    key: 'getRelated',
+                    value: function getRelated() {
+                        return this._plug.at('related').get().then(relatedPagesModel.parse);
+                    }
+                }]);
+
+                return PageBase;
+            })();
+
+            _export('PageBase', PageBase);
+        }
+    };
+});
+$__System.register('69', ['3'], function (_export) {
+    /**
+     * Martian - Core JavaScript API for MindTouch
+     *
+     * Copyright (c) 2015 MindTouch Inc.
+     * www.mindtouch.com  oss@mindtouch.com
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *     http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
+    'use strict';
+
+    var modelHelper, subpagesModel;
+    return {
+        setters: [function (_) {
+            modelHelper = _.modelHelper;
+        }],
+        execute: function () {
+            subpagesModel = {
+                parse: function parse(data) {
+                    var obj = modelHelper.fromJson(data);
+                    var parsed = {
+                        totalcount: modelHelper.getInt(obj['@totalcount']),
+                        count: modelHelper.getInt(obj['@count']),
+                        href: obj['@href']
+                    };
+                    if ('page.subpage' in obj) {
+                        var subpages = modelHelper.getArray(obj['page.subpage']);
+                        parsed.pageSubpage = [];
+                        subpages.forEach(function (sp) {
+                            parsed.pageSubpage.push({
+                                id: modelHelper.getInt(sp['@id']),
+                                href: sp['@href'],
+                                deleted: modelHelper.getBool(sp['@deleted']),
+                                subpages: modelHelper.getBool(sp['@subpages']),
+                                dateCreated: modelHelper.getDate(sp['date.created']),
+                                language: sp.language,
+                                namespace: sp.namespace,
+                                path: modelHelper.getString(sp.path),
+                                title: sp.title,
+                                uriUi: sp['uri.ui']
+                            });
+                        });
+                    }
+                    return parsed;
+                }
+            };
+
+            _export('subpagesModel', subpagesModel);
+        }
+    };
+});
+$__System.registerDynamic("6a", ["6b"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var _Object$defineProperty = $__require('6b')["default"];
+  exports["default"] = function(obj, key, value) {
+    if (key in obj) {
+      _Object$defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  };
+  exports.__esModule = true;
+  return module.exports;
+});
+
+$__System.register('68', ['3', '6a'], function (_export) {
+    var modelHelper, _defineProperty, pageContentsModel;
+
+    return {
+        setters: [function (_) {
+            modelHelper = _.modelHelper;
+        }, function (_a) {
+            _defineProperty = _a['default'];
+        }],
+        execute: function () {
+            /**
+             * Martian - Core JavaScript API for MindTouch
+             *
+             * Copyright (c) 2015 MindTouch Inc.
+             * www.mindtouch.com  oss@mindtouch.com
+             *
+             * Licensed under the Apache License, Version 2.0 (the "License");
+             * you may not use this file except in compliance with the License.
+             * You may obtain a copy of the License at
+             *
+             *     http://www.apache.org/licenses/LICENSE-2.0
+             *
+             * Unless required by applicable law or agreed to in writing, software
+             * distributed under the License is distributed on an "AS IS" BASIS,
+             * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+             * See the License for the specific language governing permissions and
+             * limitations under the License.
+             */
+            'use strict';
+
+            pageContentsModel = {
+                parse: function parse(data) {
+                    var obj = modelHelper.fromJson(data);
+                    var parsed = {
+                        type: obj['@type'],
+                        title: obj['@title']
+                    };
+                    if ('@unsafe' in obj) {
+                        parsed.unsafe = modelHelper.getBool(obj['@unsafe']);
+                    }
+                    if ('@draft' in obj) {
+                        parsed.draft = modelHelper.getBool(obj['@draft']);
+                    }
+                    if (Array.isArray(obj.body)) {
+                        parsed.body = obj.body[0];
+                        parsed.targets = pageContentsModel._getTargets(obj.body);
+                    } else {
+                        parsed.body = obj.body;
+                    }
+                    modelHelper.addIfDefined(obj.tail, 'tail', parsed);
+                    return parsed;
+                },
+                _getTargets: function _getTargets(body) {
+                    var targets = [];
+                    for (var i = 1; i < body.length; i++) {
+                        targets.push(_defineProperty({}, body[i]['@target'], body[i]['#text']));
+                    }
+                    return targets;
+                }
+            };
+
+            _export('pageContentsModel', pageContentsModel);
+        }
+    };
+});
+$__System.register('6c', ['3', '17'], function (_export) {
+    /**
+     * Martian - Core JavaScript API for MindTouch
+     *
+     * Copyright (c) 2015 MindTouch Inc.
+     * www.mindtouch.com  oss@mindtouch.com
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *     http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
+    'use strict';
+
+    var modelHelper, pageModel, pageTreeModel;
+    return {
+        setters: [function (_) {
+            modelHelper = _.modelHelper;
+        }, function (_2) {
+            pageModel = _2.pageModel;
+        }],
+        execute: function () {
+            pageTreeModel = {
+                parse: function parse(data) {
+                    var obj = modelHelper.fromJson(data);
+                    return pageModel.parse(obj.page);
+                }
+            };
+
+            _export('pageTreeModel', pageTreeModel);
+        }
+    };
+});
+$__System.register('6d', ['3'], function (_export) {
+    /**
+     * Martian - Core JavaScript API for MindTouch
+     *
+     * Copyright (c) 2015 MindTouch Inc.
+     * www.mindtouch.com  oss@mindtouch.com
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *     http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
+    'use strict';
+
+    var modelHelper, pageRatingModel;
+    return {
+        setters: [function (_) {
+            modelHelper = _.modelHelper;
+        }],
+        execute: function () {
+            pageRatingModel = {
+                parse: function parse(data) {
+                    var obj = modelHelper.fromJson(data);
+                    var parsed = {
+                        count: modelHelper.getInt(obj['@count']),
+                        date: modelHelper.getDate(obj['@date']),
+                        seatedCount: modelHelper.getInt(obj['@seated.count']),
+                        unseatedCount: modelHelper.getInt(obj['@unseated.count'])
+                    };
+                    if ('@score' in obj && obj['@score'] !== '') {
+                        parsed.score = modelHelper.getInt(obj['@score']);
+                    }
+                    if ('@seated.score' in obj && obj['@seated.score'] !== '') {
+                        parsed.seatedScore = modelHelper.getInt(obj['@seated.score']);
+                    }
+                    if ('@unseated.score' in obj && obj['@unseated.score'] !== '') {
+                        parsed.unseatedScore = modelHelper.getInt(obj['@unseated.score']);
+                    }
+                    if ('@score.trend' in obj) {
+                        parsed.scoreTrend = modelHelper.getInt(obj['@score.trend']);
+                    }
+                    if ('@seated.score.trend' in obj) {
+                        parsed.seatedScoreTrend = modelHelper.getInt(obj['@seated.score.trend']);
+                    }
+                    if ('@unseated.score.trend' in obj) {
+                        parsed.unseatedScoreTrend = modelHelper.getInt(obj['@unseated.score.trend']);
+                    }
+                    if ('user.ratedby' in obj) {
+                        var ratedBy = obj['user.ratedby'];
+                        parsed.userRatedBy = {
+                            id: modelHelper.getInt(ratedBy['@id']),
+                            score: modelHelper.getInt(ratedBy['@score']),
+                            date: modelHelper.getDate(ratedBy['@date']),
+                            href: ratedBy['@href'],
+                            seated: modelHelper.getBool(ratedBy['@seated'])
+                        };
+                    }
+                    return parsed;
+                }
+            };
+
+            _export('pageRatingModel', pageRatingModel);
+        }
+    };
+});
 $__System.register('3', [], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
@@ -3308,7 +4260,7 @@ $__System.register('3', [], function (_export) {
         }
     };
 });
-$__System.register('60', ['3'], function (_export) {
+$__System.register('6e', ['3'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -3329,109 +4281,300 @@ $__System.register('60', ['3'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, searchModel;
+    var modelHelper, permissionsModel;
     return {
         setters: [function (_) {
             modelHelper = _.modelHelper;
         }],
         execute: function () {
-            searchModel = {
+            permissionsModel = {
                 parse: function parse(data) {
                     var obj = modelHelper.fromJson(data);
-                    var search = {
-                        ranking: obj['@ranking'],
-                        queryId: obj['@queryid'],
-                        queryCount: modelHelper.getInt(obj['@querycount']),
-                        recommendationCount: modelHelper.getInt(obj['@count.recommendations']),
-                        count: modelHelper.getInt(obj['@count']),
-                        result: []
-                    };
-                    if ('result' in obj) {
-                        var results = modelHelper.getArray(obj.result);
-                        results.forEach(function (result) {
-                            search.result.push({
-                                author: result.author,
-                                content: result.content,
-                                dateModified: modelHelper.getDate(result['date.modified']),
-                                id: result.id,
-                                mime: result.mime,
-                                rank: result.rank,
-                                title: result.title,
-                                uri: result.uri,
-                                uriTrack: result['uri.track'],
-                                page: {
-                                    path: result.page.path,
-                                    rating: result.page.rating,
-                                    title: result.page.title,
-                                    uriUi: result.page['uri.ui']
-                                }
-                            });
-                        });
-                    }
-                    if ('summary' in obj) {
-                        search.summary = {
-                            path: obj.summary['@path'],
-                            results: []
-                        };
-                        if ('results' in obj.summary) {
-                            var results = modelHelper.getArray(obj.summary.results);
-                            results.forEach(function (result) {
-                                search.summary.results.push({
-                                    path: result['@path'],
-                                    count: modelHelper.getInt(result['@count']),
-                                    title: result['@title']
-                                });
-                            });
+                    var parsed = {
+                        operations: modelHelper.getString(obj.operations).split(','),
+                        role: {
+                            id: modelHelper.getInt(obj.role['@id']),
+                            name: modelHelper.getString(obj.role)
                         }
-                    }
-                    return search;
+                    };
+                    return parsed;
                 }
             };
 
-            _export('searchModel', searchModel);
+            _export('permissionsModel', permissionsModel);
         }
     };
 });
-$__System.register('61', ['9', '60', 'b', 'c', '4c', 'a', '4e'], function (_export) {
-    var Plug, searchModel, _createClass, _classCallCheck, _Promise, utility, stringUtility, Site;
+$__System.register('4', ['3', '17', '6e'], function (_export) {
+    /**
+     * Martian - Core JavaScript API for MindTouch
+     *
+     * Copyright (c) 2015 MindTouch Inc.
+     * www.mindtouch.com  oss@mindtouch.com
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *     http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
+    'use strict';
 
-    function _buildSearchConstraints(params) {
-        var constraints = [];
-        params.namespace = 'main';
-        constraints.push('+namespace:' + utility.searchEscape(params.namespace));
-        if ('path' in params) {
-            var path = params.path;
-            if (stringUtility.startsWith(path, '/')) {
-                path = stringUtility.leftTrim(path, '/');
-            }
-            constraints.push('+path.ancestor:' + utility.searchEscape(path));
-        }
-        if ('tags' in params) {
-            var tags = params.tags;
-            if (typeof tags === 'string' && tags) {
-                tags = tags.split(',');
-            }
-            tags.forEach(function (tag) {
-                constraints.push('+tag:"' + utility.searchEscape(tag) + '"');
-            });
-        }
-        return '+(' + constraints.join(' ') + ')';
-    }
+    var modelHelper, pageModel, permissionsModel, userModel;
     return {
         setters: [function (_) {
-            Plug = _.Plug;
+            modelHelper = _.modelHelper;
         }, function (_2) {
-            searchModel = _2.searchModel;
-        }, function (_b) {
-            _createClass = _b['default'];
-        }, function (_c) {
-            _classCallCheck = _c['default'];
-        }, function (_c2) {
-            _Promise = _c2['default'];
-        }, function (_a) {
-            utility = _a.utility;
+            pageModel = _2.pageModel;
         }, function (_e) {
-            stringUtility = _e.stringUtility;
+            permissionsModel = _e.permissionsModel;
+        }],
+        execute: function () {
+            userModel = {
+                parse: function parse(data) {
+                    var obj = modelHelper.fromJson(data);
+                    var parsed = {
+                        id: modelHelper.getInt(obj['@id']),
+                        wikiId: obj['@wikiid'],
+                        href: obj['@href'],
+                        dateCreated: modelHelper.getDate(obj['date.created']),
+                        email: obj.email,
+                        fullname: obj.fullname,
+                        username: obj.username,
+                        nick: obj.nick,
+                        status: obj.status
+                    };
+                    if (typeof obj['license.seat'] === 'string') {
+                        parsed.seated = modelHelper.getBool(obj['license.seat']);
+                        parsed.siteOwner = false;
+                    } else {
+                        parsed.seated = modelHelper.getBool(modelHelper.getString(obj['license.seat']));
+                        parsed.siteOwner = modelHelper.getBool(obj['license.seat']['@owner']);
+                    }
+                    if ('date.lastlogin' in obj) {
+                        parsed.dateLastLogin = modelHelper.getDate(obj['date.lastlogin']);
+                    }
+                    if ('page.home' in obj) {
+                        parsed.pageHome = pageModel.parse(obj['page.home']);
+                    }
+                    if ('permissions.user' in obj) {
+                        parsed.userPermissions = permissionsModel.parse(obj['permissions.user']);
+                    }
+                    return parsed;
+                }
+            };
+
+            _export('userModel', userModel);
+        }
+    };
+});
+$__System.register('17', ['3', '4', '6d'], function (_export) {
+    /**
+     * Martian - Core JavaScript API for MindTouch
+     *
+     * Copyright (c) 2015 MindTouch Inc.
+     * www.mindtouch.com  oss@mindtouch.com
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *     http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
+    'use strict';
+
+    var modelHelper, userModel, pageRatingModel, pageModel;
+    return {
+        setters: [function (_) {
+            modelHelper = _.modelHelper;
+        }, function (_2) {
+            userModel = _2.userModel;
+        }, function (_d) {
+            pageRatingModel = _d.pageRatingModel;
+        }],
+        execute: function () {
+            pageModel = {
+                parse: function parse(data) {
+                    var obj = modelHelper.fromJson(data);
+                    var parsed = {
+                        id: modelHelper.getInt(obj['@id']),
+                        title: obj.title,
+                        uriUi: obj['uri.ui']
+                    };
+                    modelHelper.addIfDefined(obj['@href'], 'href', parsed);
+                    modelHelper.addIfDefined(obj['@state'], 'state', parsed);
+                    modelHelper.addIfDefined(obj['@draft.state'], 'draftState', parsed);
+                    modelHelper.addIfDefined(obj.article, 'article', parsed);
+                    modelHelper.addIfDefined(obj.language, 'language', parsed);
+                    modelHelper.addIfDefined(obj.namespace, 'namespace', parsed);
+                    modelHelper.addIfDefined(obj['language.effective'], 'languageEffective', parsed);
+                    modelHelper.addIfDefined(obj.timeuuid, 'timeuuid', parsed);
+                    if ('path' in obj) {
+                        parsed.path = modelHelper.getString(obj.path);
+                    }
+                    if ('@revision' in obj) {
+                        parsed.revision = modelHelper.getInt(obj['@revision']);
+                    }
+                    if ('date.created' in obj) {
+                        parsed.dateCreated = modelHelper.getDate(obj['date.created']);
+                    }
+                    if ('@deleted' in obj) {
+                        parsed.deleted = modelHelper.getBool(obj['@deleted']);
+                    }
+                    if ('@publish' in obj) {
+                        parsed.publish = modelHelper.getBool(obj['@publish']);
+                    }
+                    if ('@unpublish' in obj) {
+                        parsed.unpublish = modelHelper.getBool(obj['@unpublish']);
+                    }
+                    if ('@deactivate' in obj) {
+                        parsed.deactivate = modelHelper.getBool(obj['@deactivate']);
+                    }
+                    if ('@virtual' in obj) {
+                        parsed.virtual = modelHelper.getBool(obj['@virtual']);
+                    }
+                    if ('date.modified' in obj) {
+                        parsed.dateModified = modelHelper.getDate(obj['date.modified']);
+                    }
+                    if ('date.edited' in obj) {
+                        parsed.dateEdited = modelHelper.getDate(obj['date.edited']);
+                    }
+                    if ('page.parent' in obj) {
+                        parsed.pageParent = pageModel._getParents(obj['page.parent']);
+                    }
+                    if ('rating' in obj) {
+                        parsed.rating = pageRatingModel.parse(obj.rating);
+                    }
+                    if ('user.author' in obj) {
+                        parsed.userAuthor = userModel.parse(obj['user.author']);
+                    }
+
+                    // TODO: Parse obj.files if defined
+                    // TODO: Parse obj.content if defined
+                    // TODO: Parse obj.properties if defined
+                    // TODO: Parse obj['user.createdby'] if defined
+
+                    // Only parse subpages if the property exists, and it has a 'page'
+                    //  sub-property.
+                    if ('subpages' in obj && typeof obj.subpages !== 'string' && 'page' in obj.subpages) {
+                        parsed.subpages = pageModel._getSubpages(obj.subpages);
+                    }
+                    return parsed;
+                },
+                _getParents: function _getParents(parent) {
+                    return pageModel.parse(parent);
+                },
+                _getSubpages: function _getSubpages(subpages) {
+                    var pageDef = subpages.page;
+                    var parsed = [];
+                    pageDef = modelHelper.getArray(pageDef);
+                    pageDef.forEach(function (sp) {
+                        parsed.push(pageModel.parse(sp));
+                    });
+                    return parsed;
+                }
+            };
+
+            _export('pageModel', pageModel);
+        }
+    };
+});
+$__System.register('6f', ['3', '17'], function (_export) {
+    /**
+     * Martian - Core JavaScript API for MindTouch
+     *
+     * Copyright (c) 2015 MindTouch Inc.
+     * www.mindtouch.com  oss@mindtouch.com
+     *
+     * Licensed under the Apache License, Version 2.0 (the "License");
+     * you may not use this file except in compliance with the License.
+     * You may obtain a copy of the License at
+     *
+     *     http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
+    'use strict';
+
+    var modelHelper, pageModel, pageMoveModel;
+    return {
+        setters: [function (_) {
+            modelHelper = _.modelHelper;
+        }, function (_2) {
+            pageModel = _2.pageModel;
+        }],
+        execute: function () {
+            pageMoveModel = {
+                parse: function parse(data) {
+                    var obj = modelHelper.fromJson(data);
+                    var parsed = {
+                        count: obj['@count'],
+                        pages: []
+                    };
+                    if ('page' in obj) {
+                        var pages = modelHelper.getArray(obj.page);
+                        pages.forEach(function (page) {
+                            parsed.pages.push(pageModel.parse(page));
+                        });
+                    }
+                    return parsed;
+                }
+            };
+
+            _export('pageMoveModel', pageMoveModel);
+        }
+    };
+});
+$__System.register('70', ['6', '7', '8', '9', '13', '16', '17', '18', '19', '68', '69', '1c', '6c', '6d', '6f'], function (_export) {
+    var Plug, utility, _createClass, _classCallCheck, _Promise, PageBase, pageModel, _get, _inherits, pageContentsModel, subpagesModel, _Object$keys, pageTreeModel, pageRatingModel, pageMoveModel, Page;
+
+    return {
+        setters: [function (_6) {
+            Plug = _6.Plug;
+        }, function (_7) {
+            utility = _7.utility;
+        }, function (_3) {
+            _createClass = _3['default'];
+        }, function (_4) {
+            _classCallCheck = _4['default'];
+        }, function (_5) {
+            _Promise = _5['default'];
+        }, function (_8) {
+            PageBase = _8.PageBase;
+        }, function (_9) {
+            pageModel = _9.pageModel;
+        }, function (_) {
+            _get = _['default'];
+        }, function (_2) {
+            _inherits = _2['default'];
+        }, function (_11) {
+            pageContentsModel = _11.pageContentsModel;
+        }, function (_10) {
+            subpagesModel = _10.subpagesModel;
+        }, function (_c) {
+            _Object$keys = _c['default'];
+        }, function (_c2) {
+            pageTreeModel = _c2.pageTreeModel;
+        }, function (_d) {
+            pageRatingModel = _d.pageRatingModel;
+        }, function (_f) {
+            pageMoveModel = _f.pageMoveModel;
         }],
         execute: function () {
             /**
@@ -3454,83 +4597,131 @@ $__System.register('61', ['9', '60', 'b', 'c', '4c', 'a', '4e'], function (_expo
              */
             'use strict';
 
-            Site = (function () {
-                function Site(settings) {
-                    _classCallCheck(this, Site);
+            Page = (function (_PageBase) {
+                _inherits(Page, _PageBase);
 
-                    this.plug = new Plug(settings).at('@api', 'deki', 'site');
+                function Page(id, settings) {
+                    if (id === undefined) id = 'home';
+
+                    _classCallCheck(this, Page);
+
+                    _get(Object.getPrototypeOf(Page.prototype), 'constructor', this).call(this, id);
+                    this._plug = new Plug(settings).at('@api', 'deki', 'pages', this._id);
                 }
 
-                _createClass(Site, [{
-                    key: 'getResourceString',
-                    value: function getResourceString() {
-                        var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+                _createClass(Page, [{
+                    key: 'getInfo',
+                    value: function getInfo() {
+                        var params = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-                        if (!('key' in options)) {
-                            return _Promise.reject('No resource key was supplied');
-                        }
-                        var locPlug = this.plug.at('localization', options.key);
-                        if ('lang' in options) {
-                            locPlug = locPlug.withParam('lang', options.lang);
-                        }
-                        return locPlug.get();
+                        var infoParams = { exclude: 'revision' };
+                        _Object$keys(params).forEach(function (key) {
+                            infoParams[key] = params[key];
+                        });
+                        return this._plug.at('info').withParams(infoParams).get().then(pageModel.parse);
                     }
                 }, {
-                    key: 'search',
-                    value: function search() {
-                        var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+                    key: 'getSubpages',
+                    value: function getSubpages(params) {
+                        return this._plug.at('subpages').withParams(params).get().then(subpagesModel.parse);
+                    }
+                }, {
+                    key: 'getTree',
+                    value: function getTree(params) {
+                        return this._plug.at('tree').withParams(params).get().then(pageTreeModel.parse);
+                    }
+                }, {
+                    key: 'getTreeIds',
+                    value: function getTreeIds() {
+                        return this._plug.at('tree').withParam('format', 'ids').get().then(function (idString) {
+                            return idString.split(',').map(function (id) {
+                                var numId = parseInt(id, 10);
+                                if (isNaN(numId)) {
+                                    throw new Error('Unable to parse the tree IDs.');
+                                }
+                                return numId;
+                            });
+                        })['catch'](function (e) {
+                            return _Promise.reject({ message: e.message });
+                        });
+                    }
+                }, {
+                    key: 'getRating',
+                    value: function getRating() {
+                        return this._plug.at('ratings').get().then(pageRatingModel.parse);
+                    }
+                }, {
+                    key: 'rate',
+                    value: function rate() {
+                        var rating = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+                        var oldRating = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
 
-                        var _ref$page = _ref.page;
-                        var page = _ref$page === undefined ? 1 : _ref$page;
-                        var _ref$limit = _ref.limit;
-                        var limit = _ref$limit === undefined ? 10 : _ref$limit;
-                        var _ref$tags = _ref.tags;
-                        var tags = _ref$tags === undefined ? '' : _ref$tags;
-                        var _ref$q = _ref.q;
-                        var q = _ref$q === undefined ? '' : _ref$q;
-                        var _ref$path = _ref.path;
-                        var path = _ref$path === undefined ? '' : _ref$path;
-                        var _ref$recommendations = _ref.recommendations;
-                        var recommendations = _ref$recommendations === undefined ? true : _ref$recommendations;
+                        rating = rating.toString();
+                        oldRating = oldRating.toString();
+                        if (rating !== '1' && rating !== '0' && rating !== '') {
+                            throw new Error('Invalid rating supplied');
+                        }
+                        if (oldRating !== '1' && oldRating !== '0' && oldRating !== '') {
+                            throw new Error('Invalid rating supplied for the old rating');
+                        }
+                        return this._plug.at('ratings').withParams({ score: rating, previousScore: oldRating }).post(null, utility.textRequestType).then(pageRatingModel.parse);
+                    }
+                }, {
+                    key: 'getHtmlTemplate',
+                    value: function getHtmlTemplate(path) {
+                        var params = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-                        var constraint = {};
-                        if (path !== '') {
-                            constraint.path = path;
-                        }
-                        if (tags !== '') {
-                            constraint.tags = tags;
-                        }
-                        var searchParams = {
-                            limit: limit,
-                            page: page,
-                            offset: parseInt(limit, 10) * (parseInt(page, 10) - 1),
-                            sortBy: '-date,-rank',
-                            q: q,
-                            summarypath: encodeURI(path),
-                            constraint: _buildSearchConstraints(constraint),
-                            recommendations: recommendations
-                        };
-                        return this.plug.at('query').withParams(searchParams).get().then(searchModel.parse);
+                        params.pageid = this._id;
+
+                        // Double-URL-encode the path and add '=' to the beginning.  This makes
+                        //  it a proper page ID to be used in a URI segment.
+                        var templatePath = '=' + encodeURIComponent(encodeURIComponent(path));
+                        var contentsPlug = new Plug().at('@api', 'deki', 'pages', templatePath, 'contents').withParams(params);
+                        return contentsPlug.get().then(pageContentsModel.parse);
+                    }
+                }, {
+                    key: 'move',
+                    value: function move() {
+                        var params = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+                        return this._plug.at('move').withParams(params).post(null, 'text/plain; charset=utf-8').then(pageMoveModel.parse);
+                    }
+                }, {
+                    key: 'activateDraft',
+                    value: function activateDraft() {
+                        return this._plug.at('activate-draft').post().then(pageModel.parse);
                     }
                 }]);
 
-                return Site;
-            })();
+                return Page;
+            })(PageBase);
 
-            _export('Site', Site);
+            _export('Page', Page);
         }
     };
 });
-$__System.register('62', ['61', 'b', 'c'], function (_export) {
-    var Site, _createClass, _classCallCheck, Search;
+$__System.register('71', ['8', '9', '13', '15', '70'], function (_export) {
+    var _createClass, _classCallCheck, _Promise, DraftManager, Page, Article;
 
+    function _getTagsMarkup(tags) {
+        var tagsMarkup = '';
+        tags.forEach(function (tag) {
+            tagsMarkup = tagsMarkup + '<a>' + tag + '</a>';
+        });
+        tagsMarkup = '<p class="template:tag-insert">' + tagsMarkup + '</p>';
+        return tagsMarkup;
+    }
     return {
         setters: [function (_) {
-            Site = _.Site;
-        }, function (_b) {
-            _createClass = _b['default'];
-        }, function (_c) {
-            _classCallCheck = _c['default'];
+            _createClass = _['default'];
+        }, function (_2) {
+            _classCallCheck = _2['default'];
+        }, function (_3) {
+            _Promise = _3['default'];
+        }, function (_4) {
+            DraftManager = _4.DraftManager;
+        }, function (_5) {
+            Page = _5.Page;
         }],
         execute: function () {
             /**
@@ -3552,45 +4743,97 @@ $__System.register('62', ['61', 'b', 'c'], function (_export) {
              */
             'use strict';
 
-            Search = (function () {
-                function Search(settings) {
-                    _classCallCheck(this, Search);
+            Article = (function () {
+                function Article(settings) {
+                    _classCallCheck(this, Article);
 
-                    this.site = new Site(settings);
+                    this._settings = settings;
                 }
 
-                /**
-                 * @param {String} q - keywords or advanced search syntax
-                 * @param {Object} options - {
-                 *  page: paginated {page}
-                 *  limit: limit search results to {limit} items per paginated page
-                 *  tags: constrain search results to items tagged with {tag}
-                 *  path: constraint search results to items located in the {path} page hierarchy
-                 * }
-                 * @returns {Object}
-                 */
+                _createClass(Article, [{
+                    key: 'createUnpublished',
+                    value: function createUnpublished(_ref) {
+                        var _this = this;
 
-                _createClass(Search, [{
-                    key: 'search',
-                    value: function search(q) {
-                        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+                        var path = _ref.path;
+                        var _ref$content = _ref.content;
+                        var content = _ref$content === undefined ? '' : _ref$content;
+                        var _ref$title = _ref.title;
+                        var title = _ref$title === undefined ? null : _ref$title;
+                        var _ref$type = _ref.type;
+                        var type = _ref$type === undefined ? 'article:topic' : _ref$type;
+                        var _ref$tags = _ref.tags;
+                        var tags = _ref$tags === undefined ? [] : _ref$tags;
 
-                        if (!q || q === '') {
-                            throw new Error('Search requires keywords or advanced search syntax.');
-                        }
-                        options.q = q;
-                        return this.site.search(options);
+                        return new _Promise(function (resolve, reject) {
+                            var draftManager = new DraftManager(_this._settings);
+
+                            // First, create a new, empty draft at the path supplied.
+                            draftManager.createDraft(path).then(function (resp) {
+                                if (tags.indexOf(type) < 0) {
+                                    tags.push(type);
+                                }
+                                var tagsMarkup = _getTagsMarkup(tags);
+                                var newContent = '' + content + tagsMarkup;
+
+                                // Now that the draft is created, set the contents and title;
+                                var contentsParams = {};
+                                if (title !== null) {
+                                    contentsParams.title = title;
+                                }
+                                var newDraft = draftManager.getDraft(resp.id);
+                                newDraft.setContents(newContent, contentsParams).then(function () {
+                                    resolve();
+                                })['catch'](function () {
+                                    reject('An error occurred while setting the unpublished article content');
+                                });
+                            })['catch'](function () {
+                                reject('An error occurred while creating the unpublished article');
+                            });
+                        });
+                    }
+                }, {
+                    key: 'createPublished',
+                    value: function createPublished(_ref2) {
+                        var _this2 = this;
+
+                        var path = _ref2.path;
+                        var _ref2$title = _ref2.title;
+                        var title = _ref2$title === undefined ? null : _ref2$title;
+                        var _ref2$content = _ref2.content;
+                        var content = _ref2$content === undefined ? '' : _ref2$content;
+                        var _ref2$type = _ref2.type;
+                        var type = _ref2$type === undefined ? 'article:topic' : _ref2$type;
+                        var _ref2$tags = _ref2.tags;
+                        var tags = _ref2$tags === undefined ? [] : _ref2$tags;
+
+                        return new _Promise(function (resolve, reject) {
+                            var pageApi = new Page(path, _this2._settings);
+                            if (tags.indexOf(type) < 0) {
+                                tags.push(type);
+                            }
+                            var newContent = content + '\n            ' + _getTagsMarkup(tags);
+                            var contentsParams = {};
+                            if (title !== null) {
+                                contentsParams.title = title;
+                            }
+                            pageApi.setContents(newContent, contentsParams).then(function () {
+                                resolve();
+                            })['catch'](function () {
+                                reject('An error occurred while creating the published article');
+                            });
+                        });
                     }
                 }]);
 
-                return Search;
+                return Article;
             })();
 
-            _export('Search', Search);
+            _export('Article', Article);
         }
     };
 });
-$__System.registerDynamic("1c", [], true, function($__require, exports, module) {
+$__System.registerDynamic("21", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -3611,37 +4854,37 @@ $__System.registerDynamic("1c", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("63", ["1c"], true, function($__require, exports, module) {
+$__System.registerDynamic("72", ["21"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $ = $__require('1c');
+  var $ = $__require('21');
   module.exports = function defineProperty(it, key, desc) {
     return $.setDesc(it, key, desc);
   };
   return module.exports;
 });
 
-$__System.registerDynamic("64", ["63"], true, function($__require, exports, module) {
+$__System.registerDynamic("6b", ["72"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('63'),
+    "default": $__require('72'),
     __esModule: true
   };
   return module.exports;
 });
 
-$__System.registerDynamic("b", ["64"], true, function($__require, exports, module) {
+$__System.registerDynamic("8", ["6b"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var _Object$defineProperty = $__require('64')["default"];
+  var _Object$defineProperty = $__require('6b')["default"];
   exports["default"] = (function() {
     function defineProperties(target, props) {
       for (var i = 0; i < props.length; i++) {
@@ -3665,7 +4908,7 @@ $__System.registerDynamic("b", ["64"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("c", [], true, function($__require, exports, module) {
+$__System.registerDynamic("9", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -3680,7 +4923,7 @@ $__System.registerDynamic("c", [], true, function($__require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("16", [], true, function($__require, exports, module) {
+$__System.registerDynamic("31", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -3693,19 +4936,19 @@ $__System.registerDynamic("16", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("65", ["16"], true, function($__require, exports, module) {
+$__System.registerDynamic("73", ["31"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var defined = $__require('16');
+  var defined = $__require('31');
   module.exports = function(it) {
     return Object(defined(it));
   };
   return module.exports;
 });
 
-$__System.registerDynamic("39", [], true, function($__require, exports, module) {
+$__System.registerDynamic("52", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -3716,7 +4959,7 @@ $__System.registerDynamic("39", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("36", [], true, function($__require, exports, module) {
+$__System.registerDynamic("4f", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -3729,12 +4972,12 @@ $__System.registerDynamic("36", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("33", ["36"], true, function($__require, exports, module) {
+$__System.registerDynamic("4b", ["4f"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var aFunction = $__require('36');
+  var aFunction = $__require('4f');
   module.exports = function(fn, that, length) {
     aFunction(fn);
     if (that === undefined)
@@ -3760,14 +5003,14 @@ $__System.registerDynamic("33", ["36"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("22", ["39", "31", "33"], true, function($__require, exports, module) {
+$__System.registerDynamic("26", ["52", "29", "4b"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var global = $__require('39'),
-      core = $__require('31'),
-      ctx = $__require('33'),
+  var global = $__require('52'),
+      core = $__require('29'),
+      ctx = $__require('4b'),
       PROTOTYPE = 'prototype';
   var $export = function(type, name, source) {
     var IS_FORCED = type & $export.F,
@@ -3809,7 +5052,7 @@ $__System.registerDynamic("22", ["39", "31", "33"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("41", [], true, function($__require, exports, module) {
+$__System.registerDynamic("59", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -3824,14 +5067,14 @@ $__System.registerDynamic("41", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("53", ["22", "31", "41"], true, function($__require, exports, module) {
+$__System.registerDynamic("1f", ["26", "29", "59"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $export = $__require('22'),
-      core = $__require('31'),
-      fails = $__require('41');
+  var $export = $__require('26'),
+      core = $__require('29'),
+      fails = $__require('59');
   module.exports = function(KEY, exec) {
     var fn = (core.Object || {})[KEY] || Object[KEY],
         exp = {};
@@ -3843,13 +5086,13 @@ $__System.registerDynamic("53", ["22", "31", "41"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("66", ["65", "53"], true, function($__require, exports, module) {
+$__System.registerDynamic("74", ["73", "1f"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var toObject = $__require('65');
-  $__require('53')('keys', function($keys) {
+  var toObject = $__require('73');
+  $__require('1f')('keys', function($keys) {
     return function keys(it) {
       return $keys(toObject(it));
     };
@@ -3857,7 +5100,7 @@ $__System.registerDynamic("66", ["65", "53"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("31", [], true, function($__require, exports, module) {
+$__System.registerDynamic("29", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -3868,38 +5111,38 @@ $__System.registerDynamic("31", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("67", ["66", "31"], true, function($__require, exports, module) {
+$__System.registerDynamic("75", ["74", "29"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  $__require('66');
-  module.exports = $__require('31').Object.keys;
+  $__require('74');
+  module.exports = $__require('29').Object.keys;
   return module.exports;
 });
 
-$__System.registerDynamic("50", ["67"], true, function($__require, exports, module) {
+$__System.registerDynamic("1c", ["75"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('67'),
+    "default": $__require('75'),
     __esModule: true
   };
   return module.exports;
 });
 
-$__System.register("5f", ["50", "b", "c"], function (_export) {
-    var _Object$keys, _createClass, _classCallCheck, _defaultProperties, Settings;
+$__System.register("2d", ["8", "9", "1c"], function (_export) {
+    var _createClass, _classCallCheck, _Object$keys, _defaultProperties, Settings;
 
     return {
         setters: [function (_) {
-            _Object$keys = _["default"];
-        }, function (_b) {
-            _createClass = _b["default"];
+            _createClass = _["default"];
+        }, function (_2) {
+            _classCallCheck = _2["default"];
         }, function (_c) {
-            _classCallCheck = _c["default"];
+            _Object$keys = _c["default"];
         }],
         execute: function () {
             /**
@@ -3979,20 +5222,22 @@ $__System.register("5f", ["50", "b", "c"], function (_export) {
         }
     };
 });
-$__System.register('68', ['12', '62', 'b', 'c', '5f'], function (_export) {
-    var User, Search, _createClass, _classCallCheck, Settings, GeniusLink;
+$__System.register('76', ['8', '9', '14', '71', 'f', '2d'], function (_export) {
+    var _createClass, _classCallCheck, Search, Article, User, Settings, GeniusLink;
 
     return {
         setters: [function (_) {
-            User = _.User;
+            _createClass = _['default'];
         }, function (_2) {
-            Search = _2.Search;
-        }, function (_b) {
-            _createClass = _b['default'];
-        }, function (_c) {
-            _classCallCheck = _c['default'];
+            _classCallCheck = _2['default'];
+        }, function (_3) {
+            Search = _3.Search;
+        }, function (_4) {
+            Article = _4.Article;
         }, function (_f) {
-            Settings = _f.Settings;
+            User = _f.User;
+        }, function (_d) {
+            Settings = _d.Settings;
         }],
         execute: function () {
             /**
@@ -4051,6 +5296,7 @@ $__System.register('68', ['12', '62', 'b', 'c', '5f'], function (_export) {
                     this.settings = new Settings({ host: host, token: token });
                     this.userLib = new User(this.settings);
                     this.searchLib = new Search(this.settings);
+                    this.articleLib = new Article(this.settings);
                 }
 
                 _createClass(GeniusLink, [{
@@ -4068,6 +5314,11 @@ $__System.register('68', ['12', '62', 'b', 'c', '5f'], function (_export) {
                     get: function get() {
                         return this.userLib;
                     }
+                }, {
+                    key: 'Article',
+                    get: function get() {
+                        return this.articleLib;
+                    }
                 }]);
 
                 return GeniusLink;
@@ -4077,7 +5328,7 @@ $__System.register('68', ['12', '62', 'b', 'c', '5f'], function (_export) {
         }
     };
 });
-$__System.register('1', ['68'], function (_export) {
+$__System.register('1', ['76'], function (_export) {
   /**
    * MindTouch GeniusLink SDK
    * Copyright (C) 2006-2015 MindTouch, Inc.

@@ -122,3 +122,59 @@ var gl = new GeniusLink({
 });
 window.location = gl.User.getLoginUrl();
 ```
+
+### GeniusLink.Article.createUnpublished({Object} params)
+Create an unpublished article on the MindTouch site.
+
+**params** {Object}
+* **path** {String} - The path of the new page (required)
+* **content** {String} - The initial contents of the page (default = '')
+* **title** {String} - The display title of the new page (default = inferred from the path)
+* **type** {String} - Article type of the new page (default = 'article:topic')
+  * Valid types: `article:topic-portfolio`, `article:topic-category`, `article:topic-guide`, `article:topic`, `article:howto`, `article:reference`
+* **tags** {Array} - Initial tags to be set on the new page (default = [])
+
+**Returns {Promise<Object>}** The Object from the returned Promise contains information about the newly created article.
+
+**Sample**
+```javascript
+var gl = new GeniusLink({
+    host: 'https://success.example.com',
+    token: '12345'
+});
+gl.Article.createUnpublished({
+    path: 'path/to/article',
+    content: 'Article contents.',
+    tags: [ 'foo', 'bar' ]
+}).then(function(unpublishedArticle) {
+    console.log('Article created with ID ' + unpublishedArticle.id);
+});
+```
+
+### GeniusLink.Article.createPublished({Object} params)
+Create a published article on the MindTouch site.
+
+**params** {Object}
+* **path** {String} - The path of the new page (required)
+* **content** {String} - The initial contents of the page (default = '')
+* **title** {String} - The display title of the new page (default = inferred from the path)
+* **type** {String} - Article type of the new page (default = 'article:topic')
+  * Valid types: `article:topic-portfolio`, `article:topic-category`, `article:topic-guide`, `article:topic`, `article:howto`, `article:reference`
+* **tags** {Array} - Initial tags to be set on the new page (default = [])
+
+**Returns {Promise<Object>}** The Object from the returned Promise contains information about the newly created article.
+
+**Sample**
+```javascript
+var gl = new GeniusLink({
+    host: 'https://success.example.com',
+    token: '12345'
+});
+gl.Article.createPublished({
+    path: 'path/to/article',
+    content: 'Article contents.',
+    tags: [ 'foo', 'bar' ]
+}).then(function(unpublishedArticle) {
+    console.log('Article created with ID ' + unpublishedArticle.id);
+});
+```
