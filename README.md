@@ -27,6 +27,7 @@ The interface to search for help articles from a MindTouch site. Returns a promi
 * **page** {Number} - paginate page number (default = 1)
 * **limit** {Number} - limit search results to x items per paginated page (default = 10)
 * **tags** {String} - Tags by which to filter the results in a comma delimited list (default = '')
+* **type** {String} - Type or types to filter the results in a comma delimited list (default = '') types: `wiki`, `document`, `image`, `binary`
 * **path** {String} - A specific hierarchy path to filter by (default = '')
 
 **Returns {Promise\<Object\>}**
