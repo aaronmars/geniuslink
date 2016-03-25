@@ -30,7 +30,7 @@ export class Article {
         this._settings = settings;
         this._draftManager = new DraftManager(settings);
     }
-    createUnpublished({ path, content, title = null, type = 'article:topic', tags = [] }) {
+    createUnpublished({ path, content = '', title = null, type = 'article:topic', tags = [] }) {
         return new Promise((resolve, reject) => {
 
             // First, create a new, empty draft at the path supplied.
@@ -57,7 +57,7 @@ export class Article {
             });
         });
     }
-    createPublished({ path, title = null, content, type = 'article:topic', tags = [] }) {
+    createPublished({ path, title = null, content = '', type = 'article:topic', tags = [] }) {
         return new Promise((resolve, reject) => {
             let pageApi = new Page(path, this._settings);
             if(tags.indexOf(type) < 0) {

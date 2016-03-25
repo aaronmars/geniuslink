@@ -16,7 +16,7 @@ describe('article', () => {
             spyOn(Page.prototype, 'setContents').and.returnValue(Promise.resolve({}));
         });
         it('can create an unpublished article with mininmal params', (done) => {
-            let createParams = { path: 'foo/bar/baz', content: 'this is test content' };
+            let createParams = { path: 'foo/bar/baz' };
             gl.Article.createUnpublished(createParams).then(() => {
                 done();
             });
@@ -45,7 +45,7 @@ describe('article', () => {
             });
         });
         it('can create an published article with mininmal params', (done) => {
-            let createParams = { path: 'foo/bar/baz', content: 'this is test content' };
+            let createParams = { path: 'foo/bar/baz' };
             gl.Article.createPublished(createParams).then(() => {
                 done();
             });

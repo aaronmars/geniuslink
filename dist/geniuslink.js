@@ -4757,7 +4757,8 @@ $__System.register('71', ['8', '9', '13', '15', '70'], function (_export) {
                         var _this = this;
 
                         var path = _ref.path;
-                        var content = _ref.content;
+                        var _ref$content = _ref.content;
+                        var content = _ref$content === undefined ? '' : _ref$content;
                         var _ref$title = _ref.title;
                         var title = _ref$title === undefined ? null : _ref$title;
                         var _ref$type = _ref.type;
@@ -4799,7 +4800,8 @@ $__System.register('71', ['8', '9', '13', '15', '70'], function (_export) {
                         var path = _ref2.path;
                         var _ref2$title = _ref2.title;
                         var title = _ref2$title === undefined ? null : _ref2$title;
-                        var content = _ref2.content;
+                        var _ref2$content = _ref2.content;
+                        var content = _ref2$content === undefined ? '' : _ref2$content;
                         var _ref2$type = _ref2.type;
                         var type = _ref2$type === undefined ? 'article:topic' : _ref2$type;
                         var _ref2$tags = _ref2.tags;
