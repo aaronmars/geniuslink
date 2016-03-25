@@ -4769,11 +4769,10 @@ $__System.register('71', ['8', '9', '13', '15', '70'], function (_export) {
 
                             // First, create a new, empty draft at the path supplied.
                             _this._draftManager.createDraft(path).then(function (resp) {
-                                var newDraft = _this._draftManager.getDraft(resp.id);
                                 if (tags.indexOf(type) < 0) {
                                     tags.push(type);
                                 }
-                                var tagsMarkup = ''; //_getTagsMarkup(tags);
+                                var tagsMarkup = _getTagsMarkup(tags);
                                 var newContent = '' + content + tagsMarkup;
 
                                 // Now that the draft is created, set the contents and title;
@@ -4781,6 +4780,7 @@ $__System.register('71', ['8', '9', '13', '15', '70'], function (_export) {
                                 if (title !== null) {
                                     contentsParams.title = title;
                                 }
+                                var newDraft = _this._draftManager.getDraft(resp.id);
                                 newDraft.setContents(newContent, contentsParams).then(function () {
                                     resolve();
                                 })['catch'](function () {
@@ -4797,7 +4797,8 @@ $__System.register('71', ['8', '9', '13', '15', '70'], function (_export) {
                         var _this2 = this;
 
                         var path = _ref2.path;
-                        var title = _ref2.title;
+                        var _ref2$title = _ref2.title;
+                        var title = _ref2$title === undefined ? null : _ref2$title;
                         var content = _ref2.content;
                         var _ref2$type = _ref2.type;
                         var type = _ref2$type === undefined ? 'article:topic' : _ref2$type;

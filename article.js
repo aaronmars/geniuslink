@@ -52,7 +52,7 @@ export class Article {
                 }).catch(() => {
                     reject('An error occurred while setting the unpublished article content');
                 });
-            }).catch((e) => {
+            }).catch(() => {
                 reject('An error occurred while creating the unpublished article');
             });
         });
