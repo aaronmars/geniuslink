@@ -28,13 +28,13 @@ function _getTagsMarkup(tags) {
 export class Article {
     constructor(settings) {
         this._settings = settings;
-        this._draftManager = new DraftManager(settings);
     }
     createUnpublished({ path, content = '', title = null, type = 'article:topic', tags = [] }) {
         return new Promise((resolve, reject) => {
+            let draftManager = new DraftManager(this._settings);
 
             // First, create a new, empty draft at the path supplied.
-            this._draftManager.createDraft(path).then((resp) => {
+            draftManager.createDraft(path).then((resp) => {
                 if(tags.indexOf(type) < 0) {
                     tags.push(type);
                 }
@@ -46,7 +46,7 @@ export class Article {
                 if(title !== null) {
                     contentsParams.title = title;
                 }
-                let newDraft = this._draftManager.getDraft(resp.id);
+                let newDraft = draftManager.getDraft(resp.id);
                 newDraft.setContents(newContent, contentsParams).then(() => {
                     resolve();
                 }).catch(() => {

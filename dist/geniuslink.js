@@ -4748,7 +4748,6 @@ $__System.register('71', ['8', '9', '13', '15', '70'], function (_export) {
                     _classCallCheck(this, Article);
 
                     this._settings = settings;
-                    this._draftManager = new DraftManager(settings);
                 }
 
                 _createClass(Article, [{
@@ -4767,9 +4766,10 @@ $__System.register('71', ['8', '9', '13', '15', '70'], function (_export) {
                         var tags = _ref$tags === undefined ? [] : _ref$tags;
 
                         return new _Promise(function (resolve, reject) {
+                            var draftManager = new DraftManager(_this._settings);
 
                             // First, create a new, empty draft at the path supplied.
-                            _this._draftManager.createDraft(path).then(function (resp) {
+                            draftManager.createDraft(path).then(function (resp) {
                                 if (tags.indexOf(type) < 0) {
                                     tags.push(type);
                                 }
@@ -4781,7 +4781,7 @@ $__System.register('71', ['8', '9', '13', '15', '70'], function (_export) {
                                 if (title !== null) {
                                     contentsParams.title = title;
                                 }
-                                var newDraft = _this._draftManager.getDraft(resp.id);
+                                var newDraft = draftManager.getDraft(resp.id);
                                 newDraft.setContents(newContent, contentsParams).then(function () {
                                     resolve();
                                 })['catch'](function () {
