@@ -17,6 +17,7 @@
  */
 import {User} from './user';
 import {Search} from './search';
+import {Article} from './article';
 import {Settings} from 'martian/lib/settings';
 export class GeniusLink {
 
@@ -50,6 +51,7 @@ export class GeniusLink {
         this.settings = new Settings({ host: host, token: token });
         this.userLib = new User(this.settings);
         this.searchLib = new Search(this.settings);
+        this.articleLib = new Article(this.settings);
     }
     get configuration() {
         return this.settings.getProperties();
@@ -59,5 +61,8 @@ export class GeniusLink {
     }
     get User() {
         return this.userLib;
+    }
+    get Article() {
+        return this.articleLib;
     }
 }

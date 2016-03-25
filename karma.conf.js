@@ -38,13 +38,15 @@ module.exports = function(config) {
             serveFiles: [
                 'geniuslink.js',
                 'search.js',
-                'user.js'
+                'user.js',
+                'article.js'
             ]
         },
         preprocessors: {
             'geniuslink.js': [ 'babel', 'sourcemap', 'coverage' ],
             'search.js': [ 'babel', 'sourcemap', 'coverage' ],
             'user.js': [ 'babel', 'sourcemap', 'coverage' ],
+            'article.js': [ 'babel', 'sourcemap', 'coverage' ],
             'jspm_packages/github/mindtouch/martian*/**/*.js': [ 'babel' ],
             'test/*.test.js': [ 'babel' ]
         },
@@ -75,7 +77,6 @@ module.exports = function(config) {
             cert: fs.readFileSync('test/mysitename.crt', 'utf8')
         },
         phantomjsLauncher: {
-            exitOnResourceError: true,
             base: 'PhantomJS',
             flags: [
                 '--web-security=false',
