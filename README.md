@@ -134,7 +134,7 @@ Create an unpublished article on the MindTouch site.
   * Valid types: `article:topic-portfolio`, `article:topic-category`, `article:topic-guide`, `article:topic`, `article:howto`, `article:reference`
 * **tags** {Array} - Initial tags to be set on the new page (default = [])
 
-**Returns {Promise<Object>}** The Object from the returned Promise contains information about the newly created article.
+**Returns {Promise\<Object\>}** The Object from the returned Promise contains information about the newly created article.
 
 **Sample**
 ```javascript
@@ -159,10 +159,10 @@ Create a published article on the MindTouch site.
 * **content** {String} - The initial contents of the page (default = '')
 * **title** {String} - The display title of the new page (default = inferred from the path)
 * **type** {String} - Article type of the new page (default = 'article:topic')
-  * Valid types: `article:topic-portfolio`, `article:topic-category`, `article:topic-guide`, `article:topic`, `article:howto`, `article:reference`
+  * Valid types: `article:topic-category`, `article:topic-guide`, `article:topic`, `article:howto`, `article:reference`
 * **tags** {Array} - Initial tags to be set on the new page (default = [])
 
-**Returns {Promise<Object>}** The Object from the returned Promise contains information about the newly created article.
+**Returns {Promise\<Object\>}** The Object from the returned Promise contains information about the newly created article.
 
 **Sample**
 ```javascript
