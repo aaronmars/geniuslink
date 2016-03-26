@@ -3,6 +3,7 @@ node_js:
   - "4"
 
 notifications:
+  flowdock: $FLOWDOCK_API_TOKEN
   email:
     recipients:
       - $NOTIFICATION_EMAIL_RECIPIENT
