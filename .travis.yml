@@ -27,4 +27,4 @@ install:
 script: '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && node node_modules/.bin/gulp || node node_modules/.bin/gulp inspect'
 
 after_success:
-  - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && cat coverage/*/lcov.info | codecov || echo "Pull Request Build: skipping codecov...'
+  - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && cat coverage/*/lcov.info | codecov || echo "Pull Request Build: skipping codecov..."'
