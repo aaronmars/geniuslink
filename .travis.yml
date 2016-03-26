@@ -22,10 +22,10 @@ before_install:
 
 install:
   - npm install
-  - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && node node_modules/.bin/jspm config registries.github.auth $JSPM_GITHUB_AUTH_TOKEN || echo "Pull Request Build: skipping jspm config..."'
-  - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && node node_modules/.bin/jspm install || echo "Pull Request Build: skipping jspm install..."'
+  - 'if [[ "${TRAVIS_PULL_REQUEST}" = "false" ]]; then node node_modules/.bin/jspm config registries.github.auth $JSPM_GITHUB_AUTH_TOKEN; fi'
+  - 'if [[ "${TRAVIS_PULL_REQUEST}" = "false" ]]; then node node_modules/.bin/jspm install; fi'
 
 script: '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && node node_modules/.bin/gulp || node node_modules/.bin/gulp inspect'
 
 after_success:
-  - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && cat coverage/*/lcov.info | codecov || echo "Pull Request Build: skipping codecov..."'
+  - 'if [[ "${TRAVIS_PULL_REQUEST}" = "false" ]]; then cat coverage/*/lcov.info | codecov; fi'
