@@ -4,3 +4,4 @@ coverage/
 docs/
 .idea
 .DS_Store
+*.orig
