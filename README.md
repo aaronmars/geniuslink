@@ -123,6 +123,37 @@ var gl = new GeniusLink({
 window.location = gl.User.getLoginUrl();
 ```
 
+### GeniusLink.User.getInsights()
+Gets the activity of a particular user based off a system-defined token.  Currently, user page views and searches are reported.
+
+**Returns {Promise\<Object\>}**
+```
+{
+    count: ...,
+    upto: ...,
+    since: ...,
+    event:[
+        /// array of user events
+    ]
+}
+```
+
+**Sample**
+```javascript
+var gl = new GeniusLink({
+    host: 'https://success.example.com',
+    token: '12345'
+});
+var token = 'abc123';
+gl.User.getInsights(token).then(function(response) {
+
+    // Use the event data
+    response.event.forEach(function(event) {
+        //...
+    });
+});
+```
+
 ### GeniusLink.Article.createUnpublished({Object} params)
 Create an unpublished article on the MindTouch site.
 
