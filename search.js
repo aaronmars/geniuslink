@@ -27,7 +27,9 @@ export class Search {
      *  page: paginated {page}
      *  limit: limit search results to {limit} items per paginated page
      *  tags: constrain search results to items tagged with {tag}
+     *  type: Type or types to filter the results in a comma delimited list (default = '') types: `wiki`, `document`, `image`, `binary`
      *  path: constraint search results to items located in the {path} page hierarchy
+     *  recommendations: `true` to include recommended search results based off site configuration. `false` to suppress them.
      * }
      * @returns {Object}
      */

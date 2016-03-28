@@ -44,6 +44,9 @@ export class User {
     /**
      * Gets the activity of a user based on a system-defined token. Currently,
      * page views and search attempts are returned in the listing of the user activity.
+     *
+     * @param  {String} userToken A system-defined token that identifies a particular user.
+     * @return {Promise} A Promise that, when resolved yields the user activity event list.
      */
     getInsights(userToken) {
         let ue = new UserEvents(this.settings);

@@ -19,6 +19,10 @@ import {User} from './user';
 import {Search} from './search';
 import {Article} from './article';
 import {Settings} from 'martian/lib/settings';
+
+/**
+ * The main GeniusLink SDK entry point.
+ */
 export class GeniusLink {
 
     /**
@@ -53,15 +57,39 @@ export class GeniusLink {
         this.searchLib = new Search(this.settings);
         this.articleLib = new Article(this.settings);
     }
+
+    /**
+     * Get the configuration settings used for construction of the GeniusLink instance
+     *
+     * @return {type} A settings object with the configuration parameters
+     */
     get configuration() {
         return this.settings.getProperties();
     }
+
+    /**
+     * Get the GeniusLink search interface.
+     *
+     * @return {Function} The GeniusLink search function.
+     */
     get search() {
         return this.searchLib.search.bind(this.searchLib);
     }
+
+    /**
+     * Get current user management instance.
+     *
+     * @return {User} A User object that can be used to work with the user management functionality.
+     */
     get User() {
         return this.userLib;
     }
+
+    /**
+     * Get current article management instance.
+     *
+     * @return {Article} An Article object that can be used to work with the article management functionality.
+     */
     get Article() {
         return this.articleLib;
     }
