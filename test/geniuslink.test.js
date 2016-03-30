@@ -1,4 +1,4 @@
-import {GeniusLink} from 'geniuslink';
+import {GeniusLink} from '../geniuslink';
 describe('GeniusLink', () => {
     describe('construction', () => {
         it('can successfully construct a GL object', () => {
@@ -30,7 +30,7 @@ describe('GeniusLink', () => {
             });
             let gl2 = new GeniusLink({
                 host: 'https://www.example.com',
-                token: 'efgh5678'
+                token: 'abcd5678'
             });
             expect(gl1.configuration).toEqual({
                 host: 'https://example.mindtouch.us',
@@ -38,14 +38,14 @@ describe('GeniusLink', () => {
             });
             expect(gl2.configuration).toEqual({
                 host: 'https://www.example.com',
-                token: 'efgh5678'
+                token: 'abcd5678'
             });
         });
         it('can fail if invalid configuration is used in the constructor', () => {
             expect(() => new GeniusLink()).toThrow();
             expect(() => GeniusLink()).toThrow();
             expect(() => new GeniusLink({ host: 'https://www.example.com' })).toThrow();
-            expect(() => new GeniusLink({ token: 'thisisatoken' })).toThrow();
+            expect(() => new GeniusLink({ token: 'abcd1234' })).toThrow();
             expect(() => new GeniusLink({ host: 'https://www.example.com', token: '' })).toThrow();
             expect(() => new GeniusLink({ host: 'www.example.com', token: 123 })).toThrow();
         });

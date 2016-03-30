@@ -30,11 +30,6 @@ function _getTagsMarkup(tags) {
  * Article management
  */
 export class Article {
-
-    /**
-     * Create an Article management object.
-     * @param {Object} settings The settings object for the initialization of the SDK
-     */
     constructor(settings) {
         this._settings = settings;
     }
@@ -42,13 +37,13 @@ export class Article {
     /**
      * Create an unpublished article on the MindTouch site.
      *
-     * @param {Object} options - Parameters that control the Article creation. The following parameters are valid:
-     * - `path` {string} - The path of the new article
-     * - `content` {string} (optional) - The initial contents of the new article.  Defaults to ''
-     * - `title` {string} (optional) - The display title of the new page.  If not supplied, it is inferred from the path parameter.
-     * - `type` {string} (optional) - Article type of the new article. Valid types are: `article:topic-category`, `article:topic-guide`, `article:topic`, `article:howto`, `article:reference`.  Defaults to `article:topic`
-     * - `tags` {Array} (optional) - Initial tags to be set on the new article.  Defaults to an empty array.
-     * @return {Promise<Object>} A Promise yielding an object that contains information about the newly created article.
+     * This function takes a single Object parameter that controls the Article creation. The following parameters are valid:
+     * @param {String} path - The path of the new article
+     * @param {String} [content=''] - The initial contents of the new article.  Defaults to ''
+     * @param {String} [title=null] - The display title of the new page.  If not supplied, it is inferred from the path parameter.
+     * @param {String} [type='article:topic'] - Article type of the new article. Valid types are: `article:topic-category`, `article:topic-guide`, `article:topic`, `article:howto`, `article:reference`.  Defaults to `article:topic`
+     * @param {Array} [tags=[]] - Initial tags to be set on the new article.  Defaults to an empty array.
+     * @return {Promise} A Promise yielding an object that contains information about the newly created article.
      */
     createUnpublished({ path, content = '', title = null, type = 'article:topic', tags = [] }) {
         return new Promise((resolve, reject) => {
@@ -68,8 +63,8 @@ export class Article {
                     contentsParams.title = title;
                 }
                 let newDraft = draftManager.getDraft(resp.id);
-                newDraft.setContents(newContent, contentsParams).then(() => {
-                    resolve();
+                newDraft.setContents(newContent, contentsParams).then((contentsResp) => {
+                    resolve(contentsResp);
                 }).catch(() => {
                     reject('An error occurred while setting the unpublished article content');
                 });
@@ -82,13 +77,13 @@ export class Article {
     /**
      * Create a published article on the MindTouch site.
      *
-     * @param {Object} options - Parameters that control the Article creation. The following parameters are valid:
-     * - `path` {string} - The path of the new article
-     * - `content` {string} (optional) - The initial contents of the new article.  Defaults to ''
-     * - `title` {string} (optional) - The display title of the new page.  If not supplied, it is inferred from the path parameter.
-     * - `type` {string} (optional) - Article type of the new article. Valid types are: `article:topic-category`, `article:topic-guide`, `article:topic`, `article:howto`, `article:reference`.  Defaults to `article:topic`
-     * - `tags` {Array} (optional) - Initial tags to be set on the new article.  Defaults to an empty array.
-     * @return {Promise<Object>} A Promise yielding an object that contains information about the newly created article.
+     * This function takes a single Object parameter that controls the Article creation. The following parameters are valid:
+     * @param {String} path - The path of the new article
+     * @param {String} [content=''] - The initial contents of the new article.  Defaults to ''
+     * @param {String} [title=null] - The display title of the new page.  If not supplied, it is inferred from the path parameter.
+     * @param {String} [type='article:topic'] - Article type of the new article. Valid types are: `article:topic-category`, `article:topic-guide`, `article:topic`, `article:howto`, `article:reference`.  Defaults to `article:topic`
+     * @param {Array} [tags=[]] - Initial tags to be set on the new article.  Defaults to an empty array.
+     * @return {Promise} A Promise yielding an object that contains information about the newly created article.
      */
     createPublished({ path, title = null, content = '', type = 'article:topic', tags = [] }) {
         return new Promise((resolve, reject) => {
@@ -102,8 +97,8 @@ export class Article {
             if(title !== null) {
                 contentsParams.title = title;
             }
-            pageApi.setContents(newContent, contentsParams).then(() => {
-                resolve();
+            pageApi.setContents(newContent, contentsParams).then((resp) => {
+                resolve(resp);
             }).catch(() => {
                 reject('An error occurred while creating the published article');
             });

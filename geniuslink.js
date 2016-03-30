@@ -27,7 +27,6 @@ export class GeniusLink {
 
     /**
      * Construct and configure the GeniusLink connection
-     *
      * @param {Object} configuration - An object containing other initialization values.
      */
     constructor(configuration = {}) {
@@ -61,7 +60,7 @@ export class GeniusLink {
     /**
      * Get the configuration settings used for construction of the GeniusLink instance
      *
-     * @return {type} A settings object with the configuration parameters
+     * @return {Object} A settings object with the configuration parameters
      */
     get configuration() {
         return this.settings.getProperties();

@@ -1,4 +1,4 @@
-import {GeniusLink} from 'geniuslink';
+import {GeniusLink} from '../geniuslink';
 import {Draft, DraftManager} from 'martian/draft';
 import {Page} from 'martian/page';
 describe('article', () => {
@@ -15,7 +15,7 @@ describe('article', () => {
             spyOn(Draft.prototype, 'setContents').and.returnValue(Promise.resolve({}));
             spyOn(Page.prototype, 'setContents').and.returnValue(Promise.resolve({}));
         });
-        it('can create an unpublished article with mininmal params', (done) => {
+        it('can create an unpublished article with minimal params', (done) => {
             let createParams = { path: 'foo/bar/baz' };
             gl.Article.createUnpublished(createParams).then(() => {
                 done();
@@ -44,7 +44,7 @@ describe('article', () => {
                 done();
             });
         });
-        it('can create an published article with mininmal params', (done) => {
+        it('can create an published article with minimal params', (done) => {
             let createParams = { path: 'foo/bar/baz' };
             gl.Article.createPublished(createParams).then(() => {
                 done();

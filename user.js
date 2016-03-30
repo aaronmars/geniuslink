@@ -17,6 +17,10 @@
  */
 import {UserManager} from 'martian/user';
 import {UserEvents} from 'martian/userEvents';
+
+/**
+ * User management
+ */
 export class User {
     constructor(settings) {
         this.settings = settings;
@@ -25,8 +29,7 @@ export class User {
 
     /**
      * The current MindTouch host user, or an anonymous user is unauthenticated
-     *
-     * @returns {Object}
+     * @returns {Promise.<Object>} - A Promise that, when resolved, yields an object with information about the current user.
      */
     getCurrentUser() {
         return this.martianUser.getCurrentUser();
@@ -34,8 +37,7 @@ export class User {
 
     /**
      * A url that allows an anonymous user to authenticate with the MindTouch host
-     *
-     * @returns {String}
+     * @returns {String} - The URL on the MindTouch site that will present a user with a login form.
      */
     getLoginUrl() {
         return `${this.settings.get('host')}/@app/login/redirect`;
@@ -44,9 +46,8 @@ export class User {
     /**
      * Gets the activity of a user based on a system-defined token. Currently,
      * page views and search attempts are returned in the listing of the user activity.
-     *
-     * @param  {String} userToken A system-defined token that identifies a particular user.
-     * @return {Promise} A Promise that, when resolved yields the user activity event list.
+     * @param  {String} userToken - A system-defined token that identifies a particular user.
+     * @return {Promise.<Object>} - A Promise that, when resolved, yields the user activity event list.
      */
     getInsights(userToken) {
         let ue = new UserEvents(this.settings);
