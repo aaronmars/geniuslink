@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {GeniusLink} from 'geniuslink';
+import {GeniusLink} from '../geniuslink';
 import {UserManager} from 'martian/user';
 import {UserEvents} from 'martian/userEvents';
 describe('user', () => {

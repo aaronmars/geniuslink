@@ -24,7 +24,10 @@ var plumber = require('gulp-plumber');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var sourcemaps = require('gulp-sourcemaps');
+var jsdoc = require('gulp-jsdoc3');
 var KarmaServer = require('karma').Server;
+
+var docFiles = [ 'README.md', 'geniuslink.js', 'search.js', 'user.js', 'article.js' ];
 
 /*** sub tasks ***/
 gulp.task('build', function(cb) {
@@ -60,6 +63,11 @@ gulp.task('inspect', function() {
         .pipe(cached('inspect'))
         .pipe(eslint({ configFile: '.eslintrc' }))
         .pipe(eslint.format('stylish'));
+});
+
+gulp.task('doc', function(cb) {
+    gulp.src(docFiles, { read: false })
+        .pipe(jsdoc(cb));
 });
 
 /*** main tasks ***/

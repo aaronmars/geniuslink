@@ -23,13 +23,14 @@ export class Search {
 
     /**
      * @param {String} q - keywords or advanced search syntax
-     * @param {Object} options - {
-     *  page: paginated {page}
-     *  limit: limit search results to {limit} items per paginated page
-     *  tags: constrain search results to items tagged with {tag}
-     *  path: constraint search results to items located in the {path} page hierarchy
-     * }
-     * @returns {Object}
+     * @param {Object} options - Options that customize the set of search results.
+     * @param {Number} [options.page=1] The paginated page number offset to return.
+     * @param {Number} [options.limit=10] - Limit search results to the specified number of items per paginated page.
+     * @param {String} [options.tags=''] - A comma-separated list of tags to constrain search results to items containing one of the tags.
+     * @param {String} [options.type=''] - Type or types to filter the results in a comma delimited list.  Valid types: `wiki`, `document`, `image`, `binary`
+     * @param {String} [options.path=''] - A page path to constrain the search results to items located under the specified path.
+     * @param {Boolean} [options.recommendations=true] - `true` to include recommended search results based off site configuration. `false` to suppress them.
+     * @returns {Promise} - A Promise that, when resolved, yields the results from the search.
      */
     search(q, options = {}) {
         if(!q || q === '') {

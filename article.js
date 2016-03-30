@@ -25,10 +25,26 @@ function _getTagsMarkup(tags) {
     tagsMarkup = `<p class="template:tag-insert">${tagsMarkup}</p>`;
     return tagsMarkup;
 }
+
+/**
+ * Article management
+ */
 export class Article {
     constructor(settings) {
         this._settings = settings;
     }
+
+    /**
+     * Create an unpublished article on the MindTouch site.
+     *
+     * This function takes a single Object parameter that controls the Article creation. The following parameters are valid:
+     * @param {String} path - The path of the new article
+     * @param {String} [content=''] - The initial contents of the new article.  Defaults to ''
+     * @param {String} [title=null] - The display title of the new page.  If not supplied, it is inferred from the path parameter.
+     * @param {String} [type='article:topic'] - Article type of the new article. Valid types are: `article:topic-category`, `article:topic-guide`, `article:topic`, `article:howto`, `article:reference`.  Defaults to `article:topic`
+     * @param {Array} [tags=[]] - Initial tags to be set on the new article.  Defaults to an empty array.
+     * @return {Promise} A Promise yielding an object that contains information about the newly created article.
+     */
     createUnpublished({ path, content = '', title = null, type = 'article:topic', tags = [] }) {
         return new Promise((resolve, reject) => {
             let draftManager = new DraftManager(this._settings);
@@ -47,8 +63,8 @@ export class Article {
                     contentsParams.title = title;
                 }
                 let newDraft = draftManager.getDraft(resp.id);
-                newDraft.setContents(newContent, contentsParams).then(() => {
-                    resolve();
+                newDraft.setContents(newContent, contentsParams).then((contentsResp) => {
+                    resolve(contentsResp);
                 }).catch(() => {
                     reject('An error occurred while setting the unpublished article content');
                 });
@@ -57,6 +73,18 @@ export class Article {
             });
         });
     }
+
+    /**
+     * Create a published article on the MindTouch site.
+     *
+     * This function takes a single Object parameter that controls the Article creation. The following parameters are valid:
+     * @param {String} path - The path of the new article
+     * @param {String} [content=''] - The initial contents of the new article.  Defaults to ''
+     * @param {String} [title=null] - The display title of the new page.  If not supplied, it is inferred from the path parameter.
+     * @param {String} [type='article:topic'] - Article type of the new article. Valid types are: `article:topic-category`, `article:topic-guide`, `article:topic`, `article:howto`, `article:reference`.  Defaults to `article:topic`
+     * @param {Array} [tags=[]] - Initial tags to be set on the new article.  Defaults to an empty array.
+     * @return {Promise} A Promise yielding an object that contains information about the newly created article.
+     */
     createPublished({ path, title = null, content = '', type = 'article:topic', tags = [] }) {
         return new Promise((resolve, reject) => {
             let pageApi = new Page(path, this._settings);
@@ -69,8 +97,8 @@ export class Article {
             if(title !== null) {
                 contentsParams.title = title;
             }
-            pageApi.setContents(newContent, contentsParams).then(() => {
-                resolve();
+            pageApi.setContents(newContent, contentsParams).then((resp) => {
+                resolve(resp);
             }).catch(() => {
                 reject('An error occurred while creating the published article');
             });

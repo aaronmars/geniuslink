@@ -476,87 +476,91 @@ $__System.register('e', ['6', '7', '8', '9', 'a', 'c', 'd'], function (_export) 
     };
 });
 $__System.register('f', ['5', '8', '9', 'e'], function (_export) {
-    var UserManager, _createClass, _classCallCheck, UserEvents, User;
+  var UserManager, _createClass, _classCallCheck, UserEvents, User;
 
-    return {
-        setters: [function (_3) {
-            UserManager = _3.UserManager;
-        }, function (_) {
-            _createClass = _['default'];
-        }, function (_2) {
-            _classCallCheck = _2['default'];
-        }, function (_e) {
-            UserEvents = _e.UserEvents;
-        }],
-        execute: function () {
-            /**
-             * MindTouch GeniusLink SDK
-             * Copyright (C) 2006-2015 MindTouch, Inc.
-             * www.mindtouch.com  oss@mindtouch.com
-             *
-             * Licensed under the Apache License, Version 2.0 (the "License");
-             * you may not use this file except in compliance with the License.
-             * You may obtain a copy of the License at
-             *
-             *     http://www.apache.org/licenses/LICENSE-2.0
-             *
-             * Unless required by applicable law or agreed to in writing, software
-             * distributed under the License is distributed on an "AS IS" BASIS,
-             * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-             * See the License for the specific language governing permissions and
-             * limitations under the License.
-             */
-            'use strict';
+  return {
+    setters: [function (_3) {
+      UserManager = _3.UserManager;
+    }, function (_) {
+      _createClass = _['default'];
+    }, function (_2) {
+      _classCallCheck = _2['default'];
+    }, function (_e) {
+      UserEvents = _e.UserEvents;
+    }],
+    execute: function () {
+      /**
+       * MindTouch GeniusLink SDK
+       * Copyright (C) 2006-2015 MindTouch, Inc.
+       * www.mindtouch.com  oss@mindtouch.com
+       *
+       * Licensed under the Apache License, Version 2.0 (the "License");
+       * you may not use this file except in compliance with the License.
+       * You may obtain a copy of the License at
+       *
+       *     http://www.apache.org/licenses/LICENSE-2.0
+       *
+       * Unless required by applicable law or agreed to in writing, software
+       * distributed under the License is distributed on an "AS IS" BASIS,
+       * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       * See the License for the specific language governing permissions and
+       * limitations under the License.
+       */
 
-            User = (function () {
-                function User(settings) {
-                    _classCallCheck(this, User);
+      /**
+       * User management
+       */
+      'use strict';
 
-                    this.settings = settings;
-                    this.martianUser = new UserManager(settings);
-                }
+      User = (function () {
+        function User(settings) {
+          _classCallCheck(this, User);
 
-                /**
-                 * The current MindTouch host user, or an anonymous user is unauthenticated
-                 *
-                 * @returns {Object}
-                 */
-
-                _createClass(User, [{
-                    key: 'getCurrentUser',
-                    value: function getCurrentUser() {
-                        return this.martianUser.getCurrentUser();
-                    }
-
-                    /**
-                     * A url that allows an anonymous user to authenticate with the MindTouch host
-                     *
-                     * @returns {String}
-                     */
-                }, {
-                    key: 'getLoginUrl',
-                    value: function getLoginUrl() {
-                        return this.settings.get('host') + '/@app/login/redirect';
-                    }
-
-                    /**
-                     * Gets the activity of a user based on a system-defined token. Currently,
-                     * page views and search attempts are returned in the listing of the user activity.
-                     */
-                }, {
-                    key: 'getInsights',
-                    value: function getInsights(userToken) {
-                        var ue = new UserEvents(this.settings);
-                        return ue.getActivity(userToken);
-                    }
-                }]);
-
-                return User;
-            })();
-
-            _export('User', User);
+          this.settings = settings;
+          this.martianUser = new UserManager(settings);
         }
-    };
+
+        /**
+         * The current MindTouch host user, or an anonymous user is unauthenticated
+         * @returns {Promise.<Object>} - A Promise that, when resolved, yields an object with information about the current user.
+         */
+
+        _createClass(User, [{
+          key: 'getCurrentUser',
+          value: function getCurrentUser() {
+            return this.martianUser.getCurrentUser();
+          }
+
+          /**
+           * A url that allows an anonymous user to authenticate with the MindTouch host
+           * @returns {String} - The URL on the MindTouch site that will present a user with a login form.
+           */
+        }, {
+          key: 'getLoginUrl',
+          value: function getLoginUrl() {
+            return this.settings.get('host') + '/@app/login/redirect';
+          }
+
+          /**
+           * Gets the activity of a user based on a system-defined token. Currently,
+           * page views and search attempts are returned in the listing of the user activity.
+           * @param  {String} userToken - A system-defined token that identifies a particular user.
+           * @return {Promise.<Object>} - A Promise that, when resolved, yields the user activity event list.
+           */
+        }, {
+          key: 'getInsights',
+          value: function getInsights(userToken) {
+            var ue = new UserEvents(this.settings);
+            return ue.getActivity(userToken);
+          }
+        }]);
+
+        return User;
+      })();
+
+      _export('User', User);
+    }
+  };
 });
 $__System.register('10', ['3'], function (_export) {
     /**
@@ -825,13 +829,14 @@ $__System.register('14', ['8', '9', '11'], function (_export) {
 
                 /**
                  * @param {String} q - keywords or advanced search syntax
-                 * @param {Object} options - {
-                 *  page: paginated {page}
-                 *  limit: limit search results to {limit} items per paginated page
-                 *  tags: constrain search results to items tagged with {tag}
-                 *  path: constraint search results to items located in the {path} page hierarchy
-                 * }
-                 * @returns {Object}
+                 * @param {Object} options - Options that customize the set of search results.
+                 * @param {Number} [options.page=1] The paginated page number offset to return.
+                 * @param {Number} [options.limit=10] - Limit search results to the specified number of items per paginated page.
+                 * @param {String} [options.tags=''] - A comma-separated list of tags to constrain search results to items containing one of the tags.
+                 * @param {String} [options.type=''] - Type or types to filter the results in a comma delimited list.  Valid types: `wiki`, `document`, `image`, `binary`
+                 * @param {String} [options.path=''] - A page path to constrain the search results to items located under the specified path.
+                 * @param {Boolean} [options.recommendations=true] - `true` to include recommended search results based off site configuration. `false` to suppress them.
+                 * @returns {Promise} - A Promise that, when resolved, yields the results from the search.
                  */
 
                 _createClass(Search, [{
@@ -4711,6 +4716,10 @@ $__System.register('71', ['8', '9', '13', '15', '70'], function (_export) {
         tagsMarkup = '<p class="template:tag-insert">' + tagsMarkup + '</p>';
         return tagsMarkup;
     }
+
+    /**
+     * Article management
+     */
     return {
         setters: [function (_) {
             _createClass = _['default'];
@@ -4750,6 +4759,18 @@ $__System.register('71', ['8', '9', '13', '15', '70'], function (_export) {
                     this._settings = settings;
                 }
 
+                /**
+                 * Create an unpublished article on the MindTouch site.
+                 *
+                 * This function takes a single Object parameter that controls the Article creation. The following parameters are valid:
+                 * @param {String} path - The path of the new article
+                 * @param {String} [content=''] - The initial contents of the new article.  Defaults to ''
+                 * @param {String} [title=null] - The display title of the new page.  If not supplied, it is inferred from the path parameter.
+                 * @param {String} [type='article:topic'] - Article type of the new article. Valid types are: `article:topic-category`, `article:topic-guide`, `article:topic`, `article:howto`, `article:reference`.  Defaults to `article:topic`
+                 * @param {Array} [tags=[]] - Initial tags to be set on the new article.  Defaults to an empty array.
+                 * @return {Promise} A Promise yielding an object that contains information about the newly created article.
+                 */
+
                 _createClass(Article, [{
                     key: 'createUnpublished',
                     value: function createUnpublished(_ref) {
@@ -4782,8 +4803,8 @@ $__System.register('71', ['8', '9', '13', '15', '70'], function (_export) {
                                     contentsParams.title = title;
                                 }
                                 var newDraft = draftManager.getDraft(resp.id);
-                                newDraft.setContents(newContent, contentsParams).then(function () {
-                                    resolve();
+                                newDraft.setContents(newContent, contentsParams).then(function (contentsResp) {
+                                    resolve(contentsResp);
                                 })['catch'](function () {
                                     reject('An error occurred while setting the unpublished article content');
                                 });
@@ -4792,6 +4813,18 @@ $__System.register('71', ['8', '9', '13', '15', '70'], function (_export) {
                             });
                         });
                     }
+
+                    /**
+                     * Create a published article on the MindTouch site.
+                     *
+                     * This function takes a single Object parameter that controls the Article creation. The following parameters are valid:
+                     * @param {String} path - The path of the new article
+                     * @param {String} [content=''] - The initial contents of the new article.  Defaults to ''
+                     * @param {String} [title=null] - The display title of the new page.  If not supplied, it is inferred from the path parameter.
+                     * @param {String} [type='article:topic'] - Article type of the new article. Valid types are: `article:topic-category`, `article:topic-guide`, `article:topic`, `article:howto`, `article:reference`.  Defaults to `article:topic`
+                     * @param {Array} [tags=[]] - Initial tags to be set on the new article.  Defaults to an empty array.
+                     * @return {Promise} A Promise yielding an object that contains information about the newly created article.
+                     */
                 }, {
                     key: 'createPublished',
                     value: function createPublished(_ref2) {
@@ -4817,8 +4850,8 @@ $__System.register('71', ['8', '9', '13', '15', '70'], function (_export) {
                             if (title !== null) {
                                 contentsParams.title = title;
                             }
-                            pageApi.setContents(newContent, contentsParams).then(function () {
-                                resolve();
+                            pageApi.setContents(newContent, contentsParams).then(function (resp) {
+                                resolve(resp);
                             })['catch'](function () {
                                 reject('An error occurred while creating the published article');
                             });
@@ -5257,13 +5290,16 @@ $__System.register('76', ['8', '9', '14', '71', 'f', '2d'], function (_export) {
              * See the License for the specific language governing permissions and
              * limitations under the License.
              */
+
+            /**
+             * The main GeniusLink SDK entry point.
+             */
             'use strict';
 
             GeniusLink = (function () {
 
                 /**
                  * Construct and configure the GeniusLink connection
-                 *
                  * @param {Object} configuration - An object containing other initialization values.
                  */
 
@@ -5299,21 +5335,45 @@ $__System.register('76', ['8', '9', '14', '71', 'f', '2d'], function (_export) {
                     this.articleLib = new Article(this.settings);
                 }
 
+                /**
+                 * Get the configuration settings used for construction of the GeniusLink instance
+                 *
+                 * @return {Object} A settings object with the configuration parameters
+                 */
+
                 _createClass(GeniusLink, [{
                     key: 'configuration',
                     get: function get() {
                         return this.settings.getProperties();
                     }
+
+                    /**
+                     * Get the GeniusLink search interface.
+                     *
+                     * @return {Function} The GeniusLink search function.
+                     */
                 }, {
                     key: 'search',
                     get: function get() {
                         return this.searchLib.search.bind(this.searchLib);
                     }
+
+                    /**
+                     * Get current user management instance.
+                     *
+                     * @return {User} A User object that can be used to work with the user management functionality.
+                     */
                 }, {
                     key: 'User',
                     get: function get() {
                         return this.userLib;
                     }
+
+                    /**
+                     * Get current article management instance.
+                     *
+                     * @return {Article} An Article object that can be used to work with the article management functionality.
+                     */
                 }, {
                     key: 'Article',
                     get: function get() {
