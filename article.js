@@ -48,14 +48,14 @@ export class Article {
     createUnpublished({ path, content = '', title = null, type = 'article:topic', tags = [] }) {
         return new Promise((resolve, reject) => {
             let draftManager = new DraftManager(this._settings);
-            let tagsCopy = [ ...tags ];
+            let tagsWithArticleType = new Array(tags);
 
             // First, create a new, empty draft at the path supplied.
             draftManager.createDraft(path).then((resp) => {
-                if(tagsCopy.indexOf(type) < 0) {
-                    tagsCopy.push(type);
+                if(tagsWithArticleType.indexOf(type) < 0) {
+                    tagsWithArticleType.push(type);
                 }
-                let tagsMarkup = _getTagsMarkup(tagsCopy);
+                let tagsMarkup = _getTagsMarkup(tagsWithArticleType);
                 let newContent = `${content}${tagsMarkup}`;
 
                 // Now that the draft is created, set the contents and title;
