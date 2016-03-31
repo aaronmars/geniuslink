@@ -4788,13 +4788,14 @@ $__System.register('71', ['8', '9', '13', '15', '70'], function (_export) {
 
                         return new _Promise(function (resolve, reject) {
                             var draftManager = new DraftManager(_this._settings);
+                            var tagsWithArticleType = new Array(tags);
 
                             // First, create a new, empty draft at the path supplied.
                             draftManager.createDraft(path).then(function (resp) {
-                                if (tags.indexOf(type) < 0) {
-                                    tags.push(type);
+                                if (tagsWithArticleType.indexOf(type) < 0) {
+                                    tagsWithArticleType.push(type);
                                 }
-                                var tagsMarkup = _getTagsMarkup(tags);
+                                var tagsMarkup = _getTagsMarkup(tagsWithArticleType);
                                 var newContent = '' + content + tagsMarkup;
 
                                 // Now that the draft is created, set the contents and title;
