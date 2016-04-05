@@ -51,6 +51,6 @@ export class User {
      */
     getInsights(userToken) {
         let ue = new UserEvents(this.settings);
-        return ue.getActivity(userToken);
+        return ue.getActivity(userToken, { include: 'page' });
     }
 }

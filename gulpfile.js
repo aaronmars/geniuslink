@@ -15,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*eslint-env node*/
 'use strict';
 
 var jspm = require('jspm');

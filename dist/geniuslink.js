@@ -551,7 +551,7 @@ $__System.register('f', ['5', '8', '9', 'e'], function (_export) {
           key: 'getInsights',
           value: function getInsights(userToken) {
             var ue = new UserEvents(this.settings);
-            return ue.getActivity(userToken);
+            return ue.getActivity(userToken, { include: 'page' });
           }
         }]);
 
