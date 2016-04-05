@@ -1,16 +1,11 @@
 {
   "globals": {
-
-    /* Jasmine */
-    "jasmine": false,
-    "describe": false,
-    "it": false,
-    "xdescribe": false,
-    "xit": false,
-    "expect": false,
-    "beforeEach": false,
-    "afterEach": false,
-    "Mocks": false
+    "window": false,
+    "Mocks": true
+  },
+  "env": {
+    "es6": true,
+    "jasmine": true
   },
   "parserOptions": {
     "ecmaVersion": 6,
