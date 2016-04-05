@@ -56,103 +56,160 @@ $__System.register('2', ['3', '4'], function (_export) {
     };
 });
 $__System.register('5', ['2', '4', '6', '7', '8', '9'], function (_export) {
-    var userListModel, userModel, Plug, utility, _createClass, _classCallCheck, User, UserManager;
+  var userListModel, userModel, Plug, utility, _createClass, _classCallCheck, User, UserManager;
 
-    return {
-        setters: [function (_6) {
-            userListModel = _6.userListModel;
-        }, function (_5) {
-            userModel = _5.userModel;
-        }, function (_3) {
-            Plug = _3.Plug;
-        }, function (_4) {
-            utility = _4.utility;
-        }, function (_) {
-            _createClass = _['default'];
-        }, function (_2) {
-            _classCallCheck = _2['default'];
-        }],
-        execute: function () {
-            /**
-             * Martian - Core JavaScript API for MindTouch
-             *
-             * Copyright (c) 2015 MindTouch Inc.
-             * www.mindtouch.com  oss@mindtouch.com
-             *
-             * Licensed under the Apache License, Version 2.0 (the "License");
-             * you may not use this file except in compliance with the License.
-             * You may obtain a copy of the License at
-             *
-             *     http://www.apache.org/licenses/LICENSE-2.0
-             *
-             * Unless required by applicable law or agreed to in writing, software
-             * distributed under the License is distributed on an "AS IS" BASIS,
-             * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-             * See the License for the specific language governing permissions and
-             * limitations under the License.
-             */
-            'use strict';
+  return {
+    setters: [function (_6) {
+      userListModel = _6.userListModel;
+    }, function (_5) {
+      userModel = _5.userModel;
+    }, function (_3) {
+      Plug = _3.Plug;
+    }, function (_4) {
+      utility = _4.utility;
+    }, function (_) {
+      _createClass = _['default'];
+    }, function (_2) {
+      _classCallCheck = _2['default'];
+    }],
+    execute: function () {
+      /**
+       * Martian - Core JavaScript API for MindTouch
+       *
+       * Copyright (c) 2015 MindTouch Inc.
+       * www.mindtouch.com  oss@mindtouch.com
+       *
+       * Licensed under the Apache License, Version 2.0 (the "License");
+       * you may not use this file except in compliance with the License.
+       * You may obtain a copy of the License at
+       *
+       *     http://www.apache.org/licenses/LICENSE-2.0
+       *
+       * Unless required by applicable law or agreed to in writing, software
+       * distributed under the License is distributed on an "AS IS" BASIS,
+       * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       * See the License for the specific language governing permissions and
+       * limitations under the License.
+       */
 
-            User = (function () {
-                function User(id, settings) {
-                    if (id === undefined) id = 'current';
+      /**
+       * A class for managing a MindTouch user.
+       */
+      'use strict';
 
-                    _classCallCheck(this, User);
+      User = (function () {
 
-                    this._id = utility.getResourceId(id, 'current');
-                    this._plug = new Plug(settings).at('@api', 'deki', 'users', this._id);
-                }
+        /**
+         * Construct a new User object.
+         * @param {Number|String} [id='current'] - The user's numeric ID or username.
+         * @param {Settings} [settings] - The {@link Settings} information to use in construction. If not supplied, the default settings are used.
+         */
 
-                _createClass(User, [{
-                    key: 'getInfo',
-                    value: function getInfo() {
-                        return this._plug.get().then(userModel.parse);
-                    }
-                }]);
+        function User(id, settings) {
+          if (id === undefined) id = 'current';
 
-                return User;
-            })();
+          _classCallCheck(this, User);
 
-            _export('User', User);
-
-            UserManager = (function () {
-                function UserManager(settings) {
-                    _classCallCheck(this, UserManager);
-
-                    this.settings = settings;
-                    this.plug = new Plug(settings).at('@api', 'deki', 'users');
-                }
-
-                _createClass(UserManager, [{
-                    key: 'getCurrentUser',
-                    value: function getCurrentUser() {
-                        return this.plug.at('current').get().then(userModel.parse);
-                    }
-                }, {
-                    key: 'getUsers',
-                    value: function getUsers() {
-                        return this.plug.get().then(userListModel.parse);
-                    }
-                }, {
-                    key: 'searchUsers',
-                    value: function searchUsers(constraints) {
-                        return this.plug.at('search').withParams(constraints).get().then(userListModel.parse);
-                    }
-                }, {
-                    key: 'getUser',
-                    value: function getUser() {
-                        var id = arguments.length <= 0 || arguments[0] === undefined ? 'current' : arguments[0];
-
-                        return new User(id, this.settings);
-                    }
-                }]);
-
-                return UserManager;
-            })();
-
-            _export('UserManager', UserManager);
+          this._id = utility.getResourceId(id, 'current');
+          this._plug = new Plug(settings).at('@api', 'deki', 'users', this._id);
         }
-    };
+
+        /**
+         * A class for managing the users on a MindTouch site.
+         */
+
+        /**
+         * Get the user information.
+         * @returns {Promise.<userModel>} - A Promise that, when resolved, returns a {@link userModel} containing the user information.
+         */
+
+        _createClass(User, [{
+          key: 'getInfo',
+          value: function getInfo() {
+            return this._plug.get().then(userModel.parse);
+          }
+        }]);
+
+        return User;
+      })();
+
+      _export('User', User);
+
+      UserManager = (function () {
+
+        /**
+         * Construct a new UserManager object.
+         * @param {Settings} [settings] - The {@link Settings} information to use in construction. If not supplied, the default settings are used.
+         */
+
+        function UserManager(settings) {
+          _classCallCheck(this, UserManager);
+
+          this.settings = settings;
+          this.plug = new Plug(settings).at('@api', 'deki', 'users');
+        }
+
+        /**
+         * Get the currently signed-in user.
+         * @returns {Promise.<userModel>} - A Promise that, when resolved, returns a {@link userModel} containing the current user's information.
+         */
+
+        _createClass(UserManager, [{
+          key: 'getCurrentUser',
+          value: function getCurrentUser() {
+            return this.plug.at('current').get().then(userModel.parse);
+          }
+
+          /**
+           * Get all of the users.
+           * @returns {Promise.<userListModel>} - A Promise that, when resolved, returns a {@link userListModel} containing the list of users.
+           */
+        }, {
+          key: 'getUsers',
+          value: function getUsers() {
+            return this.plug.get().then(userListModel.parse);
+          }
+
+          /**
+           * Get a listing of users filtered by the supplied constraints
+           * @param {Object} constraints - The various constraints that can be used to filter the user listing.
+           * @param {Number} constraints.groupid - Search for users in a specific group
+           * @param {String} constraints.fullname - Search for users full name starting with supplied text.
+           * @param {Boolean} constraints.active - Search for users by their active status
+           * @param {Number} constraints.authprovider - Return users belonging to given authentication service id
+           * @param {String} constraints.email - Search for users by name and email or part of a name and email
+           * @param {Boolean} constraints.seated - Search for users with or without seats
+           * @param {String} constraints.username - Search for users name starting with supplied text
+           * @param {Number} constraints.roleid - Search for users of a specific role ID.
+           * @param {Number} constraints.limit - Maximum number of items to retrieve. Actual maximum is capped by site setting
+           * @returns {Promise.<userListModel>} - A Promise that, when resolved, returns a {@link userListModel} containing the list of found users.
+           */
+        }, {
+          key: 'searchUsers',
+          value: function searchUsers(constraints) {
+            return this.plug.at('search').withParams(constraints).get().then(userListModel.parse);
+          }
+
+          /**
+           * Get a {@see User} object by ID.
+           * @param {Number|String} [id='current'] - The user's numeric ID or username.
+           * @returns {User} - The User object corresponding to the supplied ID.
+           */
+        }, {
+          key: 'getUser',
+          value: function getUser() {
+            var id = arguments.length <= 0 || arguments[0] === undefined ? 'current' : arguments[0];
+
+            return new User(id, this.settings);
+          }
+        }]);
+
+        return UserManager;
+      })();
+
+      _export('UserManager', UserManager);
+    }
+  };
 });
 $__System.register('a', ['3', 'b'], function (_export) {
     /**
@@ -189,12 +246,10 @@ $__System.register('a', ['3', 'b'], function (_export) {
                     var parsed = {
                         count: modelHelper.getInt(obj['@count']),
                         upto: obj['@upto'],
-                        since: obj['@since'],
-                        events: []
+                        since: obj['@since']
                     };
-                    var events = modelHelper.getArray(obj.event);
-                    events.forEach(function (e) {
-                        parsed.events.push(eventModel.parse(e));
+                    parsed.events = modelHelper.getArray(obj.event).map(function (e) {
+                        return eventModel.parse(e);
                     });
                     return parsed;
                 }
@@ -305,9 +360,12 @@ $__System.register('b', ['3'], function (_export) {
                     }
                     if ('page' in obj) {
                         parsed.page = {
-                            id: obj.page['@id'],
+                            id: modelHelper.getInt(obj.page['@id']),
                             path: obj.page.path
                         };
+                        if ('title' in obj.page) {
+                            parsed.page.title = obj.page.title;
+                        }
                         if ('@revision' in obj.page) {
                             parsed.page.revision = modelHelper.getInt(obj.page['@revision']);
                         }
@@ -399,81 +457,117 @@ $__System.register('d', ['3', 'b'], function (_export) {
     };
 });
 $__System.register('e', ['6', '7', '8', '9', 'a', 'c', 'd'], function (_export) {
-    var Plug, utility, _createClass, _classCallCheck, userActivityModel, eventListModel, eventDetailModel, UserEvents;
+  var Plug, utility, _createClass, _classCallCheck, userActivityModel, eventListModel, eventDetailModel, UserEvents;
 
-    return {
-        setters: [function (_3) {
-            Plug = _3.Plug;
-        }, function (_4) {
-            utility = _4.utility;
-        }, function (_) {
-            _createClass = _['default'];
-        }, function (_2) {
-            _classCallCheck = _2['default'];
-        }, function (_a) {
-            userActivityModel = _a.userActivityModel;
-        }, function (_c) {
-            eventListModel = _c.eventListModel;
-        }, function (_d) {
-            eventDetailModel = _d.eventDetailModel;
-        }],
-        execute: function () {
-            /**
-             * Martian - Core JavaScript API for MindTouch
-             *
-             * Copyright (c) 2015 MindTouch Inc.
-             * www.mindtouch.com  oss@mindtouch.com
-             *
-             * Licensed under the Apache License, Version 2.0 (the "License");
-             * you may not use this file except in compliance with the License.
-             * You may obtain a copy of the License at
-             *
-             *     http://www.apache.org/licenses/LICENSE-2.0
-             *
-             * Unless required by applicable law or agreed to in writing, software
-             * distributed under the License is distributed on an "AS IS" BASIS,
-             * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-             * See the License for the specific language governing permissions and
-             * limitations under the License.
-             */
-            'use strict';
+  return {
+    setters: [function (_3) {
+      Plug = _3.Plug;
+    }, function (_4) {
+      utility = _4.utility;
+    }, function (_) {
+      _createClass = _['default'];
+    }, function (_2) {
+      _classCallCheck = _2['default'];
+    }, function (_a) {
+      userActivityModel = _a.userActivityModel;
+    }, function (_c) {
+      eventListModel = _c.eventListModel;
+    }, function (_d) {
+      eventDetailModel = _d.eventDetailModel;
+    }],
+    execute: function () {
+      /**
+       * Martian - Core JavaScript API for MindTouch
+       *
+       * Copyright (c) 2015 MindTouch Inc.
+       * www.mindtouch.com  oss@mindtouch.com
+       *
+       * Licensed under the Apache License, Version 2.0 (the "License");
+       * you may not use this file except in compliance with the License.
+       * You may obtain a copy of the License at
+       *
+       *     http://www.apache.org/licenses/LICENSE-2.0
+       *
+       * Unless required by applicable law or agreed to in writing, software
+       * distributed under the License is distributed on an "AS IS" BASIS,
+       * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       * See the License for the specific language governing permissions and
+       * limitations under the License.
+       */
 
-            UserEvents = (function () {
-                function UserEvents(settings) {
-                    _classCallCheck(this, UserEvents);
+      /**
+       * A class for fetching and managing events triggered by users.
+       */
+      'use strict';
 
-                    this.settings = settings;
-                    this.plug = new Plug(settings).at('@api', 'deki', 'events');
-                }
+      UserEvents = (function () {
 
-                _createClass(UserEvents, [{
-                    key: 'getActivity',
-                    value: function getActivity(userToken) {
-                        return this.plug.at('support-agent', userToken).get().then(userActivityModel.parse);
-                    }
-                }, {
-                    key: 'getHistory',
-                    value: function getHistory(userId) {
-                        return this.plug.at('user-page', utility.getResourceId(userId, 'current')).get().then(eventListModel.parse);
-                    }
-                }, {
-                    key: 'getHistoryDetail',
-                    value: function getHistoryDetail(userId, detailId) {
-                        return this.plug.at('user-page', utility.getResourceId(userId, 'current'), detailId).get().then(eventDetailModel.parse);
-                    }
-                }, {
-                    key: 'logSearch',
-                    value: function logSearch(userId, eventData) {
-                        return this.plug.at('search', utility.getResourceId(userId, 'current')).post(JSON.stringify(eventData), utility.jsonRequestType);
-                    }
-                }]);
+        /**
+         * Construct a new UserEvents object.
+         * @param {Settings} [settings] - The {@link Settings} information to use in construction. If not supplied, the default settings are used.
+         */
 
-                return UserEvents;
-            })();
+        function UserEvents(settings) {
+          _classCallCheck(this, UserEvents);
 
-            _export('UserEvents', UserEvents);
+          this.settings = settings;
+          this.plug = new Plug(settings).at('@api', 'deki', 'events');
         }
-    };
+
+        /**
+         * Get the user activity.
+         * @param {Number|String} userToken - A token that identifies the user from an event perspective.  It can be the user's numeric ID, username, or another system-defined token.
+         * @returns {Promise.<userActivityModel>} - A Promise that, when resolved, yields a {@link userActivityModel} containing the user's activity events.
+         */
+
+        _createClass(UserEvents, [{
+          key: 'getActivity',
+          value: function getActivity(userToken, params) {
+            return this.plug.at('support-agent', userToken).withParams(params).get().then(userActivityModel.parse);
+          }
+
+          /**
+           * Get the user's history events.
+           * @param {Number|String} [userId='current'] - The user's numeric ID or username.
+           * @returns {Promise.<eventListModel>} - A Promise that, when resolved, yields a {@link eventListModel} that contains the listing of the user's events.
+           */
+        }, {
+          key: 'getHistory',
+          value: function getHistory(userId) {
+            return this.plug.at('user-page', utility.getResourceId(userId, 'current')).get().then(eventListModel.parse);
+          }
+
+          /**
+           * Get the details of a specific user event.
+           * @param {Number|String} [userId='current'] - The user's numeric ID or username.
+           * @param {String} detailId - The detail ID of the event.
+           * @returns {Promise.<eventDetailModel>} - A Promise that, when resolved, yields a {@link eventDetailModel} that contains the event information.
+           */
+        }, {
+          key: 'getHistoryDetail',
+          value: function getHistoryDetail(userId, detailId) {
+            return this.plug.at('user-page', utility.getResourceId(userId, 'current'), detailId).get().then(eventDetailModel.parse);
+          }
+
+          /**
+           * Log a search event that is performed by a specific user.
+           * @param {Number|String} [userId='current'] - The user's numeric ID or username.
+           * @param {Object} eventData - Specific data about the search that was performed.
+           * @returns {Promise} - A Promise that, when resolved, indicates a successful posting of the search event.
+           */
+        }, {
+          key: 'logSearch',
+          value: function logSearch(userId, eventData) {
+            return this.plug.at('search', utility.getResourceId(userId, 'current')).post(JSON.stringify(eventData), utility.jsonRequestType);
+          }
+        }]);
+
+        return UserEvents;
+      })();
+
+      _export('UserEvents', UserEvents);
+    }
+  };
 });
 $__System.register('f', ['5', '8', '9', 'e'], function (_export) {
   var UserManager, _createClass, _classCallCheck, UserEvents, User;
@@ -680,6 +774,10 @@ $__System.register('11', ['6', '7', '8', '9', '10', '12', '13'], function (_expo
         }
         return '+(' + constraints.join(' ') + ')';
     }
+
+    /**
+     * A class for administering aspects of a MindTouch site.
+     */
     return {
         setters: [function (_6) {
             Plug = _6.Plug;
@@ -718,11 +816,25 @@ $__System.register('11', ['6', '7', '8', '9', '10', '12', '13'], function (_expo
             'use strict';
 
             Site = (function () {
+
+                /**
+                 * Construct a Site object.
+                 * @param {Settings} [settings] - The {@link Settings} information to use in construction. If not supplied, the default settings are used.
+                 */
+
                 function Site(settings) {
                     _classCallCheck(this, Site);
 
                     this.plug = new Plug(settings).at('@api', 'deki', 'site');
                 }
+
+                /**
+                 * Get the localized string corresponding to the supplied resource key.
+                 * @param {Object} options - Options to direct the fetching of the localized string.
+                 * @param {String} options.key - The key that identifies the string to fetch.
+                 * @param {String} [options.lang] - A language code used to fetch the string in a specific language.  If not supplied, the current system language will be used.
+                 * @returns {Promise.<String>} - A Promise that, when resolved, yields the fetched string.
+                 */
 
                 _createClass(Site, [{
                     key: 'getResourceString',
@@ -738,6 +850,19 @@ $__System.register('11', ['6', '7', '8', '9', '10', '12', '13'], function (_expo
                         }
                         return locPlug.get();
                     }
+
+                    /**
+                     * Perform a search across the site.
+                     * This function takes a single parameter with the following options.
+                     * @param {Number} [page=1] The paginated page number offset to return.
+                     * @param {Number} [limit=10] - Limit search results to the specified number of items per paginated page.
+                     * @param {String} [tags=''] - A comma-separated list of tags to constrain search results to items containing one of the tags.
+                     * @param {String} [type=''] - Type or types to filter the results in a comma delimited list.  Valid types: `wiki`, `document`, `image`, `binary`
+                     * @param {String} [q=''] - Search keywords or advanced search syntax.
+                     * @param {String} [path=''] - A page path to constrain the search results to items located under the specified path.
+                     * @param {Boolean} [recommendations=true] - `true` to include recommended search results based off site configuration. `false` to suppress them.
+                     * @returns {Promise.<searchModel>} - A Promise that, when resolved, yields the results from the search in a {@link searchModel}.
+                     */
                 }, {
                     key: 'search',
                     value: function search() {
@@ -950,102 +1075,144 @@ $__System.registerDynamic("22", ["21"], true, function($__require, exports, modu
 });
 
 $__System.register('23', ['6', '7', '8', '9', '24', '25', '26', '27'], function (_export) {
-    var Plug, utility, _createClass, _classCallCheck, PageBase, pageModel, _get, _inherits, Draft, DraftManager;
+  var Plug, utility, _createClass, _classCallCheck, PageBase, pageModel, _get, _inherits, Draft, DraftManager;
 
-    return {
-        setters: [function (_5) {
-            Plug = _5.Plug;
-        }, function (_6) {
-            utility = _6.utility;
-        }, function (_3) {
-            _createClass = _3['default'];
-        }, function (_4) {
-            _classCallCheck = _4['default'];
-        }, function (_7) {
-            PageBase = _7.PageBase;
-        }, function (_8) {
-            pageModel = _8.pageModel;
-        }, function (_) {
-            _get = _['default'];
-        }, function (_2) {
-            _inherits = _2['default'];
-        }],
-        execute: function () {
-            /**
-             * Martian - Core JavaScript API for MindTouch
-             *
-             * Copyright (c) 2015 MindTouch Inc.
-             * www.mindtouch.com  oss@mindtouch.com
-             *
-             * Licensed under the Apache License, Version 2.0 (the "License");
-             * you may not use this file except in compliance with the License.
-             * You may obtain a copy of the License at
-             *
-             *     http://www.apache.org/licenses/LICENSE-2.0
-             *
-             * Unless required by applicable law or agreed to in writing, software
-             * distributed under the License is distributed on an "AS IS" BASIS,
-             * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-             * See the License for the specific language governing permissions and
-             * limitations under the License.
-             */
-            'use strict';
+  return {
+    setters: [function (_5) {
+      Plug = _5.Plug;
+    }, function (_6) {
+      utility = _6.utility;
+    }, function (_3) {
+      _createClass = _3['default'];
+    }, function (_4) {
+      _classCallCheck = _4['default'];
+    }, function (_7) {
+      PageBase = _7.PageBase;
+    }, function (_8) {
+      pageModel = _8.pageModel;
+    }, function (_) {
+      _get = _['default'];
+    }, function (_2) {
+      _inherits = _2['default'];
+    }],
+    execute: function () {
+      /**
+       * Martian - Core JavaScript API for MindTouch
+       *
+       * Copyright (c) 2015 MindTouch Inc.
+       * www.mindtouch.com  oss@mindtouch.com
+       *
+       * Licensed under the Apache License, Version 2.0 (the "License");
+       * you may not use this file except in compliance with the License.
+       * You may obtain a copy of the License at
+       *
+       *     http://www.apache.org/licenses/LICENSE-2.0
+       *
+       * Unless required by applicable law or agreed to in writing, software
+       * distributed under the License is distributed on an "AS IS" BASIS,
+       * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       * See the License for the specific language governing permissions and
+       * limitations under the License.
+       */
 
-            Draft = (function (_PageBase) {
-                _inherits(Draft, _PageBase);
+      /**
+       * A class for managing a single unpublished draft page.
+       */
+      'use strict';
 
-                function Draft(id, settings) {
-                    if (id === undefined) id = 'home';
+      Draft = (function (_PageBase) {
+        _inherits(Draft, _PageBase);
 
-                    _classCallCheck(this, Draft);
+        /**
+         * Construct a Draft object.
+         * @param {Number|String} [id=home] - The id of the draft to construct.
+         * @param {Settings} [settings] - The {@link Settings} information to use in construction. If not supplied, the default settings are used.
+         */
 
-                    _get(Object.getPrototypeOf(Draft.prototype), 'constructor', this).call(this, id);
-                    this._plug = new Plug(settings).at('@api', 'deki', 'drafts', this._id);
-                }
+        function Draft(id, settings) {
+          if (id === undefined) id = 'home';
 
-                _createClass(Draft, [{
-                    key: 'deactivate',
-                    value: function deactivate() {
-                        return this._plug.at('deactivate').post().then(pageModel.parse);
-                    }
-                }, {
-                    key: 'publish',
-                    value: function publish() {
-                        return this._plug.at('publish').post();
-                    }
-                }]);
+          _classCallCheck(this, Draft);
 
-                return Draft;
-            })(PageBase);
-
-            _export('Draft', Draft);
-
-            DraftManager = (function () {
-                function DraftManager(settings) {
-                    _classCallCheck(this, DraftManager);
-
-                    this._settings = settings;
-                }
-
-                _createClass(DraftManager, [{
-                    key: 'createDraft',
-                    value: function createDraft(newPath) {
-                        var plug = new Plug(this._settings).at('@api', 'deki', 'drafts', utility.getResourceId(newPath), 'create');
-                        return plug.post().then(pageModel.parse);
-                    }
-                }, {
-                    key: 'getDraft',
-                    value: function getDraft(id) {
-                        return new Draft(id, this._settings);
-                    }
-                }]);
-
-                return DraftManager;
-            })();
-
-            _export('DraftManager', DraftManager);
+          _get(Object.getPrototypeOf(Draft.prototype), 'constructor', this).call(this, id);
+          this._plug = new Plug(settings).at('@api', 'deki', 'drafts', this._id);
         }
-    };
+
+        /**
+         * A class for managing unpublished draft pages.
+         */
+
+        /**
+         * Deactivate the current draft and revert to the published page.
+         * @returns {Promise.<pageModel>} - A Promise that, when resolved, yields a {@link pageModel} for the deactivated page.
+         */
+
+        _createClass(Draft, [{
+          key: 'deactivate',
+          value: function deactivate() {
+            return this._plug.at('deactivate').post().then(pageModel.parse);
+          }
+
+          /**
+           * Publish the draft.
+           * @returns {Promise} - A Promise that, when resolved, indicates a successful publish operation.
+           */
+        }, {
+          key: 'publish',
+          value: function publish() {
+            return this._plug.at('publish').post();
+          }
+        }]);
+
+        return Draft;
+      })(PageBase);
+
+      _export('Draft', Draft);
+
+      DraftManager = (function () {
+
+        /**
+         * Create a new DraftManager.
+         * @param {Settings} [settings] - The {@link Settings} information to use in construction. If not supplied, the default settings are used.
+         */
+
+        function DraftManager(settings) {
+          _classCallCheck(this, DraftManager);
+
+          this._settings = settings;
+        }
+
+        /**
+         * Create a new draft on the site where a page does not already exist.
+         * @param {String} newPath - The path of the new draft.
+         * @returns {Promise.<pageModel>} - A Promise that, when resolved, yields a {@link pageModel} for the newly-created draft.
+         */
+
+        _createClass(DraftManager, [{
+          key: 'createDraft',
+          value: function createDraft(newPath) {
+            var plug = new Plug(this._settings).at('@api', 'deki', 'drafts', utility.getResourceId(newPath), 'create');
+            return plug.post().then(pageModel.parse);
+          }
+
+          /**
+           * Fetch a new Draft object by ID.
+           * @param {Number|String} [id=home] - The id of the draft to return.
+           * @returns {Draft} - A new {@link Draft} object.
+           */
+        }, {
+          key: 'getDraft',
+          value: function getDraft(id) {
+            return new Draft(id, this._settings);
+          }
+        }]);
+
+        return DraftManager;
+      })();
+
+      _export('DraftManager', DraftManager);
+    }
+  };
 });
 $__System.register('28', ['8', '9'], function (_export) {
     var _createClass, _classCallCheck, uriParser, UriSearchParams, UriParser;
@@ -1956,15 +2123,12 @@ $__System.register('6', ['8', '9', '13', '29', '38', '39', '2a'], function (_exp
 
                     _classCallCheck(this, Plug);
 
-                    var url = '';
-                    var token = null;
-
                     // Initialize the settings
                     this.settings = settings;
-                    url = this.settings.get('host');
-                    token = this.settings.get('token');
+                    var url = this.settings.get('host');
+                    var token = this.settings.get('token');
 
-                    // initailize the url for this instance
+                    // Initialize the url for this instance
                     var _url = new Uri(url);
                     if ('constructionParams' in params) {
                         if ('segments' in params.constructionParams) {
@@ -4011,7 +4175,7 @@ $__System.register('24', ['3', '7', '8', '9', '13', '25', '68', '2a', '6d', '6a'
                 }, {
                     key: 'getDiff',
                     value: function getDiff() {
-                        throw new Error('Page.getDiff() is not impmemented');
+                        throw new Error('Page.getDiff() is not implemented');
                     }
                 }, {
                     key: 'getRelated',
@@ -4062,24 +4226,20 @@ $__System.register('6e', ['3'], function (_export) {
                         count: modelHelper.getInt(obj['@count']),
                         href: obj['@href']
                     };
-                    if ('page.subpage' in obj) {
-                        var subpages = modelHelper.getArray(obj['page.subpage']);
-                        parsed.pageSubpage = [];
-                        subpages.forEach(function (sp) {
-                            parsed.pageSubpage.push({
-                                id: modelHelper.getInt(sp['@id']),
-                                href: sp['@href'],
-                                deleted: modelHelper.getBool(sp['@deleted']),
-                                subpages: modelHelper.getBool(sp['@subpages']),
-                                dateCreated: modelHelper.getDate(sp['date.created']),
-                                language: sp.language,
-                                namespace: sp.namespace,
-                                path: modelHelper.getString(sp.path),
-                                title: sp.title,
-                                uriUi: sp['uri.ui']
-                            });
-                        });
-                    }
+                    parsed.subpages = modelHelper.getArray(obj['page.subpage']).map(function (sp) {
+                        return {
+                            id: modelHelper.getInt(sp['@id']),
+                            href: sp['@href'],
+                            deleted: modelHelper.getBool(sp['@deleted']),
+                            hasSubpages: modelHelper.getBool(sp['@subpages']),
+                            dateCreated: modelHelper.getDate(sp['date.created']),
+                            language: sp.language,
+                            namespace: sp.namespace,
+                            path: modelHelper.getString(sp.path),
+                            title: sp.title,
+                            uriUi: sp['uri.ui']
+                        };
+                    });
                     return parsed;
                 }
             };
@@ -4690,10 +4850,20 @@ $__System.register('75', ['6', '7', '8', '9', '13', '24', '25', '26', '27', '71'
              * See the License for the specific language governing permissions and
              * limitations under the License.
              */
+
+            /**
+             * A class for managing a published page.
+             */
             'use strict';
 
             Page = (function (_PageBase) {
                 _inherits(Page, _PageBase);
+
+                /**
+                 * Construct a new Page.
+                 * @param {Number|String} [id='home'] The numeric page ID or the page path.
+                 * @param {Settings} [settings] - The {@link Settings} information to use in construction. If not supplied, the default settings are used.
+                 */
 
                 function Page(id, settings) {
                     if (id === undefined) id = 'home';
@@ -4703,6 +4873,12 @@ $__System.register('75', ['6', '7', '8', '9', '13', '24', '25', '26', '27', '71'
                     _get(Object.getPrototypeOf(Page.prototype), 'constructor', this).call(this, id);
                     this._plug = new Plug(settings).at('@api', 'deki', 'pages', this._id);
                 }
+
+                /**
+                 * Gets the basic page information.
+                 * @param {Object} [params] - Additional parameters to direct the API request.
+                 * @returns {Promise.<pageModel>} - A Promise that, when resolved, yields a {@link pageModel} containing the basic page information.
+                 */
 
                 _createClass(Page, [{
                     key: 'getInfo',
@@ -4715,16 +4891,33 @@ $__System.register('75', ['6', '7', '8', '9', '13', '24', '25', '26', '27', '71'
                         });
                         return this._plug.at('info').withParams(infoParams).get().then(pageModel.parse);
                     }
+
+                    /**
+                     * Get the subpages of the page.
+                     * @param {Object} [params] - Additional parameters to direct the API request.
+                     * @returns {Promise.<subpagesModel>} - A Promise that, when resolved, yields a {@link subpagesModel} containing the basic page information.
+                     */
                 }, {
                     key: 'getSubpages',
                     value: function getSubpages(params) {
                         return this._plug.at('subpages').withParams(params).get().then(subpagesModel.parse);
                     }
+
+                    /**
+                     * Get a hierarchy tree based on the current page.
+                     * @param {Object} [params] - Additional parameters to direct the API request.
+                     * @returns {Promise.<pageTreeModel>} - A Promise that, when resolved, yields a {@link pageTreeModel} containing the basic page information.
+                     */
                 }, {
                     key: 'getTree',
                     value: function getTree(params) {
                         return this._plug.at('tree').withParams(params).get().then(pageTreeModel.parse);
                     }
+
+                    /**
+                     * Get the hierarchical list of pages IDs from the current page to the home page.
+                     * @returns {Promise.<Array>} - The array of hierarchical page IDs.
+                     */
                 }, {
                     key: 'getTreeIds',
                     value: function getTreeIds() {
@@ -4740,11 +4933,23 @@ $__System.register('75', ['6', '7', '8', '9', '13', '24', '25', '26', '27', '71'
                             return _Promise.reject({ message: e.message });
                         });
                     }
+
+                    /**
+                     * Gets the rating information for the page.
+                     * @returns {Promise.<pageRatingModel>} - A Promise that, when resolved, yields a {@link pageRatingModel} containing the rating information.
+                     */
                 }, {
                     key: 'getRating',
                     value: function getRating() {
                         return this._plug.at('ratings').get().then(pageRatingModel.parse);
                     }
+
+                    /**
+                     * Set the rating for the page.
+                     * @param {String} [rating=''] - The new rating for the page.
+                     * @param {String} [oldRating=''] - The old rating for the page that is being replaced by {@see rating}.
+                     * @returns {Promise.<pageRatingModel>} - A Promise that, when resolved, yields a {@link pageRatingModel} containing the new rating information.
+                     */
                 }, {
                     key: 'rate',
                     value: function rate() {
@@ -4761,6 +4966,13 @@ $__System.register('75', ['6', '7', '8', '9', '13', '24', '25', '26', '27', '71'
                         }
                         return this._plug.at('ratings').withParams({ score: rating, previousScore: oldRating }).post(null, utility.textRequestType).then(pageRatingModel.parse);
                     }
+
+                    /**
+                     * Gets a MindTouch template rendered in the context of the current page, as HTML.
+                     * @param {String} path - The template path.
+                     * @param {Object} [params] - Additional parameters to direct the API request.
+                     * @returns {Promise.<pageContentsModel>} - A Promise that, when resolved, yields the rendered HTML within a {@link pageContentsModel}.
+                     */
                 }, {
                     key: 'getHtmlTemplate',
                     value: function getHtmlTemplate(path) {
@@ -4774,6 +4986,12 @@ $__System.register('75', ['6', '7', '8', '9', '13', '24', '25', '26', '27', '71'
                         var contentsPlug = new Plug().at('@api', 'deki', 'pages', templatePath, 'contents').withParams(params);
                         return contentsPlug.get().then(pageContentsModel.parse);
                     }
+
+                    /**
+                     * Move a page to a new location in the hierarchy.
+                     * @param {Object} [params] - Additional parameters to direct the API request.
+                     * @returns {Promise.<pageMoveModel>} - A Promise that, when resolved, yields a {@link pageMoveModel} containing information regarding the move operation.
+                     */
                 }, {
                     key: 'move',
                     value: function move() {
@@ -4781,6 +4999,11 @@ $__System.register('75', ['6', '7', '8', '9', '13', '24', '25', '26', '27', '71'
 
                         return this._plug.at('move').withParams(params).post(null, 'text/plain; charset=utf-8').then(pageMoveModel.parse);
                     }
+
+                    /**
+                     * Using the current page, activates a draft; copying tghe page's content and attachments.
+                     * @returns {Promise.<pageModel>} - A Promise that, when resolved, yields a {@link pageModel} containing the page information following the activation.
+                     */
                 }, {
                     key: 'activateDraft',
                     value: function activateDraft() {
