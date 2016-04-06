@@ -317,7 +317,7 @@ $__System.register('c', ['3', 'b'], function (_export) {
         }
     };
 });
-$__System.register('b', ['3'], function (_export) {
+$__System.register('b', ['3', 'd'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -338,10 +338,12 @@ $__System.register('b', ['3'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, eventModel;
+    var modelHelper, pageModel, eventModel;
     return {
         setters: [function (_) {
             modelHelper = _.modelHelper;
+        }, function (_d) {
+            pageModel = _d.pageModel;
         }],
         execute: function () {
             eventModel = {
@@ -358,18 +360,7 @@ $__System.register('b', ['3'], function (_export) {
                     if ('@language' in obj) {
                         parsed.language = obj['@language'];
                     }
-                    if ('page' in obj) {
-                        parsed.page = {
-                            id: modelHelper.getInt(obj.page['@id']),
-                            path: obj.page.path
-                        };
-                        if ('title' in obj.page) {
-                            parsed.page.title = obj.page.title;
-                        }
-                        if ('@revision' in obj.page) {
-                            parsed.page.revision = modelHelper.getInt(obj.page['@revision']);
-                        }
-                    }
+                    modelHelper.addIfDefined(obj.page, 'page', parsed, pageModel);
                     if ('user' in obj) {
                         parsed.user = { id: obj.user['@id'] };
                         if ('name' in obj.user) {
@@ -405,7 +396,7 @@ $__System.register('b', ['3'], function (_export) {
         }
     };
 });
-$__System.register('d', ['3', 'b'], function (_export) {
+$__System.register('e', ['3', 'b'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -456,7 +447,7 @@ $__System.register('d', ['3', 'b'], function (_export) {
         }
     };
 });
-$__System.register('e', ['6', '7', '8', '9', 'a', 'c', 'd'], function (_export) {
+$__System.register('f', ['6', '7', '8', '9', 'a', 'c', 'e'], function (_export) {
   var Plug, utility, _createClass, _classCallCheck, userActivityModel, eventListModel, eventDetailModel, UserEvents;
 
   return {
@@ -472,8 +463,8 @@ $__System.register('e', ['6', '7', '8', '9', 'a', 'c', 'd'], function (_export) 
       userActivityModel = _a.userActivityModel;
     }, function (_c) {
       eventListModel = _c.eventListModel;
-    }, function (_d) {
-      eventDetailModel = _d.eventDetailModel;
+    }, function (_e) {
+      eventDetailModel = _e.eventDetailModel;
     }],
     execute: function () {
       /**
@@ -569,7 +560,7 @@ $__System.register('e', ['6', '7', '8', '9', 'a', 'c', 'd'], function (_export) 
     }
   };
 });
-$__System.register('f', ['5', '8', '9', 'e'], function (_export) {
+$__System.register('10', ['5', '8', '9', 'f'], function (_export) {
   var UserManager, _createClass, _classCallCheck, UserEvents, User;
 
   return {
@@ -579,8 +570,8 @@ $__System.register('f', ['5', '8', '9', 'e'], function (_export) {
       _createClass = _['default'];
     }, function (_2) {
       _classCallCheck = _2['default'];
-    }, function (_e) {
-      UserEvents = _e.UserEvents;
+    }, function (_f) {
+      UserEvents = _f.UserEvents;
     }],
     execute: function () {
       /**
@@ -656,7 +647,7 @@ $__System.register('f', ['5', '8', '9', 'e'], function (_export) {
     }
   };
 });
-$__System.register('10', ['3'], function (_export) {
+$__System.register('11', ['3'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -740,7 +731,7 @@ $__System.register('10', ['3'], function (_export) {
         }
     };
 });
-$__System.register('11', ['6', '7', '8', '9', '10', '12', '13'], function (_export) {
+$__System.register('12', ['6', '7', '8', '9', '11', '13', '14'], function (_export) {
     var Plug, utility, _createClass, _classCallCheck, searchModel, stringUtility, _Promise, Site;
 
     function _buildSearchConstraints(params) {
@@ -914,7 +905,7 @@ $__System.register('11', ['6', '7', '8', '9', '10', '12', '13'], function (_expo
         }
     };
 });
-$__System.register('14', ['8', '9', '11'], function (_export) {
+$__System.register('15', ['8', '9', '12'], function (_export) {
     var _createClass, _classCallCheck, Site, Search;
 
     return {
@@ -984,20 +975,20 @@ $__System.register('14', ['8', '9', '11'], function (_export) {
         }
     };
 });
-$__System.registerDynamic("15", ["16", "17", "18", "19", "1a", "1b", "1c", "1d"], true, function($__require, exports, module) {
+$__System.registerDynamic("16", ["17", "18", "19", "1a", "1b", "1c", "1d", "1e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var ctx = $__require('16'),
-      $export = $__require('17'),
-      toObject = $__require('18'),
-      call = $__require('19'),
-      isArrayIter = $__require('1a'),
-      toLength = $__require('1b'),
-      getIterFn = $__require('1c');
-  $export($export.S + $export.F * !$__require('1d')(function(iter) {
+  var ctx = $__require('17'),
+      $export = $__require('18'),
+      toObject = $__require('19'),
+      call = $__require('1a'),
+      isArrayIter = $__require('1b'),
+      toLength = $__require('1c'),
+      getIterFn = $__require('1d');
+  $export($export.S + $export.F * !$__require('1e')(function(iter) {
     Array.from(iter);
   }), 'Array', {from: function from(arrayLike) {
       var O = toObject(arrayLike),
@@ -1030,36 +1021,36 @@ $__System.registerDynamic("15", ["16", "17", "18", "19", "1a", "1b", "1c", "1d"]
   return module.exports;
 });
 
-$__System.registerDynamic("1e", ["1f", "15", "20"], true, function($__require, exports, module) {
+$__System.registerDynamic("1f", ["20", "16", "21"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  $__require('1f');
-  $__require('15');
-  module.exports = $__require('20').Array.from;
+  $__require('20');
+  $__require('16');
+  module.exports = $__require('21').Array.from;
   return module.exports;
 });
 
-$__System.registerDynamic("21", ["1e"], true, function($__require, exports, module) {
+$__System.registerDynamic("22", ["1f"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('1e'),
+    "default": $__require('1f'),
     __esModule: true
   };
   return module.exports;
 });
 
-$__System.registerDynamic("22", ["21"], true, function($__require, exports, module) {
+$__System.registerDynamic("23", ["22"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var _Array$from = $__require('21')["default"];
+  var _Array$from = $__require('22')["default"];
   exports["default"] = function(arr) {
     if (Array.isArray(arr)) {
       for (var i = 0,
@@ -1074,8 +1065,8 @@ $__System.registerDynamic("22", ["21"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.register('23', ['6', '7', '8', '9', '24', '25', '26', '27'], function (_export) {
-  var Plug, utility, _createClass, _classCallCheck, PageBase, pageModel, _get, _inherits, Draft, DraftManager;
+$__System.register('24', ['6', '7', '8', '9', '25', '26', '27', 'd'], function (_export) {
+  var Plug, utility, _createClass, _classCallCheck, PageBase, _get, _inherits, pageModel, Draft, DraftManager;
 
   return {
     setters: [function (_5) {
@@ -1088,12 +1079,12 @@ $__System.register('23', ['6', '7', '8', '9', '24', '25', '26', '27'], function 
       _classCallCheck = _4['default'];
     }, function (_7) {
       PageBase = _7.PageBase;
-    }, function (_8) {
-      pageModel = _8.pageModel;
     }, function (_) {
       _get = _['default'];
     }, function (_2) {
       _inherits = _2['default'];
+    }, function (_d) {
+      pageModel = _d.pageModel;
     }],
     execute: function () {
       /**
@@ -1527,7 +1518,7 @@ $__System.register('28', ['8', '9'], function (_export) {
         }
     };
 });
-$__System.register('12', [], function (_export) {
+$__System.register('13', [], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -1607,7 +1598,7 @@ $__System.register('12', [], function (_export) {
         }
     };
 });
-$__System.register('29', ['8', '9', '12', '28', '2a'], function (_export) {
+$__System.register('29', ['8', '9', '13', '28', '2a'], function (_export) {
     var _createClass, _classCallCheck, stringUtility, UriParser, _Object$keys, Uri;
 
     return {
@@ -1832,23 +1823,23 @@ $__System.registerDynamic("32", ["31"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("33", ["17", "34"], true, function($__require, exports, module) {
+$__System.registerDynamic("33", ["18", "34"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $export = $__require('17');
+  var $export = $__require('18');
   $export($export.S, 'Object', {setPrototypeOf: $__require('34').set});
   return module.exports;
 });
 
-$__System.registerDynamic("35", ["33", "20"], true, function($__require, exports, module) {
+$__System.registerDynamic("35", ["33", "21"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   $__require('33');
-  module.exports = $__require('20').Object.setPrototypeOf;
+  module.exports = $__require('21').Object.setPrototypeOf;
   return module.exports;
 });
 
@@ -2010,7 +2001,7 @@ $__System.register('38', ['9', '26', '27', '37'], function (_export) {
         }
     };
 });
-$__System.register('6', ['8', '9', '13', '29', '38', '39', '2a'], function (_export) {
+$__System.register('6', ['8', '9', '14', '29', '38', '39', '2a'], function (_export) {
     var _createClass, _classCallCheck, _Promise, Uri, XhrError, Settings, _Object$keys, Plug;
 
     function _handleHttpError(xhr) {
@@ -2359,7 +2350,7 @@ $__System.registerDynamic("3b", ["3c", "3d"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("1f", ["3b", "3e"], true, function($__require, exports, module) {
+$__System.registerDynamic("20", ["3b", "3e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -2456,14 +2447,14 @@ $__System.registerDynamic("43", ["2f", "44", "45", "46", "47"], true, function($
   return module.exports;
 });
 
-$__System.registerDynamic("3e", ["48", "17", "49", "46", "4a", "4b", "43", "45", "2f", "47"], true, function($__require, exports, module) {
+$__System.registerDynamic("3e", ["48", "18", "49", "46", "4a", "4b", "43", "45", "2f", "47"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   var LIBRARY = $__require('48'),
-      $export = $__require('17'),
+      $export = $__require('18'),
       redefine = $__require('49'),
       hide = $__require('46'),
       has = $__require('4a'),
@@ -2610,7 +2601,7 @@ $__System.registerDynamic("4e", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("19", ["4f"], true, function($__require, exports, module) {
+$__System.registerDynamic("1a", ["4f"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -2629,7 +2620,7 @@ $__System.registerDynamic("19", ["4f"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("1a", ["4b", "47"], true, function($__require, exports, module) {
+$__System.registerDynamic("1b", ["4b", "47"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -2656,7 +2647,7 @@ $__System.registerDynamic("3c", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("1b", ["3c"], true, function($__require, exports, module) {
+$__System.registerDynamic("1c", ["3c"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -2697,7 +2688,7 @@ $__System.registerDynamic("4b", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("1c", ["50", "47", "4b", "20"], true, function($__require, exports, module) {
+$__System.registerDynamic("1d", ["50", "47", "4b", "21"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -2705,24 +2696,24 @@ $__System.registerDynamic("1c", ["50", "47", "4b", "20"], true, function($__requ
   var classof = $__require('50'),
       ITERATOR = $__require('47')('iterator'),
       Iterators = $__require('4b');
-  module.exports = $__require('20').getIteratorMethod = function(it) {
+  module.exports = $__require('21').getIteratorMethod = function(it) {
     if (it != undefined)
       return it[ITERATOR] || it['@@iterator'] || Iterators[classof(it)];
   };
   return module.exports;
 });
 
-$__System.registerDynamic("51", ["16", "19", "1a", "4f", "1b", "1c"], true, function($__require, exports, module) {
+$__System.registerDynamic("51", ["17", "1a", "1b", "4f", "1c", "1d"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var ctx = $__require('16'),
-      call = $__require('19'),
-      isArrayIter = $__require('1a'),
+  var ctx = $__require('17'),
+      call = $__require('1a'),
+      isArrayIter = $__require('1b'),
       anObject = $__require('4f'),
-      toLength = $__require('1b'),
-      getIterFn = $__require('1c');
+      toLength = $__require('1c'),
+      getIterFn = $__require('1d');
   module.exports = function(iterable, entries, fn, that) {
     var iterFn = getIterFn(iterable),
         f = ctx(fn, that, entries ? 2 : 1),
@@ -2744,7 +2735,7 @@ $__System.registerDynamic("51", ["16", "19", "1a", "4f", "1b", "1c"], true, func
   return module.exports;
 });
 
-$__System.registerDynamic("34", ["2f", "52", "4f", "16"], true, function($__require, exports, module) {
+$__System.registerDynamic("34", ["2f", "52", "4f", "17"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -2760,7 +2751,7 @@ $__System.registerDynamic("34", ["2f", "52", "4f", "16"], true, function($__requ
   module.exports = {
     set: Object.setPrototypeOf || ('__proto__' in {} ? function(test, buggy, set) {
       try {
-        set = $__require('16')(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
+        set = $__require('17')(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
         set(test, []);
         buggy = !(test instanceof Array);
       } catch (e) {
@@ -2879,13 +2870,13 @@ $__System.registerDynamic("59", ["52", "58"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("5a", ["16", "56", "57", "59", "58", "42", "5b"], true, function($__require, exports, module) {
+$__System.registerDynamic("5a", ["17", "56", "57", "59", "58", "42", "5b"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   (function(process) {
-    var ctx = $__require('16'),
+    var ctx = $__require('17'),
         invoke = $__require('56'),
         html = $__require('57'),
         cel = $__require('59'),
@@ -3146,13 +3137,13 @@ $__System.registerDynamic("5d", ["5f"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("60", ["20", "2f", "5d", "47"], true, function($__require, exports, module) {
+$__System.registerDynamic("60", ["21", "2f", "5d", "47"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var core = $__require('20'),
+  var core = $__require('21'),
       $ = $__require('2f'),
       DESCRIPTORS = $__require('5d'),
       SPECIES = $__require('47')('species');
@@ -3210,7 +3201,7 @@ $__System.registerDynamic("47", ["61", "62", "58"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("1d", ["47"], true, function($__require, exports, module) {
+$__System.registerDynamic("1e", ["47"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -3364,7 +3355,7 @@ $__System.registerDynamic("5b", ["65"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("66", ["2f", "48", "58", "16", "50", "17", "52", "4f", "55", "4e", "51", "34", "53", "47", "54", "5c", "5d", "5e", "45", "60", "20", "1d", "5b"], true, function($__require, exports, module) {
+$__System.registerDynamic("66", ["2f", "48", "58", "17", "50", "18", "52", "4f", "55", "4e", "51", "34", "53", "47", "54", "5c", "5d", "5e", "45", "60", "21", "1e", "5b"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -3374,9 +3365,9 @@ $__System.registerDynamic("66", ["2f", "48", "58", "16", "50", "17", "52", "4f",
     var $ = $__require('2f'),
         LIBRARY = $__require('48'),
         global = $__require('58'),
-        ctx = $__require('16'),
+        ctx = $__require('17'),
         classof = $__require('50'),
-        $export = $__require('17'),
+        $export = $__require('18'),
         isObject = $__require('52'),
         anObject = $__require('4f'),
         aFunction = $__require('55'),
@@ -3612,7 +3603,7 @@ $__System.registerDynamic("66", ["2f", "48", "58", "16", "50", "17", "52", "4f",
     $export($export.G + $export.W + $export.F * !USE_NATIVE, {Promise: P});
     $__require('45')(P, PROMISE);
     $__require('60')(PROMISE);
-    Wrapper = $__require('20')[PROMISE];
+    Wrapper = $__require('21')[PROMISE];
     $export($export.S + $export.F * !USE_NATIVE, PROMISE, {reject: function reject(r) {
         var capability = new PromiseCapability(this),
             $$reject = capability.reject;
@@ -3627,7 +3618,7 @@ $__System.registerDynamic("66", ["2f", "48", "58", "16", "50", "17", "52", "4f",
         $$resolve(x);
         return capability.promise;
       }});
-    $export($export.S + $export.F * !(USE_NATIVE && $__require('1d')(function(iter) {
+    $export($export.S + $export.F * !(USE_NATIVE && $__require('1e')(function(iter) {
       P.all(iter)['catch'](function() {});
     })), PROMISE, {
       all: function all(iterable) {
@@ -3676,20 +3667,20 @@ $__System.registerDynamic("66", ["2f", "48", "58", "16", "50", "17", "52", "4f",
   return module.exports;
 });
 
-$__System.registerDynamic("67", ["3a", "1f", "4d", "66", "20"], true, function($__require, exports, module) {
+$__System.registerDynamic("67", ["3a", "20", "4d", "66", "21"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   $__require('3a');
-  $__require('1f');
+  $__require('20');
   $__require('4d');
   $__require('66');
-  module.exports = $__require('20').Promise;
+  module.exports = $__require('21').Promise;
   return module.exports;
 });
 
-$__System.registerDynamic("13", ["67"], true, function($__require, exports, module) {
+$__System.registerDynamic("14", ["67"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -3825,7 +3816,7 @@ $__System.register('68', ['3'], function (_export) {
         }
     };
 });
-$__System.register('69', ['3', '4', '25'], function (_export) {
+$__System.register('69', ['3', '4', 'd'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -3852,8 +3843,8 @@ $__System.register('69', ['3', '4', '25'], function (_export) {
             modelHelper = _.modelHelper;
         }, function (_2) {
             userModel = _2.userModel;
-        }, function (_3) {
-            pageModel = _3.pageModel;
+        }, function (_d) {
+            pageModel = _d.pageModel;
         }],
         execute: function () {
             fileModel = {
@@ -3944,7 +3935,7 @@ $__System.register('6a', ['3', '69'], function (_export) {
         }
     };
 });
-$__System.register('6b', ['3', '25'], function (_export) {
+$__System.register('6b', ['3', 'd'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -3969,8 +3960,8 @@ $__System.register('6b', ['3', '25'], function (_export) {
     return {
         setters: [function (_) {
             modelHelper = _.modelHelper;
-        }, function (_2) {
-            pageModel = _2.pageModel;
+        }, function (_d) {
+            pageModel = _d.pageModel;
         }],
         execute: function () {
             pageEditModel = {
@@ -3999,7 +3990,7 @@ $__System.register('6b', ['3', '25'], function (_export) {
         }
     };
 });
-$__System.register('6c', ['3', '25'], function (_export) {
+$__System.register('6c', ['3', 'd'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -4024,8 +4015,8 @@ $__System.register('6c', ['3', '25'], function (_export) {
     return {
         setters: [function (_) {
             modelHelper = _.modelHelper;
-        }, function (_2) {
-            pageModel = _2.pageModel;
+        }, function (_d) {
+            pageModel = _d.pageModel;
         }],
         execute: function () {
             relatedPagesModel = {
@@ -4048,8 +4039,8 @@ $__System.register('6c', ['3', '25'], function (_export) {
         }
     };
 });
-$__System.register('24', ['3', '7', '8', '9', '13', '25', '68', '2a', '6d', '6a', '6b', '6c'], function (_export) {
-    var modelHelper, utility, _createClass, _classCallCheck, _Promise, pageModel, pageTagsModel, _Object$keys, pageContentsModel, pageFilesModel, pageEditModel, relatedPagesModel, PageBase;
+$__System.register('25', ['3', '7', '8', '9', '14', '68', '2a', 'd', '6d', '6a', '6b', '6c'], function (_export) {
+    var modelHelper, utility, _createClass, _classCallCheck, _Promise, pageTagsModel, _Object$keys, pageModel, pageContentsModel, pageFilesModel, pageEditModel, relatedPagesModel, PageBase;
 
     function _handleVirtualPage(error) {
         if (error.errorCode === 404 && error.response && error.response['@virtual']) {
@@ -4069,13 +4060,13 @@ $__System.register('24', ['3', '7', '8', '9', '13', '25', '68', '2a', '6d', '6a'
         }, function (_3) {
             _Promise = _3['default'];
         }, function (_6) {
-            pageModel = _6.pageModel;
-        }, function (_7) {
-            pageTagsModel = _7.pageTagsModel;
+            pageTagsModel = _6.pageTagsModel;
         }, function (_a) {
             _Object$keys = _a['default'];
         }, function (_d) {
-            pageContentsModel = _d.pageContentsModel;
+            pageModel = _d.pageModel;
+        }, function (_d2) {
+            pageContentsModel = _d2.pageContentsModel;
         }, function (_a2) {
             pageFilesModel = _a2.pageFilesModel;
         }, function (_b) {
@@ -4337,7 +4328,7 @@ $__System.register('6d', ['3', '6f'], function (_export) {
         }
     };
 });
-$__System.register('71', ['3', '25'], function (_export) {
+$__System.register('71', ['3', 'd'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -4362,8 +4353,8 @@ $__System.register('71', ['3', '25'], function (_export) {
     return {
         setters: [function (_) {
             modelHelper = _.modelHelper;
-        }, function (_2) {
-            pageModel = _2.pageModel;
+        }, function (_d) {
+            pageModel = _d.pageModel;
         }],
         execute: function () {
             pageTreeModel = {
@@ -4560,7 +4551,7 @@ $__System.register('73', ['3'], function (_export) {
         }
     };
 });
-$__System.register('4', ['3', '25', '73'], function (_export) {
+$__System.register('4', ['3', '73', 'd'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -4581,14 +4572,14 @@ $__System.register('4', ['3', '25', '73'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, pageModel, permissionsModel, userModel;
+    var modelHelper, permissionsModel, pageModel, userModel;
     return {
         setters: [function (_) {
             modelHelper = _.modelHelper;
         }, function (_2) {
-            pageModel = _2.pageModel;
-        }, function (_3) {
-            permissionsModel = _3.permissionsModel;
+            permissionsModel = _2.permissionsModel;
+        }, function (_d) {
+            pageModel = _d.pageModel;
         }],
         execute: function () {
             userModel = {
@@ -4629,7 +4620,7 @@ $__System.register('4', ['3', '25', '73'], function (_export) {
         }
     };
 });
-$__System.register('25', ['3', '4', '72'], function (_export) {
+$__System.register('d', ['3', '4', '72'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -4664,10 +4655,10 @@ $__System.register('25', ['3', '4', '72'], function (_export) {
                 parse: function parse(data) {
                     var obj = modelHelper.fromJson(data);
                     var parsed = {
-                        id: modelHelper.getInt(obj['@id']),
-                        title: obj.title,
-                        uriUi: obj['uri.ui']
+                        id: modelHelper.getInt(obj['@id'])
                     };
+                    modelHelper.addIfDefined(obj.title, 'title', parsed);
+                    modelHelper.addIfDefined(obj['uri.ui'], 'uriUi', parsed);
                     modelHelper.addIfDefined(obj['@href'], 'href', parsed);
                     modelHelper.addIfDefined(obj['@state'], 'state', parsed);
                     modelHelper.addIfDefined(obj['@draft.state'], 'draftState', parsed);
@@ -4746,7 +4737,7 @@ $__System.register('25', ['3', '4', '72'], function (_export) {
         }
     };
 });
-$__System.register('74', ['3', '25'], function (_export) {
+$__System.register('74', ['3', 'd'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -4771,8 +4762,8 @@ $__System.register('74', ['3', '25'], function (_export) {
     return {
         setters: [function (_) {
             modelHelper = _.modelHelper;
-        }, function (_2) {
-            pageModel = _2.pageModel;
+        }, function (_d) {
+            pageModel = _d.pageModel;
         }],
         execute: function () {
             pageMoveModel = {
@@ -4796,8 +4787,8 @@ $__System.register('74', ['3', '25'], function (_export) {
         }
     };
 });
-$__System.register('75', ['6', '7', '8', '9', '13', '24', '25', '26', '27', '71', '72', '74', '2a', '6e', '6d'], function (_export) {
-    var Plug, utility, _createClass, _classCallCheck, _Promise, PageBase, pageModel, _get, _inherits, pageTreeModel, pageRatingModel, pageMoveModel, _Object$keys, subpagesModel, pageContentsModel, Page;
+$__System.register('75', ['6', '7', '8', '9', '14', '25', '26', '27', '71', '72', '74', '2a', 'd', '6e', '6d'], function (_export) {
+    var Plug, utility, _createClass, _classCallCheck, _Promise, PageBase, _get, _inherits, pageTreeModel, pageRatingModel, pageMoveModel, _Object$keys, pageModel, subpagesModel, pageContentsModel, Page;
 
     return {
         setters: [function (_6) {
@@ -4812,24 +4803,24 @@ $__System.register('75', ['6', '7', '8', '9', '13', '24', '25', '26', '27', '71'
             _Promise = _5['default'];
         }, function (_8) {
             PageBase = _8.PageBase;
-        }, function (_9) {
-            pageModel = _9.pageModel;
         }, function (_) {
             _get = _['default'];
         }, function (_2) {
             _inherits = _2['default'];
+        }, function (_9) {
+            pageTreeModel = _9.pageTreeModel;
         }, function (_10) {
-            pageTreeModel = _10.pageTreeModel;
+            pageRatingModel = _10.pageRatingModel;
         }, function (_11) {
-            pageRatingModel = _11.pageRatingModel;
-        }, function (_12) {
-            pageMoveModel = _12.pageMoveModel;
+            pageMoveModel = _11.pageMoveModel;
         }, function (_a) {
             _Object$keys = _a['default'];
+        }, function (_d) {
+            pageModel = _d.pageModel;
         }, function (_e) {
             subpagesModel = _e.subpagesModel;
-        }, function (_d) {
-            pageContentsModel = _d.pageContentsModel;
+        }, function (_d2) {
+            pageContentsModel = _d2.pageContentsModel;
         }],
         execute: function () {
             /**
@@ -5018,7 +5009,7 @@ $__System.register('75', ['6', '7', '8', '9', '13', '24', '25', '26', '27', '71'
         }
     };
 });
-$__System.register('76', ['8', '9', '13', '22', '23', '75'], function (_export) {
+$__System.register('76', ['8', '9', '14', '23', '24', '75'], function (_export) {
     var _createClass, _classCallCheck, _Promise, _toConsumableArray, DraftManager, Page, Article;
 
     function _getTagsMarkup(tags) {
@@ -5285,7 +5276,7 @@ $__System.registerDynamic("3d", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("18", ["3d"], true, function($__require, exports, module) {
+$__System.registerDynamic("19", ["3d"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -5321,7 +5312,7 @@ $__System.registerDynamic("55", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("16", ["55"], true, function($__require, exports, module) {
+$__System.registerDynamic("17", ["55"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -5352,14 +5343,14 @@ $__System.registerDynamic("16", ["55"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("17", ["58", "20", "16"], true, function($__require, exports, module) {
+$__System.registerDynamic("18", ["58", "21", "17"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   var global = $__require('58'),
-      core = $__require('20'),
-      ctx = $__require('16'),
+      core = $__require('21'),
+      ctx = $__require('17'),
       PROTOTYPE = 'prototype';
   var $export = function(type, name, source) {
     var IS_FORCED = type & $export.F,
@@ -5416,13 +5407,13 @@ $__System.registerDynamic("5f", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("2d", ["17", "20", "5f"], true, function($__require, exports, module) {
+$__System.registerDynamic("2d", ["18", "21", "5f"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $export = $__require('17'),
-      core = $__require('20'),
+  var $export = $__require('18'),
+      core = $__require('21'),
       fails = $__require('5f');
   module.exports = function(KEY, exec) {
     var fn = (core.Object || {})[KEY] || Object[KEY],
@@ -5435,12 +5426,12 @@ $__System.registerDynamic("2d", ["17", "20", "5f"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("78", ["18", "2d"], true, function($__require, exports, module) {
+$__System.registerDynamic("78", ["19", "2d"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var toObject = $__require('18');
+  var toObject = $__require('19');
   $__require('2d')('keys', function($keys) {
     return function keys(it) {
       return $keys(toObject(it));
@@ -5449,7 +5440,7 @@ $__System.registerDynamic("78", ["18", "2d"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("20", [], true, function($__require, exports, module) {
+$__System.registerDynamic("21", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -5460,13 +5451,13 @@ $__System.registerDynamic("20", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("79", ["78", "20"], true, function($__require, exports, module) {
+$__System.registerDynamic("79", ["78", "21"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   $__require('78');
-  module.exports = $__require('20').Object.keys;
+  module.exports = $__require('21').Object.keys;
   return module.exports;
 });
 
@@ -5571,8 +5562,8 @@ $__System.register("39", ["8", "9", "2a"], function (_export) {
         }
     };
 });
-$__System.register('7a', ['8', '9', '14', '39', '76', 'f'], function (_export) {
-    var _createClass, _classCallCheck, Search, Settings, Article, User, GeniusLink;
+$__System.register('7a', ['8', '9', '10', '15', '39', '76'], function (_export) {
+    var _createClass, _classCallCheck, User, Search, Settings, Article, GeniusLink;
 
     return {
         setters: [function (_) {
@@ -5580,13 +5571,13 @@ $__System.register('7a', ['8', '9', '14', '39', '76', 'f'], function (_export) {
         }, function (_2) {
             _classCallCheck = _2['default'];
         }, function (_3) {
-            Search = _3.Search;
-        }, function (_5) {
-            Settings = _5.Settings;
+            User = _3.User;
         }, function (_4) {
-            Article = _4.Article;
-        }, function (_f) {
-            User = _f.User;
+            Search = _4.Search;
+        }, function (_6) {
+            Settings = _6.Settings;
+        }, function (_5) {
+            Article = _5.Article;
         }],
         execute: function () {
             /**
