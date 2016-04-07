@@ -18,6 +18,7 @@
 import { User } from './user';
 import { Search } from './search';
 import { Article } from './article';
+import { Workflows } from './workflows';
 import { Settings } from 'martian/lib/settings';
 
 /**
@@ -55,6 +56,7 @@ export class GeniusLink {
         this.userLib = new User(this.settings);
         this.searchLib = new Search(this.settings);
         this.articleLib = new Article(this.settings);
+        this.workflows = new Workflows(this.settings);
     }
 
     /**
@@ -91,5 +93,12 @@ export class GeniusLink {
      */
     get Article() {
         return this.articleLib;
+    }
+
+    /**
+     * Get the current management interface for site workflows.
+     */
+    get Workflows() {
+        return this.workflows;
     }
 }

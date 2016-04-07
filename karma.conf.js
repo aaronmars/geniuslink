@@ -40,7 +40,8 @@ module.exports = function(config) {
                 'geniuslink.js',
                 'search.js',
                 'user.js',
-                'article.js'
+                'article.js',
+                'workflows.js'
             ]
         },
         preprocessors: {
@@ -48,6 +49,7 @@ module.exports = function(config) {
             'search.js': [ 'babel', 'sourcemap', 'coverage' ],
             'user.js': [ 'babel', 'sourcemap', 'coverage' ],
             'article.js': [ 'babel', 'sourcemap', 'coverage' ],
+            'workflows.js': [ 'babel', 'sourcemap', 'coverage' ],
             'jspm_packages/github/mindtouch/martian*/**/*.js': [ 'babel' ],
             'test/*.test.js': [ 'babel' ]
         },
