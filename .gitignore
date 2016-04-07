@@ -2,6 +2,9 @@ node_modules/
 jspm_packages/
 coverage/
 docs/
+dist/
+.deploy/
 .idea
 .DS_Store
 *.orig
+travis/mindtouch-geniuslink_rsa.key

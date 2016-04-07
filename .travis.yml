@@ -1,6 +1,14 @@
 language: node_js
 node_js:
-  - "4"
+  - '4'
+
+branches:
+  except:
+    - /^build-.*$/
+
+env:
+  global:
+    secure: MARmPapEXClZL7KfY7cWMcAzrQh519YhXiSg6+10Bm/cUWHdBYnPaMdTjae1UBLjrYiUN/huCLJfgSqxm+mY0wN1l9OzKIJNK0RwRatmrSP4KfuTDQeIx6kiCd/aEdcLKMpILhzrnFjRNSbqid6k0uNRTCeb7C0Wwy/8TUsN6zTnoYXop7yslNA2KhOaUCiSX+BULWbwwP2k9tWuFo09Qx1g3xBdW4fkeSoFR+Co3FcEzZxW1+OPR/HLI4pjQLZEzih0oLtS4CZSgDMmO9yHcJqzh/oiq8gJvZkzqNRG7+beCRpAYzkvOGczr5OIL7/NOYepSiJHYsLrszMLQooi/P7PMiScDGo99wBcvDWDH5ZL9r7AuDooMQVVKZEXBm8McVfwmR4E8wTQ4FI6eRsCFoJbE2hTXu5uZdpdzl7pQmp+C2zupX4Za6+HcdPkGswMkvbszo7GNGP3+POs3j2hs0zOqByIF5b/2TWfQ8ZVB6P82DhZ4z5VHyJR0lHoU4tSiFYf2a/IGgaosq+M5ZRhzTP2XvJ3qSIZ0d0rr+wEod3TCvSbylu9QPoEXBuVNZ8tl7l/XJNwfQcgp6Tphd0THEK3Ig9A/0FOxtJESaI49rl4wc7HxOAzqXYeLs0HCAcfL8b0twS6HQC1L7SmXSdTL+tgjwIeaV/r2akHXrcJ+sI=
 
 notifications:
   flowdock: $FLOWDOCK_API_TOKEN
@@ -12,7 +20,7 @@ notifications:
 
 cache:
   directories:
-    - $HOME/.cache/pip
+    - "${HOME}/.cache/pip"
     - node_modules
     - jspm_packages
 
@@ -22,10 +30,12 @@ before_install:
 
 install:
   - npm install
-  - 'if [[ "${TRAVIS_PULL_REQUEST}" = "false" ]]; then node node_modules/.bin/jspm config registries.github.auth $JSPM_GITHUB_AUTH_TOKEN; fi'
-  - 'if [[ "${TRAVIS_PULL_REQUEST}" = "false" ]]; then node node_modules/.bin/jspm install; fi'
+  - if [[ "${TRAVIS_SECURE_ENV_VARS}" == "true" ]]; then node node_modules/.bin/jspm config registries.github.auth $JSPM_GITHUB_AUTH_TOKEN; fi
+  - if [[ "${TRAVIS_SECURE_ENV_VARS}" == "true" ]]; then node node_modules/.bin/jspm install; fi
 
-script: '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && node node_modules/.bin/gulp || node node_modules/.bin/gulp inspect'
+script:
+  - travis/build.sh
+  - travis/deploy.sh
 
 after_success:
-  - 'if [[ "${TRAVIS_PULL_REQUEST}" = "false" ]]; then cat coverage/*/lcov.info | codecov; fi'
+  - if [[ "${TRAVIS_SECURE_ENV_VARS}" == "true" ]]; then cat coverage/*/lcov.info | codecov; fi
