@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*eslint-env node*/
+/* eslint-env node */
 var fs = require('fs');
 module.exports = function(config) {
     'use strict';

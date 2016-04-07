@@ -1,6 +1,6 @@
-import {GeniusLink} from '../geniuslink';
-import {Draft, DraftManager} from 'martian/draft';
-import {Page} from 'martian/page';
+import { GeniusLink } from '../geniuslink';
+import { Draft, DraftManager } from 'martian/draft';
+import { Page } from 'martian/page';
 describe('article', () => {
     let gl = null;
     beforeEach(() => {

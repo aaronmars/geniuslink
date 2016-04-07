@@ -15,8 +15,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {GeniusLink} from '../geniuslink';
-import {Site} from 'martian/site';
+import { GeniusLink } from '../geniuslink';
+import { Site } from 'martian/site';
 describe('search', () => {
     describe('operations', () => {
         let gl = null;

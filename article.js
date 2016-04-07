@@ -15,8 +15,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {DraftManager} from 'martian/draft';
-import {Page} from 'martian/page';
+import { DraftManager } from 'martian/draft';
+import { Page } from 'martian/page';
 function _getTagsMarkup(tags) {
     let tagsMarkup = '';
     tags.forEach((tag) => {
