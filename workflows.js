@@ -28,7 +28,7 @@ export class Workflows {
     /**
      * Use the submit issue workflow.
      * @param {Object} options - The options used to control the issue submission.
-     * Other parameters may be included in the options, and are dependent on the workflow configuration in the MindTouch site.
+     * Other parameters may be included in the options, and are dependent on the MindTouch site’s workflow configuration.
      * @param {String} [options.email] - If supplied, notifies the workflow logic of the email address of the user submitting the issue.
      * @param {String} [options.path] - If supplied, notifies the workflow logic of the site path the user was on before submitting the issue.
      * @param {String} [options.search] - If supplied, notifies the workflow logic of the last search term the user tried before submitting the issue.
@@ -52,7 +52,7 @@ export class Workflows {
     /**
      * Use the workflow that requests an article be written.
      * @param {Object} options - The options used to control the article request.
-     * Other parameters may be included in the options, and are dependent on the workflow configuration in the MindTouch site.
+     * Other parameters may be included in the options, and are dependent on the MindTouch site’s workflow configuration.
      * @param {String} [options.email] - If supplied, notifies the workflow logic of the email address of the user making the request.
      */
     requestArticle(options = {}) {
@@ -66,7 +66,7 @@ export class Workflows {
     /**
      * Use the contact support workflow.
      * @param {Object} options - The options used to control the support contact request.
-     * Other parameters may be included in the options, and are dependent on the workflow configuration in the MindTouch site.
+     * Other parameters may be included in the options, and are dependent on the MindTouch site’s workflow configuration.
      * @param {String} [options.email] - If supplied, notifies the workflow logic of the email address of the user contacting support.
      * @param {String} [options.path] - If supplied, notifies the workflow logic of the site path the user was on before contacting support.
      * @param {String} [options.search] - If supplied, notifies the workflow logic of the last search term the user tried before contacting support.
