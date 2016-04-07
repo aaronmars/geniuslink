@@ -1,6 +1,6 @@
 {
   "name": "mindtouch-geniuslink",
-  "version": "0.3.0-beta.1",
+  "version": "0.3.0-beta.2",
   "description": "MindTouch GeniusLink is an integration SDK for MindTouch customer success sites",
   "license": "Apache-2.0",
   "main": "index.js",
