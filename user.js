@@ -15,8 +15,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {UserManager} from 'martian/user';
-import {UserEvents} from 'martian/userEvents';
+import { UserManager } from 'martian/user';
+import { UserEvents } from 'martian/userEvents';
 
 /**
  * User management

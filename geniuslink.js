@@ -15,10 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {User} from './user';
-import {Search} from './search';
-import {Article} from './article';
-import {Settings} from 'martian/lib/settings';
+import { User } from './user';
+import { Search } from './search';
+import { Article } from './article';
+import { Settings } from 'martian/lib/settings';
 
 /**
  * The main GeniusLink SDK entry point.

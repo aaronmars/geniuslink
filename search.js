@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Site} from 'martian/site';
+import { Site } from 'martian/site';
 export class Search {
     constructor(settings) {
         this.site = new Site(settings);

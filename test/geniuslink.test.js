@@ -1,4 +1,4 @@
-import {GeniusLink} from '../geniuslink';
+import { GeniusLink } from '../geniuslink';
 describe('GeniusLink', () => {
     describe('construction', () => {
         it('can successfully construct a GL object', () => {
