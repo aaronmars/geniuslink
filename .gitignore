@@ -3,6 +3,7 @@ jspm_packages/
 coverage/
 docs/
 dist/
+out/
 .deploy/
 .idea
 .DS_Store

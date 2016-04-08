@@ -14,7 +14,7 @@ if [[ "${TRAVIS_SECURE_ENV_VARS}" != "true" ]] || [ "${TRAVIS_TAG}" ] || [ ! "${
     echo "travis/deploy.sh: only executes on branches with secure environment variables."
     exit 0
 fi;
-if [ ! "$(git ls-files -o dist)" ]; then
+if [ ! "$(git ls-files -o out)" ]; then
     echo "travis/deploy.sh: did not find any build artifacts to push (this should never happen)."
     exit 1
 fi;
@@ -23,7 +23,6 @@ shopt -u nocasematch
 # configure
 git config --global user.email "services@mindtouch.com"
 git config --global user.name "mtbot"
-GENIUSLINK_BUILD_BRANCH="build-${TRAVIS_BRANCH}"
 
 # decrypt
 mkdir -p ${HOME}/.ssh/github
@@ -37,28 +36,27 @@ echo "travis/deploy.sh: successfully decrypted and created the deployment key fi
 git clone git@github.com:"${TRAVIS_REPO_SLUG}".git .deploy
 cd .deploy
 git fetch origin
-echo "travis/deploy.sh: branching ${GENIUSLINK_BUILD_BRANCH} from ${TRAVIS_COMMIT}."
-git checkout --no-track -b "${GENIUSLINK_BUILD_BRANCH}" "${TRAVIS_COMMIT}"
-if [ `git branch -r | egrep "^[[:space:]]+origin/${GENIUSLINK_BUILD_BRANCH}$"` ]; then
-    echo "travis/deploy.sh: merging existing ${GENIUSLINK_BUILD_BRANCH} from ${TRAVIS_REPO_SLUG}:${GENIUSLINK_BUILD_BRANCH}."
-    git merge --no-edit origin/"${GENIUSLINK_BUILD_BRANCH}"
+echo "travis/deploy.sh: branching ${TRAVIS_BRANCH} from ${TRAVIS_COMMIT}."
+git checkout --no-track -b "${TRAVIS_BRANCH}" "${TRAVIS_COMMIT}"
+if [ `git branch -r | egrep "^[[:space:]]+origin/${TRAVIS_BRANCH}$"` ]; then
+    echo "travis/deploy.sh: merging existing ${TRAVIS_BRANCH} from ${TRAVIS_REPO_SLUG}."
+    git merge --no-edit origin/"${TRAVIS_BRANCH}"
 fi;
 
 # deploy build
 echo "travis/deploy.sh: copying build artifacts and staging for commit..."
-cp -a ../dist .
-git add -f -v dist/geniuslink.js
-git add -f -v dist/geniuslink.js.map
-git add -f -v dist/geniuslink.min.js
-git add -f -v dist/geniuslink.min.js.map
+mkdir -p dist
+cp -a ../out/* dist
+git add -f -v dist/*
 echo "travis/deploy.sh: build artifacts copied and staged for commit."
-git commit -m "Build ${TRAVIS_BRANCH} #${TRAVIS_BUILD_NUMBER}
+git commit -m "Build ${TRAVIS_BRANCH} #${TRAVIS_BUILD_NUMBER} [ci skip]
 Commits ${TRAVIS_COMMIT_RANGE}
 https://travis-ci.org/MindTouch/geniuslink/builds/${TRAVIS_BUILD_ID}"
-echo "travis/deploy.sh: deploying ${GENIUSLINK_BUILD_BRANCH}..."
-git push origin "${GENIUSLINK_BUILD_BRANCH}"
+echo "travis/deploy.sh: deploying build artifacts to ${TRAVIS_BRANCH}..."
+git diff origin/"${TRAVIS_BRANCH}" --name-only
+git push origin "${TRAVIS_BRANCH}"
 if [ $? -ne 0 ]; then
-    echo "travis/deploy.sh: could not deploy ${GENIUSLINK_BUILD_BRANCH}."
+    echo "travis/deploy.sh: could not deploy build artifacts to ${TRAVIS_BRANCH}."
     exit 1
 fi;
-echo "travis/deploy.sh: successfully deployed ${GENIUSLINK_BUILD_BRANCH}."
+echo "travis/deploy.sh: successfully deployed build artifacts to ${TRAVIS_BRANCH}."
