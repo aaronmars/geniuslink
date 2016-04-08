@@ -11,7 +11,7 @@ if [[ "${TRAVIS_REPO_SLUG}" != "MindTouch/geniuslink" ]]; then
     exit 0
 fi;
 if [[ "${TRAVIS_SECURE_ENV_VARS}" != "true" ]] || [ "${TRAVIS_TAG}" ] || [ ! "${TRAVIS_BRANCH}" ]; then
-    echo "travis/deploy.sh: only executes on branches with secure environment variables."
+    echo "travis/deploy.sh: deployment only executes on branches (not tags or releases) with secure environment variables."
     exit 0
 fi;
 if [ ! "$(git ls-files -o out)" ]; then

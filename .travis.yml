@@ -1,10 +1,6 @@
 language: node_js
 node_js:
-  - '4'
-
-branches:
-  except:
-    - /^build-.*$/
+  - "4"
 
 env:
   global:
@@ -39,3 +35,14 @@ script:
 
 after_success:
   - if [[ "${TRAVIS_SECURE_ENV_VARS}" == "true" ]]; then cat coverage/*/lcov.info | codecov; fi
+
+deploy:
+  provider: releases
+  api_key:
+    secure: vY5Y1ClWnD4af8ygXDIXDbcwJU0RdSojrp+SdHyU6lznqm8jVtMt4hrPCU8ctquoAYKhLAfeBbEtZ17GU6CPQbXgMbuvm3JA5c0IyjAMBrFlba95f7rS0zTPO85GKTSiYpfMAgE68kUA+dWY/V464YHplyUePzi3ujAOSV+i5FC5dYQf0GnVbWb5ThfyIvwUDn3tbCe3VTHEeVynTCfTJdlEBApL7baEtMHzJmcHn1UJsSPJne3u3s1RSXOwvUOFferilb30Dez2ucrGvi+g8Y2pXKv1bww6JJZNMVcSoSpBy3hhkDaWQ3ZmHc94q98s1Bd+Meb3mv63N0RHMFpapZ+pMKYmEPWnl8si0B681ZvJ3d634vhGTmxlOJx5c8nR08PmLBF/ptoG1VN899tRiZYK4ix48SWGD6+7G7ffw43TDnFm0dQrpwhd4oZO/T9mw9z59IgiEJNtLQBFNnQMehJECQHzSsP/ZXSSFsAqh4LuH5vFzMsrO+H1y4Yj7VDmlZZQ3B87N4lMlPxWaiat+VieVPckyDfxXsDACTRGC21lByHwgoTR04WH1mpDs1ZOqJF8p7tWUaboTmjHdTJ0+Q7S4Yf0k9/7eHKzqs86FP8u7Rewo6gU0Fz+jj/qbiBbbxgcxL584mzifQMBoWdeck2wnYZqWQRfo3XL5cfn8YU=
+  file:
+    - dist/geniuslink.min.js
+    - dist/geniuslink.min.js.map
+  on:
+    tags: true
+    repo: MindTouch/geniuslink
