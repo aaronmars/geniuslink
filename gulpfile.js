@@ -32,7 +32,7 @@ var docFiles = [ 'README.md', 'geniuslink.js', 'search.js', 'user.js', 'article.
 
 /*** sub tasks ***/
 gulp.task('build', function(cb) {
-    var out = 'dist/geniuslink.js';
+    var out = 'out/geniuslink.js';
     jspm.bundleSFX('index', out, {
         minify: false,
         sourceMaps: true,
@@ -44,7 +44,7 @@ gulp.task('build', function(cb) {
             .pipe(uglify())
             .pipe(rename({ extname: '.min.js' }))
             .pipe(sourcemaps.write('/'))
-            .pipe(gulp.dest('dist'));
+            .pipe(gulp.dest('out'));
         cb();
     }).catch(function(err) {
         cb(err);
