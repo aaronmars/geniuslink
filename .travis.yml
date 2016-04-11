@@ -33,25 +33,23 @@ after_success:
 
 deploy:
   - provider: releases
-      skip_cleanup: true
-      api_key:
-        secure: vY5Y1ClWnD4af8ygXDIXDbcwJU0RdSojrp+SdHyU6lznqm8jVtMt4hrPCU8ctquoAYKhLAfeBbEtZ17GU6CPQbXgMbuvm3JA5c0IyjAMBrFlba95f7rS0zTPO85GKTSiYpfMAgE68kUA+dWY/V464YHplyUePzi3ujAOSV+i5FC5dYQf0GnVbWb5ThfyIvwUDn3tbCe3VTHEeVynTCfTJdlEBApL7baEtMHzJmcHn1UJsSPJne3u3s1RSXOwvUOFferilb30Dez2ucrGvi+g8Y2pXKv1bww6JJZNMVcSoSpBy3hhkDaWQ3ZmHc94q98s1Bd+Meb3mv63N0RHMFpapZ+pMKYmEPWnl8si0B681ZvJ3d634vhGTmxlOJx5c8nR08PmLBF/ptoG1VN899tRiZYK4ix48SWGD6+7G7ffw43TDnFm0dQrpwhd4oZO/T9mw9z59IgiEJNtLQBFNnQMehJECQHzSsP/ZXSSFsAqh4LuH5vFzMsrO+H1y4Yj7VDmlZZQ3B87N4lMlPxWaiat+VieVPckyDfxXsDACTRGC21lByHwgoTR04WH1mpDs1ZOqJF8p7tWUaboTmjHdTJ0+Q7S4Yf0k9/7eHKzqs86FP8u7Rewo6gU0Fz+jj/qbiBbbxgcxL584mzifQMBoWdeck2wnYZqWQRfo3XL5cfn8YU=
-      file:
-        - out/geniuslink.min.js
-        - out/geniuslink.min.js.map
-      on:
-        tags: true
-        repo: MindTouch/geniuslink
+    skip_cleanup: true
+    api_key:
+      secure: vY5Y1ClWnD4af8ygXDIXDbcwJU0RdSojrp+SdHyU6lznqm8jVtMt4hrPCU8ctquoAYKhLAfeBbEtZ17GU6CPQbXgMbuvm3JA5c0IyjAMBrFlba95f7rS0zTPO85GKTSiYpfMAgE68kUA+dWY/V464YHplyUePzi3ujAOSV+i5FC5dYQf0GnVbWb5ThfyIvwUDn3tbCe3VTHEeVynTCfTJdlEBApL7baEtMHzJmcHn1UJsSPJne3u3s1RSXOwvUOFferilb30Dez2ucrGvi+g8Y2pXKv1bww6JJZNMVcSoSpBy3hhkDaWQ3ZmHc94q98s1Bd+Meb3mv63N0RHMFpapZ+pMKYmEPWnl8si0B681ZvJ3d634vhGTmxlOJx5c8nR08PmLBF/ptoG1VN899tRiZYK4ix48SWGD6+7G7ffw43TDnFm0dQrpwhd4oZO/T9mw9z59IgiEJNtLQBFNnQMehJECQHzSsP/ZXSSFsAqh4LuH5vFzMsrO+H1y4Yj7VDmlZZQ3B87N4lMlPxWaiat+VieVPckyDfxXsDACTRGC21lByHwgoTR04WH1mpDs1ZOqJF8p7tWUaboTmjHdTJ0+Q7S4Yf0k9/7eHKzqs86FP8u7Rewo6gU0Fz+jj/qbiBbbxgcxL584mzifQMBoWdeck2wnYZqWQRfo3XL5cfn8YU=
+    file: out/geniuslink.min.js
+    on:
+      tags: true
+      repo: MindTouch/geniuslink
   - provider: s3
-      skip_cleanup: true
-      access_key_id:
-        secure: "jJhlmBq2n+JaaDcS+4biYc+F4/UjOwq7RYAw07ynnhSDNFRZQhs/dl1dfTqu3+8qaKmJufWMMAB4/4Ae0Ni0cFP4Z7sKo4UKd+uxVr4diJHkyxXNZnPz0v97vHY5IV9a/lOt3IQ+GQbcXMJocIcPG12yIPmAllzswAotCLS3k3HcfmsOGEpewH/EwJ6uRAveDhrOHAAtJfUBBoxadcZEhATxIcbir5fGncK1DGF46gX/Sgxxkwh4S+B9IWqwLLCbA3Gc58U5K2mSaxzUCI45Lu2oaQzDL4UuKChtH8FJaSAxnUW0hBhpnZJsX67U+JjE/A/eyK+MuefhZtCUWK+iHzya0lJN79haUVWELW/8OJd4ie2Fv1Yv8MO+Bjj6VBWvjFgjuxRRs8Y5Mw27cDPrv9kzu24DTIA0H50vVsBei13HKVJNEuWce16+T/r29o3LoeYMpEmo1QMchCkemj42WfHx7Tv270QF2H5DW79WQCaYr+upYM6+pBpcHwuuEu+gV5ioxv3Q4IhchLxPoP5eGCVODI4CJeJbBZpx/873MK3eAw9ELpSulll2LddYqP+A/EcRzTt891KSOfMd93cehI8JDU3E6iMwVZdBdhCBgTO1EZggWXGZTorctfTGIV7MyNwMRFBy3eYTulo5kGtbOePAV0557o+3ta3r4x7SShY="
-      secret_access_key:
-        secure: "FSAPImscYdcJxslTeo79raHxGSlHL671h6fz6M9pgkAvqIcxWfuyCfBRjNMblvaXkBmDJoN3qhAOoXgbW137qs1Dj5/Z3uFBnY9f084wlHdhwtoVEON7wBBZVzPg8n2ywpTblWIx1xfNuU/PjGqLZ+QjZCPcmlZATC0wVwZ236we1nwoxJOF6mJ/X+c+6R3wZ2HcEiJPw5St4OZDSfnJTIiM7luu3kTxBVDsjvw64iBcG/Sb/qKWLRaSChPxeBVXMHp1xylpBBHt9dgblTwMEYpJpn/p5E9zKzSvvvlcfjs8VQtTGSNRxyGNvDEKj9dD3oXZ7kOvFTxyP3TS12Dklf6yh8bM3ktDZuQ5XNAIidWZxt+tWHf7kXEk7ZBxsaxRhmPg8Tbs12ciEGpAis+wf3a5CRnM4YTgIdOIj/UWptnM9M0Q5XKJQEb9Qe2jYPLbQBBATh0JeaTrRTYd8gl8lVk0G77InnSV3iGtnFeKNeh6M5+a/uKFJ5xyfNWrIvNwtym5+x6OZkLmIxDcXiJSktIB3Dv3TSfKvIgoAykkMne92gyoJvX/IyxU2OIsZNq+VXmHvGVTHtCnln5crmJ5KP6Q9b179RQdVmBgpUs9Uh+UebYPlURf676UQXQYk0hdjAiBzCS1JobgNTO6nyq+e8sN7Y/XzNbhyqt/c78cyCs="
-      bucket: mindtouch-cloudfront-ajax
-      local_dir: out
-      upload_dir: "geniuslink/${TRAVIS_TAG}"
-      cache_control: "max-age=29030400, public"
-      on:
-        tags: true
-        repo: modethirteen/geniuslink
+    skip_cleanup: true
+    access_key_id:
+      secure: jJhlmBq2n+JaaDcS+4biYc+F4/UjOwq7RYAw07ynnhSDNFRZQhs/dl1dfTqu3+8qaKmJufWMMAB4/4Ae0Ni0cFP4Z7sKo4UKd+uxVr4diJHkyxXNZnPz0v97vHY5IV9a/lOt3IQ+GQbcXMJocIcPG12yIPmAllzswAotCLS3k3HcfmsOGEpewH/EwJ6uRAveDhrOHAAtJfUBBoxadcZEhATxIcbir5fGncK1DGF46gX/Sgxxkwh4S+B9IWqwLLCbA3Gc58U5K2mSaxzUCI45Lu2oaQzDL4UuKChtH8FJaSAxnUW0hBhpnZJsX67U+JjE/A/eyK+MuefhZtCUWK+iHzya0lJN79haUVWELW/8OJd4ie2Fv1Yv8MO+Bjj6VBWvjFgjuxRRs8Y5Mw27cDPrv9kzu24DTIA0H50vVsBei13HKVJNEuWce16+T/r29o3LoeYMpEmo1QMchCkemj42WfHx7Tv270QF2H5DW79WQCaYr+upYM6+pBpcHwuuEu+gV5ioxv3Q4IhchLxPoP5eGCVODI4CJeJbBZpx/873MK3eAw9ELpSulll2LddYqP+A/EcRzTt891KSOfMd93cehI8JDU3E6iMwVZdBdhCBgTO1EZggWXGZTorctfTGIV7MyNwMRFBy3eYTulo5kGtbOePAV0557o+3ta3r4x7SShY=
+    secret_access_key:
+      secure: FSAPImscYdcJxslTeo79raHxGSlHL671h6fz6M9pgkAvqIcxWfuyCfBRjNMblvaXkBmDJoN3qhAOoXgbW137qs1Dj5/Z3uFBnY9f084wlHdhwtoVEON7wBBZVzPg8n2ywpTblWIx1xfNuU/PjGqLZ+QjZCPcmlZATC0wVwZ236we1nwoxJOF6mJ/X+c+6R3wZ2HcEiJPw5St4OZDSfnJTIiM7luu3kTxBVDsjvw64iBcG/Sb/qKWLRaSChPxeBVXMHp1xylpBBHt9dgblTwMEYpJpn/p5E9zKzSvvvlcfjs8VQtTGSNRxyGNvDEKj9dD3oXZ7kOvFTxyP3TS12Dklf6yh8bM3ktDZuQ5XNAIidWZxt+tWHf7kXEk7ZBxsaxRhmPg8Tbs12ciEGpAis+wf3a5CRnM4YTgIdOIj/UWptnM9M0Q5XKJQEb9Qe2jYPLbQBBATh0JeaTrRTYd8gl8lVk0G77InnSV3iGtnFeKNeh6M5+a/uKFJ5xyfNWrIvNwtym5+x6OZkLmIxDcXiJSktIB3Dv3TSfKvIgoAykkMne92gyoJvX/IyxU2OIsZNq+VXmHvGVTHtCnln5crmJ5KP6Q9b179RQdVmBgpUs9Uh+UebYPlURf676UQXQYk0hdjAiBzCS1JobgNTO6nyq+e8sN7Y/XzNbhyqt/c78cyCs=
+    bucket: mindtouch-cloudfront-ajax
+    local_dir: out
+    upload_dir: "geniuslink/${TRAVIS_TAG}"
+    cache_control: "max-age=29030400, public"
+    on:
+      tags: true
+      repo: modethirteen/geniuslink
