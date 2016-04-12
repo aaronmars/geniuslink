@@ -1,10 +1,6 @@
 language: node_js
 node_js:
-  - '4'
-
-branches:
-  except:
-    - /^build-.*$/
+  - "4"
 
 env:
   global:
@@ -12,11 +8,6 @@ env:
 
 notifications:
   flowdock: $FLOWDOCK_API_TOKEN
-  email:
-    recipients:
-      - $NOTIFICATION_EMAIL_RECIPIENT
-    on_success: change
-    on_failure: always
 
 cache:
   directories:
@@ -39,3 +30,26 @@ script:
 
 after_success:
   - if [[ "${TRAVIS_SECURE_ENV_VARS}" == "true" ]]; then cat coverage/*/lcov.info | codecov; fi
+
+deploy:
+  - provider: releases
+    skip_cleanup: true
+    api_key:
+      secure: vY5Y1ClWnD4af8ygXDIXDbcwJU0RdSojrp+SdHyU6lznqm8jVtMt4hrPCU8ctquoAYKhLAfeBbEtZ17GU6CPQbXgMbuvm3JA5c0IyjAMBrFlba95f7rS0zTPO85GKTSiYpfMAgE68kUA+dWY/V464YHplyUePzi3ujAOSV+i5FC5dYQf0GnVbWb5ThfyIvwUDn3tbCe3VTHEeVynTCfTJdlEBApL7baEtMHzJmcHn1UJsSPJne3u3s1RSXOwvUOFferilb30Dez2ucrGvi+g8Y2pXKv1bww6JJZNMVcSoSpBy3hhkDaWQ3ZmHc94q98s1Bd+Meb3mv63N0RHMFpapZ+pMKYmEPWnl8si0B681ZvJ3d634vhGTmxlOJx5c8nR08PmLBF/ptoG1VN899tRiZYK4ix48SWGD6+7G7ffw43TDnFm0dQrpwhd4oZO/T9mw9z59IgiEJNtLQBFNnQMehJECQHzSsP/ZXSSFsAqh4LuH5vFzMsrO+H1y4Yj7VDmlZZQ3B87N4lMlPxWaiat+VieVPckyDfxXsDACTRGC21lByHwgoTR04WH1mpDs1ZOqJF8p7tWUaboTmjHdTJ0+Q7S4Yf0k9/7eHKzqs86FP8u7Rewo6gU0Fz+jj/qbiBbbxgcxL584mzifQMBoWdeck2wnYZqWQRfo3XL5cfn8YU=
+    file: out/geniuslink.min.js
+    on:
+      tags: true
+      repo: MindTouch/geniuslink
+  - provider: s3
+    skip_cleanup: true
+    access_key_id:
+      secure: TmDxis2TQ2eiuPBUApZNe/J/b3MXEpFp/ycAcHJjoqcxr7qMtMvxSJTToTZBZUsEdFOhB+bPgFii5+e36p/EW81UFQUZR1NIk2152GERzEjZC8AY1qxGrHN/PviGAmfS5Db8wSZ/li3G13f1SB5i5TiNU2Kujx2fkepR6eTemdeiFpkmk4pBNSID0/Qsp3NdMcdS+RKIDXE/QhUGUKmoNPD8F7fZ10NmT0MaU66kvWbm4/zndIBkYYfWZmuQ29saIVTcNJTH1tyt6OdlKFEzUENGqHsfLJKGeFJnWJsv+wVeRaRFV8S0wfJ9cWcrWj7cP3HahMQ03x1+rOSFeHLR6bnjWwnGebwFupJzr1TmzUeWB3Z3XYBRkJOD/osXykMvGDd4ySBIgIZyDQAlzgPnXGcHNB55JszGB/Ox6pNEtwozjlgfMYaIMOdEOI6RPthAUqWd62qWTKtEe7TxQlJz+OsD9q/9TCFfzJBI72o3LDMOoyYPklD5iGg/CsOIg+/utq76p1n2Y/bA1TTg51NQCZsjQIKFIsuobLB0GgrYQzTjKpQHBwWqNCqR9a0mw3K1V3Yqw3t2Uab4DoIjazbIgrJ9UjTsH7Ko8GBLC270i5bpUMG5pz1UDecYW2SyzUX0BTL/lrN2OWm2/ZkKWVDnjGv58v1niR1cIzKYMtql0RU=
+    secret_access_key:
+      secure: owieBw/S/VpV/vzMZ0p6+cANcOBiX0sCs8FkDdDTUk+UQJ1zhmJfTqzVV4+3Q5753KxfvT17d8E5+krc70IXZcQzYbur3XkO+42ipvQv45E74jY7BDezRvqHresilNSAayuUrABLmfEhQi/AK4n6uT4qit9nk1uJCQ6GUDbIsS7kmVzJwdPbbVsmbqDCE9Yn4GOlOPv5eKVIr4JTWryHHPE6gQxgi2MMsLw9USOScMmYE4HXyp+C4ymn9O9KXCz85V+zenAa3DG9Te4Dg8G+DCPipytD2prOfM9i5GYUZjD/pHD02I4bNdxD0N8yJvVyWCi61h0gQNBMPIw12XCCJrVO+EZU2jS1daSj2+kSWCFj3yCFTa+UDCsTHvaF8zU3TOoKotCeLRYu7TQ3A9/buyvG/8RMeYxrrQUho8jGkFggElrvuAHooAB88Pldor9A0kCrfU3wD82fRqkvYBAcyjLxBugzS/1HmmAIU0iHdJ82JVBUNTG9E2tHTLdgFcVAiCJoUeF0WS04deBhISrX6H0m5OY5QWsZVOOND7LDNPiRMkqW4RZaMUR1Smh28W3NObXJpA5a7fCvVmswHoIu5O3ZSX8QMQCmhDonb40N5Gfqkvt8rNbV3hu7MQbnRYpm/kuaKkFRkKhm99UIUHi3mgagSzrMZyCq+5T3kjXqJcU=
+    bucket: mindtouch-cloudfront-ajax
+    local_dir: out
+    upload_dir: "geniuslink/${TRAVIS_TAG}"
+    cache_control: "max-age=29030400, public"
+    on:
+      tags: true
+      repo: MindTouch/geniuslink
