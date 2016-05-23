@@ -217,3 +217,72 @@ gl.Article.createPublished({
     console.log('Article created with ID ' + unpublishedArticle.id);
 });
 ```
+
+### GeniusLink.Workflows.submitIssue({Object} options)
+Use the submit issue workflow.
+
+**options** {Object}
+* **email** {String} - If supplied, notifies the workflow logic of the email address of the user submitting the issue.
+* **path** {String} - If supplied, notifies the workflow logic of the site path the user was on before submitting the issue.
+* **search** {String} - If supplied, notifies the workflow logic of the last search term the user tried before submitting the issue.
+
+**Returns {Promise\<Object\>}** The Promise, when resolved, indicates a successful issue submission.
+
+**Sample**
+```javascript
+var gl = new GeniusLink({
+    host: 'https://success.example.com',
+    token: '12345'
+});
+gl.Workflows.submitIssue({
+    email: 'user@example.com',
+    path: 'path/to/article'
+}).then(function() {
+    console.log('Issue submitted successfully');
+});
+```
+
+### GeniusLink.Workflows.requestArticle({Object} options)
+Use the workflow that requests an article be written.
+
+**options** {Object}
+* **email** {String} - If supplied, notifies the workflow logic of the email address of the user making the request.
+
+**Returns {Promise\<Object\>}** The Promise, when resolved, indicates a successful article request.
+
+**Sample**
+```javascript
+var gl = new GeniusLink({
+    host: 'https://success.example.com',
+    token: '12345'
+});
+gl.Workflows.requestArticle({
+    email: 'user@example.com'
+}).then(function() {
+    console.log('Article requested successfully');
+});
+```
+
+### GeniusLink.Workflows.contactSupport({Object} options)
+Use the contact support workflow.
+
+**options** {Object}
+* **email** {String} - If supplied, notifies the workflow logic of the email address of the user contacting support.
+* **path** {String} - If supplied, notifies the workflow logic of the site path the user was on before contacting support.
+* **search** {String} - If supplied, notifies the workflow logic of the last search term the user tried before contacting support.
+
+**Returns {Promise\<Object\>}** The Promise, when resolved, indicates a successful support contact request.
+
+**Sample**
+```javascript
+var gl = new GeniusLink({
+    host: 'https://success.example.com',
+    token: '12345'
+});
+gl.Workflows.contactSupport({
+    email: 'user@example.com',
+    path: 'path/to/article'
+}).then(function() {
+    console.log('Support contacted successfully');
+});
+```
