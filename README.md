@@ -1,8 +1,16 @@
-# GeniusLink SDK
+# MindTouch GeniusLink SDK
 MindTouch GeniusLink SDK is an integration library for MindTouch customer success sites. Integrate your MindTouch site's content, search, and usage data into your CRM, websites, and more!
 
 [![travis-ci.org](https://travis-ci.org/MindTouch/geniuslink.svg?branch=master)](https://travis-ci.org/MindTouch/geniuslink)
 [![codecov.io](https://codecov.io/github/MindTouch/geniuslink/coverage.svg?branch=master)](https://codecov.io/github/MindTouch/geniuslink?branch=master)
+
+## Delivery
+
+This library can be included in your web application project as a standalone script by including the following in your HTML:
+```html
+<script async src="https://ajax.mindtouch.com/geniuslink/{tag}/geniuslink.min.js"></script>
+```
+{tag} represents the GitHub release of the library (ex: https://ajax.mindtouch.com/geniuslink/1.2.3-beta.1/geniuslink.min.js). Available release tags can be found on [this GitHub page](https://github.com/MindTouch/geniuslink/tags).
 
 ## Usage
 
