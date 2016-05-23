@@ -1,8 +1,8 @@
-!function(e){function r(e,r,o){return 4===arguments.length?t.apply(this,arguments):void n(e,{declarative:!0,deps:r,declare:o})}function t(e,r,t,o){n(e,{declarative:!1,deps:r,executingRequire:t,execute:o})}function n(e,r){r.name=e,e in p||(p[e]=r),r.normalizedDeps=r.deps}function o(e,r){if(r[e.groupIndex]=r[e.groupIndex]||[],-1==v.call(r[e.groupIndex],e)){r[e.groupIndex].push(e);for(var t=0,n=e.normalizedDeps.length;n>t;t++){var a=e.normalizedDeps[t],u=p[a];if(u&&!u.evaluated){var d=e.groupIndex+(u.declarative!=e.declarative);if(void 0===u.groupIndex||u.groupIndex<d){if(void 0!==u.groupIndex&&(r[u.groupIndex].splice(v.call(r[u.groupIndex],u),1),0==r[u.groupIndex].length))throw new TypeError("Mixed dependency cycle detected");u.groupIndex=d}o(u,r)}}}}function a(e){var r=p[e];r.groupIndex=0;var t=[];o(r,t);for(var n=!!r.declarative==t.length%2,a=t.length-1;a>=0;a--){for(var u=t[a],i=0;i<u.length;i++){var s=u[i];n?d(s):l(s)}n=!n}}function u(e){return x[e]||(x[e]={name:e,dependencies:[],exports:{},importers:[]})}function d(r){if(!r.module){var t=r.module=u(r.name),n=r.module.exports,o=r.declare.call(e,function(e,r){if(t.locked=!0,"object"==typeof e)for(var o in e)n[o]=e[o];else n[e]=r;for(var a=0,u=t.importers.length;u>a;a++){var d=t.importers[a];if(!d.locked)for(var i=0;i<d.dependencies.length;++i)d.dependencies[i]===t&&d.setters[i](n)}return t.locked=!1,r},r.name);t.setters=o.setters,t.execute=o.execute;for(var a=0,i=r.normalizedDeps.length;i>a;a++){var l,s=r.normalizedDeps[a],c=p[s],v=x[s];v?l=v.exports:c&&!c.declarative?l=c.esModule:c?(d(c),v=c.module,l=v.exports):l=f(s),v&&v.importers?(v.importers.push(t),t.dependencies.push(v)):t.dependencies.push(null),t.setters[a]&&t.setters[a](l)}}}function i(e){var r,t=p[e];if(t)t.declarative?c(e,[]):t.evaluated||l(t),r=t.module.exports;else if(r=f(e),!r)throw new Error("Unable to load dependency "+e+".");return(!t||t.declarative)&&r&&r.__useDefault?r["default"]:r}function l(r){if(!r.module){var t={},n=r.module={exports:t,id:r.name};if(!r.executingRequire)for(var o=0,a=r.normalizedDeps.length;a>o;o++){var u=r.normalizedDeps[o],d=p[u];d&&l(d)}r.evaluated=!0;var c=r.execute.call(e,function(e){for(var t=0,n=r.deps.length;n>t;t++)if(r.deps[t]==e)return i(r.normalizedDeps[t]);throw new TypeError("Module "+e+" not declared as a dependency.")},t,n);c&&(n.exports=c),t=n.exports,t&&t.__esModule?r.esModule=t:r.esModule=s(t)}}function s(r){if(r===e)return r;var t={};if("object"==typeof r||"function"==typeof r)if(g){var n;for(var o in r)(n=Object.getOwnPropertyDescriptor(r,o))&&h(t,o,n)}else{var a=r&&r.hasOwnProperty;for(var o in r)(!a||r.hasOwnProperty(o))&&(t[o]=r[o])}return t["default"]=r,h(t,"__useDefault",{value:!0}),t}function c(r,t){var n=p[r];if(n&&!n.evaluated&&n.declarative){t.push(r);for(var o=0,a=n.normalizedDeps.length;a>o;o++){var u=n.normalizedDeps[o];-1==v.call(t,u)&&(p[u]?c(u,t):f(u))}n.evaluated||(n.evaluated=!0,n.module.execute.call(e))}}function f(e){if(D[e])return D[e];if("@node/"==e.substr(0,6))return y(e.substr(6));var r=p[e];if(!r)throw"Module "+e+" not present.";return a(e),c(e,[]),p[e]=void 0,r.declarative&&h(r.module.exports,"__esModule",{value:!0}),D[e]=r.declarative?r.module.exports:r.esModule}var p={},v=Array.prototype.indexOf||function(e){for(var r=0,t=this.length;t>r;r++)if(this[r]===e)return r;return-1},g=!0;try{Object.getOwnPropertyDescriptor({a:0},"a")}catch(m){g=!1}var h;!function(){try{Object.defineProperty({},"a",{})&&(h=Object.defineProperty)}catch(e){h=function(e,r,t){try{e[r]=t.value||t.get.call(e)}catch(n){}}}}();var x={},y="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&require.resolve&&"undefined"!=typeof process&&require,D={"@empty":{}};return function(e,n,o){return function(a){a(function(a){for(var u={_nodeRequire:y,register:r,registerDynamic:t,get:f,set:function(e,r){D[e]=r},newModule:function(e){return e}},d=0;d<n.length;d++)(function(e,r){r&&r.__esModule?D[e]=r:D[e]=s(r)})(n[d],arguments[d]);o(u);var i=f(e[0]);if(e.length>1)for(var d=1;d<e.length;d++)f(e[d]);return i.__useDefault?i["default"]:i})}}}("undefined"!=typeof self?self:global)
+!function(e){function r(e,r,o){return 4===arguments.length?t.apply(this,arguments):void n(e,{declarative:!0,deps:r,declare:o})}function t(e,r,t,o){n(e,{declarative:!1,deps:r,executingRequire:t,execute:o})}function n(e,r){r.name=e,e in g||(g[e]=r),r.normalizedDeps=r.deps}function o(e,r){if(r[e.groupIndex]=r[e.groupIndex]||[],-1==m.call(r[e.groupIndex],e)){r[e.groupIndex].push(e);for(var t=0,n=e.normalizedDeps.length;n>t;t++){var a=e.normalizedDeps[t],u=g[a];if(u&&!u.evaluated){var d=e.groupIndex+(u.declarative!=e.declarative);if(void 0===u.groupIndex||u.groupIndex<d){if(void 0!==u.groupIndex&&(r[u.groupIndex].splice(m.call(r[u.groupIndex],u),1),0==r[u.groupIndex].length))throw new TypeError("Mixed dependency cycle detected");u.groupIndex=d}o(u,r)}}}}function a(e){var r=g[e];r.groupIndex=0;var t=[];o(r,t);for(var n=!!r.declarative==t.length%2,a=t.length-1;a>=0;a--){for(var u=t[a],i=0;i<u.length;i++){var s=u[i];n?d(s):l(s)}n=!n}}function u(e){return D[e]||(D[e]={name:e,dependencies:[],exports:{},importers:[]})}function d(r){if(!r.module){var t=r.module=u(r.name),n=r.module.exports,o=r.declare.call(e,function(e,r){if(t.locked=!0,"object"==typeof e)for(var o in e)n[o]=e[o];else n[e]=r;for(var a=0,u=t.importers.length;u>a;a++){var d=t.importers[a];if(!d.locked)for(var i=0;i<d.dependencies.length;++i)d.dependencies[i]===t&&d.setters[i](n)}return t.locked=!1,r},r.name);t.setters=o.setters,t.execute=o.execute;for(var a=0,i=r.normalizedDeps.length;i>a;a++){var l,s=r.normalizedDeps[a],c=g[s],f=D[s];f?l=f.exports:c&&!c.declarative?l=c.esModule:c?(d(c),f=c.module,l=f.exports):l=v(s),f&&f.importers?(f.importers.push(t),t.dependencies.push(f)):t.dependencies.push(null),t.setters[a]&&t.setters[a](l)}}}function i(e){var r,t=g[e];if(t)t.declarative?p(e,[]):t.evaluated||l(t),r=t.module.exports;else if(r=v(e),!r)throw new Error("Unable to load dependency "+e+".");return(!t||t.declarative)&&r&&r.__useDefault?r["default"]:r}function l(r){if(!r.module){var t={},n=r.module={exports:t,id:r.name};if(!r.executingRequire)for(var o=0,a=r.normalizedDeps.length;a>o;o++){var u=r.normalizedDeps[o],d=g[u];d&&l(d)}r.evaluated=!0;var c=r.execute.call(e,function(e){for(var t=0,n=r.deps.length;n>t;t++)if(r.deps[t]==e)return i(r.normalizedDeps[t]);throw new TypeError("Module "+e+" not declared as a dependency.")},t,n);c&&(n.exports=c),t=n.exports,t&&t.__esModule?r.esModule=t:r.esModule=s(t)}}function s(e){var r={};if("object"==typeof e||"function"==typeof e){var t=e&&e.hasOwnProperty;if(h)for(var n in e)f(r,e,n)||c(r,e,n,t);else for(var n in e)c(r,e,n,t)}return r["default"]=e,y(r,"__useDefault",{value:!0}),r}function c(e,r,t,n){(!n||r.hasOwnProperty(t))&&(e[t]=r[t])}function f(e,r,t){try{var n;return(n=Object.getOwnPropertyDescriptor(r,t))&&y(e,t,n),!0}catch(o){return!1}}function p(r,t){var n=g[r];if(n&&!n.evaluated&&n.declarative){t.push(r);for(var o=0,a=n.normalizedDeps.length;a>o;o++){var u=n.normalizedDeps[o];-1==m.call(t,u)&&(g[u]?p(u,t):v(u))}n.evaluated||(n.evaluated=!0,n.module.execute.call(e))}}function v(e){if(I[e])return I[e];if("@node/"==e.substr(0,6))return _(e.substr(6));var r=g[e];if(!r)throw"Module "+e+" not present.";return a(e),p(e,[]),g[e]=void 0,r.declarative&&y(r.module.exports,"__esModule",{value:!0}),I[e]=r.declarative?r.module.exports:r.esModule}var g={},m=Array.prototype.indexOf||function(e){for(var r=0,t=this.length;t>r;r++)if(this[r]===e)return r;return-1},h=!0;try{Object.getOwnPropertyDescriptor({a:0},"a")}catch(x){h=!1}var y;!function(){try{Object.defineProperty({},"a",{})&&(y=Object.defineProperty)}catch(e){y=function(e,r,t){try{e[r]=t.value||t.get.call(e)}catch(n){}}}}();var D={},_="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&require.resolve&&"undefined"!=typeof process&&require,I={"@empty":{}};return function(e,n,o){return function(a){a(function(a){for(var u={_nodeRequire:_,register:r,registerDynamic:t,get:v,set:function(e,r){I[e]=r},newModule:function(e){return e}},d=0;d<n.length;d++)(function(e,r){r&&r.__esModule?I[e]=r:I[e]=s(r)})(n[d],arguments[d]);o(u);var i=v(e[0]);if(e.length>1)for(var d=1;d<e.length;d++)v(e[d]);return i.__useDefault?i["default"]:i})}}}("undefined"!=typeof self?self:global)
 
-(["1","1"], [], function($__System) {
-
-$__System.register('2', ['3', '4'], function (_export) {
+(["1"], [], function($__System) {
+var require = this.require, exports = this.exports, module = this.module;
+$__System.register('2', ['3'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -23,50 +23,51 @@ $__System.register('2', ['3', '4'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, userModel, userListModel;
+    var userModel, userListModel;
     return {
         setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }, function (_2) {
-            userModel = _2.userModel;
+            userModel = _.userModel;
         }],
         execute: function () {
-            userListModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        count: obj['@count'],
-                        users: []
-                    };
-                    modelHelper.addIfDefined(obj['@querycount'], 'querycount', parsed);
-                    modelHelper.addIfDefined(obj['@totalcount'], 'totalcount', parsed);
-                    modelHelper.addIfDefined(obj['@href'], 'href', parsed);
-                    if ('user' in obj) {
-                        var users = modelHelper.getArray(obj.user);
-                        users.forEach(function (user) {
-                            parsed.users.push(userModel.parse(user));
-                        });
-                    }
-                    return parsed;
-                }
-            };
+            userListModel = [{
+                field: '@count',
+                name: 'count',
+                transform: 'number'
+            }, {
+                field: '@querycount',
+                name: 'queryCount',
+                transform: 'number'
+            }, {
+                field: '@totalcount',
+                name: 'totalCount',
+                transform: 'number'
+            }, {
+                field: '@href',
+                name: 'href'
+            }, {
+                field: 'users',
+                isArray: true,
+                transform: userModel
+            }];
 
             _export('userListModel', userListModel);
         }
     };
 });
-$__System.register('5', ['2', '4', '6', '7', '8', '9'], function (_export) {
-  var userListModel, userModel, Plug, utility, _createClass, _classCallCheck, User, UserManager;
+$__System.register('4', ['2', '3', '5', '6', '7', '8', '9'], function (_export) {
+  var userListModel, userModel, Plug, utility, modelParser, _createClass, _classCallCheck, User, UserManager;
 
   return {
-    setters: [function (_6) {
-      userListModel = _6.userListModel;
-    }, function (_5) {
-      userModel = _5.userModel;
+    setters: [function (_7) {
+      userListModel = _7.userListModel;
+    }, function (_6) {
+      userModel = _6.userModel;
     }, function (_3) {
       Plug = _3.Plug;
     }, function (_4) {
       utility = _4.utility;
+    }, function (_5) {
+      modelParser = _5.modelParser;
     }, function (_) {
       _createClass = _['default'];
     }, function (_2) {
@@ -126,7 +127,8 @@ $__System.register('5', ['2', '4', '6', '7', '8', '9'], function (_export) {
         _createClass(User, [{
           key: 'getInfo',
           value: function getInfo() {
-            return this._plug.get().then(userModel.parse);
+            var userModelParser = modelParser.createParser(userModel);
+            return this._plug.get().then(userModelParser);
           }
         }]);
 
@@ -157,7 +159,8 @@ $__System.register('5', ['2', '4', '6', '7', '8', '9'], function (_export) {
         _createClass(UserManager, [{
           key: 'getCurrentUser',
           value: function getCurrentUser() {
-            return this.plug.at('current').get().then(userModel.parse);
+            var userModelParser = modelParser.createParser(userModel);
+            return this.plug.at('current').get().then(userModelParser);
           }
 
           /**
@@ -167,7 +170,8 @@ $__System.register('5', ['2', '4', '6', '7', '8', '9'], function (_export) {
         }, {
           key: 'getUsers',
           value: function getUsers() {
-            return this.plug.get().then(userListModel.parse);
+            var userListModelParser = modelParser.createParser(userListModel);
+            return this.plug.get().then(userListModelParser);
           }
 
           /**
@@ -187,7 +191,8 @@ $__System.register('5', ['2', '4', '6', '7', '8', '9'], function (_export) {
         }, {
           key: 'searchUsers',
           value: function searchUsers(constraints) {
-            return this.plug.at('search').withParams(constraints).get().then(userListModel.parse);
+            var userListModelParser = modelParser.createParser(userListModel);
+            return this.plug.at('search').withParams(constraints).get().then(userListModelParser);
           }
 
           /**
@@ -211,7 +216,7 @@ $__System.register('5', ['2', '4', '6', '7', '8', '9'], function (_export) {
     }
   };
 });
-$__System.register('a', ['3', 'b'], function (_export) {
+$__System.register('a', ['b'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -232,34 +237,34 @@ $__System.register('a', ['3', 'b'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, eventModel, userActivityModel;
+    var eventModel, userActivityModel;
     return {
-        setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }, function (_b) {
+        setters: [function (_b) {
             eventModel = _b.eventModel;
         }],
         execute: function () {
-            userActivityModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        count: modelHelper.getInt(obj['@count']),
-                        upto: obj['@upto'],
-                        since: obj['@since']
-                    };
-                    parsed.events = modelHelper.getArray(obj.event).map(function (e) {
-                        return eventModel.parse(e);
-                    });
-                    return parsed;
-                }
-            };
+            userActivityModel = [{
+                field: '@count',
+                name: 'count',
+                transform: 'number'
+            }, {
+                field: '@upto',
+                name: 'upto'
+            }, {
+                field: '@since',
+                name: 'since'
+            }, {
+                field: 'event',
+                name: 'events',
+                isArray: true,
+                transform: eventModel
+            }];
 
             _export('userActivityModel', userActivityModel);
         }
     };
 });
-$__System.register('c', ['3', 'b'], function (_export) {
+$__System.register('c', ['b'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -280,44 +285,53 @@ $__System.register('c', ['3', 'b'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, eventModel, eventListModel;
+    var eventModel, eventListModel;
     return {
-        setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }, function (_b) {
+        setters: [function (_b) {
             eventModel = _b.eventModel;
         }],
         execute: function () {
-            eventListModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        count: modelHelper.getInt(obj['@count']),
-                        upto: obj['@upto'],
-                        since: obj['@since'],
-                        summary: []
-                    };
-                    var events = modelHelper.getArray(obj.summary);
-                    events.forEach(function (e) {
-                        var parsedEvent = {
-                            id: e['@id'],
-                            datetime: modelHelper.getDate(e['@datetime']),
-                            count: modelHelper.getInt(e['@count']),
-                            detailid: e['@detailid'],
-                            uriDetail: e['@uri.detail'],
-                            event: eventModel.parse(e.event)
-                        };
-                        parsed.summary.push(parsedEvent);
-                    });
-                    return parsed;
-                }
-            };
+            eventListModel = [{
+                field: '@count',
+                name: 'count',
+                transform: 'number'
+            }, {
+                field: '@upto',
+                name: 'upto'
+            }, {
+                field: '@since',
+                name: 'since'
+            }, {
+                field: 'summary',
+                isArray: true,
+                transform: [{
+                    field: '@id',
+                    name: 'id'
+                }, {
+                    field: '@datetime',
+                    name: 'datetime',
+                    transform: 'date'
+                }, {
+                    field: '@count',
+                    name: 'count',
+                    transform: 'number'
+                }, {
+                    field: '@detailid',
+                    name: 'detailId'
+                }, {
+                    field: '@uri.detail',
+                    name: 'uriDetail'
+                }, {
+                    field: 'event',
+                    transform: eventModel
+                }]
+            }];
 
             _export('eventListModel', eventListModel);
         }
     };
 });
-$__System.register('b', ['3', 'd'], function (_export) {
+$__System.register('b', ['d'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -338,65 +352,87 @@ $__System.register('b', ['3', 'd'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, pageModel, eventModel;
+    var pageModel, eventModel;
     return {
-        setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }, function (_d) {
+        setters: [function (_d) {
             pageModel = _d.pageModel;
         }],
         execute: function () {
-            eventModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        id: obj['@id'],
-                        datetime: modelHelper.getDate(obj['@datetime']),
-                        type: obj['@type'],
-                        journaled: modelHelper.getBool(obj['@journaled']),
-                        version: modelHelper.getInt(obj['@version']),
-                        requestId: obj.request['@id']
-                    };
-                    if ('@language' in obj) {
-                        parsed.language = obj['@language'];
-                    }
-                    modelHelper.addIfDefined(obj.page, 'page', parsed, pageModel);
-                    if ('user' in obj) {
-                        parsed.user = { id: obj.user['@id'] };
-                        if ('name' in obj.user) {
-                            parsed.user.name = obj.user.name;
-                        }
-                    }
-                    if ('data' in obj) {
-                        if (parsed.type === 'user:search') {
-                            parsed.data = {
-                                constraint: obj.data.constraint,
-                                path: obj.data.path,
-                                query: obj.data.query,
-                                limit: modelHelper.getInt(obj.data.limit),
-                                qid: modelHelper.getInt(obj.data.qid),
-                                totalrecommended: modelHelper.getInt(obj.data.totalrecommended),
-                                totalresults: modelHelper.getInt(obj.data.totalresults)
-                            };
-                        } else {
-
-                            // The only other type possible here is 'page:view'
-                            parsed.data = {
-                                host: obj.data['_uri.host'],
-                                query: obj.data['_uri.query'],
-                                scheme: obj.data['_uri.scheme']
-                            };
-                        }
-                    }
-                    return parsed;
-                }
-            };
+            eventModel = [{
+                field: '@id',
+                name: 'id'
+            }, {
+                field: '@datetime',
+                name: 'datetime',
+                transform: 'date'
+            }, {
+                field: '@type',
+                name: 'type'
+            }, {
+                field: '@journaled',
+                name: 'journaled',
+                transform: 'boolean'
+            }, {
+                field: '@version',
+                name: 'version',
+                transform: 'number'
+            }, {
+                field: ['request', '@id'],
+                name: 'requestId'
+            }, {
+                field: '@language',
+                name: 'language'
+            }, {
+                field: 'page',
+                transform: pageModel
+            }, {
+                field: 'user',
+                transform: [{
+                    field: '@id',
+                    name: 'id',
+                    transform: 'number'
+                }, {
+                    field: 'name'
+                }]
+            }, {
+                field: 'data',
+                transform: [{
+                    field: 'constraint'
+                }, {
+                    field: 'path'
+                }, {
+                    field: 'query'
+                }, {
+                    field: 'limit',
+                    transform: 'number'
+                }, {
+                    field: 'qid',
+                    transform: 'number'
+                }, {
+                    field: 'totalrecommended',
+                    name: 'totalRecommended',
+                    transform: 'number'
+                }, {
+                    field: 'totalresults',
+                    name: 'totalResults',
+                    transform: 'number'
+                }, {
+                    field: '_uri.host',
+                    name: 'host'
+                }, {
+                    field: '_uri.query',
+                    name: 'uriQuery'
+                }, {
+                    field: '_uri.scheme',
+                    name: 'scheme'
+                }]
+            }];
 
             _export('eventModel', eventModel);
         }
     };
 });
-$__System.register('e', ['3', 'b'], function (_export) {
+$__System.register('e', ['b'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -417,44 +453,57 @@ $__System.register('e', ['3', 'b'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, eventModel, eventDetailModel;
+    var eventModel, eventDetailModel;
     return {
-        setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }, function (_b) {
+        setters: [function (_b) {
             eventModel = _b.eventModel;
         }],
         execute: function () {
-            eventDetailModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        count: modelHelper.getInt(obj['@count']),
-                        summary: {
-                            id: obj.summary['@id'],
-                            datetime: modelHelper.getDate(obj.summary['@datetime']),
-                            count: modelHelper.getInt(obj.summary['@count']),
-                            journaled: modelHelper.getBool(obj.summary['@journaled']),
-                            diffable: modelHelper.getBool(obj.summary['@diffable']),
-                            event: eventModel.parse(obj.summary.event)
-                        }
-                    };
-                    return parsed;
-                }
-            };
+            eventDetailModel = [{
+                field: '@count',
+                name: 'count',
+                transform: 'number'
+            }, {
+                field: 'summary',
+                transform: [{
+                    field: '@id',
+                    name: 'id'
+                }, {
+                    field: '@datetime',
+                    name: 'datetime',
+                    transform: 'date'
+                }, {
+                    field: '@count',
+                    name: 'count',
+                    transform: 'number'
+                }, {
+                    field: '@journaled',
+                    name: 'journaled',
+                    transform: 'boolean'
+                }, {
+                    field: '@diffable',
+                    name: 'diffable',
+                    transform: 'boolean'
+                }, {
+                    field: 'event',
+                    transform: eventModel
+                }]
+            }];
 
             _export('eventDetailModel', eventDetailModel);
         }
     };
 });
-$__System.register('f', ['6', '7', '8', '9', 'a', 'c', 'e'], function (_export) {
-  var Plug, utility, _createClass, _classCallCheck, userActivityModel, eventListModel, eventDetailModel, UserEvents;
+$__System.register('f', ['5', '6', '7', '8', '9', 'a', 'c', 'e'], function (_export) {
+  var Plug, utility, modelParser, _createClass, _classCallCheck, userActivityModel, eventListModel, eventDetailModel, UserEvents;
 
   return {
     setters: [function (_3) {
       Plug = _3.Plug;
     }, function (_4) {
       utility = _4.utility;
+    }, function (_5) {
+      modelParser = _5.modelParser;
     }, function (_) {
       _createClass = _['default'];
     }, function (_2) {
@@ -514,7 +563,8 @@ $__System.register('f', ['6', '7', '8', '9', 'a', 'c', 'e'], function (_export) 
         _createClass(UserEvents, [{
           key: 'getActivity',
           value: function getActivity(userToken, params) {
-            return this.plug.at('support-agent', userToken).withParams(params).get().then(userActivityModel.parse);
+            var userActivityModelParser = modelParser.createParser(userActivityModel);
+            return this.plug.at('support-agent', userToken).withParams(params).get().then(userActivityModelParser);
           }
 
           /**
@@ -525,7 +575,8 @@ $__System.register('f', ['6', '7', '8', '9', 'a', 'c', 'e'], function (_export) 
         }, {
           key: 'getHistory',
           value: function getHistory(userId) {
-            return this.plug.at('user-page', utility.getResourceId(userId, 'current')).get().then(eventListModel.parse);
+            var eventListModelParser = modelParser.createParser(eventListModel);
+            return this.plug.at('user-page', utility.getResourceId(userId, 'current')).get().then(eventListModelParser);
           }
 
           /**
@@ -537,7 +588,8 @@ $__System.register('f', ['6', '7', '8', '9', 'a', 'c', 'e'], function (_export) 
         }, {
           key: 'getHistoryDetail',
           value: function getHistoryDetail(userId, detailId) {
-            return this.plug.at('user-page', utility.getResourceId(userId, 'current'), detailId).get().then(eventDetailModel.parse);
+            var eventDetailModelParser = modelParser.createParser(eventDetailModel);
+            return this.plug.at('user-page', utility.getResourceId(userId, 'current'), detailId).get().then(eventDetailModelParser);
           }
 
           /**
@@ -560,7 +612,7 @@ $__System.register('f', ['6', '7', '8', '9', 'a', 'c', 'e'], function (_export) 
     }
   };
 });
-$__System.register('10', ['5', '8', '9', 'f'], function (_export) {
+$__System.register('10', ['4', '8', '9', 'f'], function (_export) {
   var UserManager, _createClass, _classCallCheck, UserEvents, User;
 
   return {
@@ -647,7 +699,7 @@ $__System.register('10', ['5', '8', '9', 'f'], function (_export) {
     }
   };
 });
-$__System.register('11', ['3'], function (_export) {
+$__System.register('11', ['d'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -668,71 +720,91 @@ $__System.register('11', ['3'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, searchModel;
+    var pageModel, searchModel;
     return {
-        setters: [function (_) {
-            modelHelper = _.modelHelper;
+        setters: [function (_d) {
+            pageModel = _d.pageModel;
         }],
         execute: function () {
-            searchModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var search = {
-                        ranking: obj['@ranking'],
-                        queryId: obj['@queryid'],
-                        queryCount: modelHelper.getInt(obj['@querycount']),
-                        recommendationCount: modelHelper.getInt(obj['@count.recommendations']),
-                        count: modelHelper.getInt(obj['@count']),
-                        result: []
-                    };
-                    if ('result' in obj) {
-                        var results = modelHelper.getArray(obj.result);
-                        results.forEach(function (result) {
-                            search.result.push({
-                                author: result.author,
-                                content: result.content,
-                                dateModified: modelHelper.getDate(result['date.modified']),
-                                id: result.id,
-                                mime: result.mime,
-                                rank: result.rank,
-                                title: result.title,
-                                uri: result.uri,
-                                uriTrack: result['uri.track'],
-                                page: {
-                                    path: result.page.path,
-                                    rating: result.page.rating,
-                                    title: result.page.title,
-                                    uriUi: result.page['uri.ui']
-                                }
-                            });
-                        });
-                    }
-                    if ('summary' in obj) {
-                        search.summary = {
-                            path: obj.summary['@path'],
-                            results: []
-                        };
-                        if ('results' in obj.summary) {
-                            var results = modelHelper.getArray(obj.summary.results);
-                            results.forEach(function (result) {
-                                search.summary.results.push({
-                                    path: result['@path'],
-                                    count: modelHelper.getInt(result['@count']),
-                                    title: result['@title']
-                                });
-                            });
-                        }
-                    }
-                    return search;
-                }
-            };
+            searchModel = [{
+                field: '@ranking',
+                name: 'ranking'
+            }, {
+                field: '@queryid',
+                name: 'queryId'
+            }, {
+                field: '@querycount',
+                name: 'queryCount',
+                transform: 'number'
+            }, {
+                field: '@count.recommendations',
+                name: 'recommendationCount',
+                transform: 'number'
+            }, {
+                field: '@count',
+                name: 'count',
+                transform: 'number'
+            }, {
+                field: 'result',
+                name: 'results',
+                isArray: true,
+                transform: [{
+                    field: 'author'
+                }, {
+                    field: 'content'
+                }, {
+                    field: 'date.modified',
+                    name: 'dateModified',
+                    transform: 'date'
+                }, {
+                    field: 'id',
+                    transform: 'number'
+                }, {
+                    field: 'mime'
+                }, {
+                    field: 'rank',
+                    transform: 'number'
+                }, {
+                    field: 'title'
+                }, {
+                    field: 'type'
+                }, {
+                    field: 'uri'
+                }, {
+                    field: 'uri.track',
+                    name: 'uriTrack'
+                }, {
+                    field: 'page',
+                    transform: pageModel
+                }]
+            }, {
+                field: 'summary',
+                transform: [{
+                    field: '@path',
+                    name: 'path'
+                }, {
+                    field: 'results',
+                    isArray: true,
+                    transform: [{
+                        field: '@path',
+                        name: 'path'
+                    }, {
+                        field: '@count',
+                        name: 'count',
+                        transform: 'number'
+                    }, {
+                        field: '@title',
+                        name: 'title'
+                    }]
+                }]
+            }];
 
             _export('searchModel', searchModel);
         }
     };
 });
-$__System.register('12', ['6', '7', '8', '9', '11', '13', '14'], function (_export) {
-    var Plug, utility, _createClass, _classCallCheck, searchModel, stringUtility, _Promise, Site;
+$__System.register('12', ['5', '6', '7', '8', '9', '11', '13', '14'], function (_export) {
+    var Plug, utility, modelParser, _createClass, _classCallCheck, searchModel, stringUtility, _Promise, Site;
 
     function _buildSearchConstraints(params) {
         var constraints = [];
@@ -774,12 +846,14 @@ $__System.register('12', ['6', '7', '8', '9', '11', '13', '14'], function (_expo
             Plug = _6.Plug;
         }, function (_4) {
             utility = _4.utility;
+        }, function (_7) {
+            modelParser = _7.modelParser;
         }, function (_) {
             _createClass = _['default'];
         }, function (_2) {
             _classCallCheck = _2['default'];
-        }, function (_7) {
-            searchModel = _7.searchModel;
+        }, function (_8) {
+            searchModel = _8.searchModel;
         }, function (_5) {
             stringUtility = _5.stringUtility;
         }, function (_3) {
@@ -875,7 +949,7 @@ $__System.register('12', ['6', '7', '8', '9', '11', '13', '14'], function (_expo
                         var recommendations = _ref$recommendations === undefined ? true : _ref$recommendations;
 
                         var constraint = {};
-                        if (path !== '') {
+                        if (path !== '' && path !== '/') {
                             constraint.path = path;
                         }
                         if (tags !== '') {
@@ -894,7 +968,8 @@ $__System.register('12', ['6', '7', '8', '9', '11', '13', '14'], function (_expo
                             constraint: _buildSearchConstraints(constraint),
                             recommendations: recommendations
                         };
-                        return this.plug.at('query').withParams(searchParams).get().then(searchModel.parse);
+                        var searchModelParser = modelParser.createParser(searchModel);
+                        return this.plug.at('query').withParams(searchParams).get().then(searchModelParser);
                     }
                 }]);
 
@@ -975,110 +1050,22 @@ $__System.register('15', ['8', '9', '12'], function (_export) {
         }
     };
 });
-$__System.registerDynamic("16", ["17", "18", "19", "1a", "1b", "1c", "1d", "1e"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var ctx = $__require('17'),
-      $export = $__require('18'),
-      toObject = $__require('19'),
-      call = $__require('1a'),
-      isArrayIter = $__require('1b'),
-      toLength = $__require('1c'),
-      getIterFn = $__require('1d');
-  $export($export.S + $export.F * !$__require('1e')(function(iter) {
-    Array.from(iter);
-  }), 'Array', {from: function from(arrayLike) {
-      var O = toObject(arrayLike),
-          C = typeof this == 'function' ? this : Array,
-          $$ = arguments,
-          $$len = $$.length,
-          mapfn = $$len > 1 ? $$[1] : undefined,
-          mapping = mapfn !== undefined,
-          index = 0,
-          iterFn = getIterFn(O),
-          length,
-          result,
-          step,
-          iterator;
-      if (mapping)
-        mapfn = ctx(mapfn, $$len > 2 ? $$[2] : undefined, 2);
-      if (iterFn != undefined && !(C == Array && isArrayIter(iterFn))) {
-        for (iterator = iterFn.call(O), result = new C; !(step = iterator.next()).done; index++) {
-          result[index] = mapping ? call(iterator, mapfn, [step.value, index], true) : step.value;
-        }
-      } else {
-        length = toLength(O.length);
-        for (result = new C(length); length > index; index++) {
-          result[index] = mapping ? mapfn(O[index], index) : O[index];
-        }
-      }
-      result.length = index;
-      return result;
-    }});
-  return module.exports;
-});
-
-$__System.registerDynamic("1f", ["20", "16", "21"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  $__require('20');
-  $__require('16');
-  module.exports = $__require('21').Array.from;
-  return module.exports;
-});
-
-$__System.registerDynamic("22", ["1f"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  module.exports = {
-    "default": $__require('1f'),
-    __esModule: true
-  };
-  return module.exports;
-});
-
-$__System.registerDynamic("23", ["22"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var _Array$from = $__require('22')["default"];
-  exports["default"] = function(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0,
-          arr2 = Array(arr.length); i < arr.length; i++)
-        arr2[i] = arr[i];
-      return arr2;
-    } else {
-      return _Array$from(arr);
-    }
-  };
-  exports.__esModule = true;
-  return module.exports;
-});
-
-$__System.register('24', ['6', '7', '8', '9', '25', '26', '27', 'd'], function (_export) {
-  var Plug, utility, _createClass, _classCallCheck, PageBase, _get, _inherits, pageModel, Draft, DraftManager;
+$__System.register('16', ['5', '6', '7', '8', '9', '17', '18', '19', 'd'], function (_export) {
+  var Plug, utility, modelParser, _createClass, _classCallCheck, PageBase, _get, _inherits, pageModel, Draft, DraftManager;
 
   return {
     setters: [function (_5) {
       Plug = _5.Plug;
     }, function (_6) {
       utility = _6.utility;
+    }, function (_7) {
+      modelParser = _7.modelParser;
     }, function (_3) {
       _createClass = _3['default'];
     }, function (_4) {
       _classCallCheck = _4['default'];
-    }, function (_7) {
-      PageBase = _7.PageBase;
+    }, function (_8) {
+      PageBase = _8.PageBase;
     }, function (_) {
       _get = _['default'];
     }, function (_2) {
@@ -1141,7 +1128,8 @@ $__System.register('24', ['6', '7', '8', '9', '25', '26', '27', 'd'], function (
         _createClass(Draft, [{
           key: 'deactivate',
           value: function deactivate() {
-            return this._plug.at('deactivate').post().then(pageModel.parse);
+            var pageModelParser = modelParser.createParser(pageModel);
+            return this._plug.at('deactivate').post().then(pageModelParser);
           }
 
           /**
@@ -1183,7 +1171,8 @@ $__System.register('24', ['6', '7', '8', '9', '25', '26', '27', 'd'], function (
           key: 'createDraft',
           value: function createDraft(newPath) {
             var plug = new Plug(this._settings).at('@api', 'deki', 'drafts', utility.getResourceId(newPath), 'create');
-            return plug.post().then(pageModel.parse);
+            var pageModelParser = modelParser.createParser(pageModel);
+            return plug.post().then(pageModelParser);
           }
 
           /**
@@ -1205,7 +1194,242 @@ $__System.register('24', ['6', '7', '8', '9', '25', '26', '27', 'd'], function (
     }
   };
 });
-$__System.register('28', ['3'], function (_export) {
+$__System.registerDynamic("1a", ["1b", "1c", "1d", "1e", "1f", "20", "21", "22"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var ctx = $__require('1b'),
+      $export = $__require('1c'),
+      toObject = $__require('1d'),
+      call = $__require('1e'),
+      isArrayIter = $__require('1f'),
+      toLength = $__require('20'),
+      getIterFn = $__require('21');
+  $export($export.S + $export.F * !$__require('22')(function(iter) {
+    Array.from(iter);
+  }), 'Array', {from: function from(arrayLike) {
+      var O = toObject(arrayLike),
+          C = typeof this == 'function' ? this : Array,
+          $$ = arguments,
+          $$len = $$.length,
+          mapfn = $$len > 1 ? $$[1] : undefined,
+          mapping = mapfn !== undefined,
+          index = 0,
+          iterFn = getIterFn(O),
+          length,
+          result,
+          step,
+          iterator;
+      if (mapping)
+        mapfn = ctx(mapfn, $$len > 2 ? $$[2] : undefined, 2);
+      if (iterFn != undefined && !(C == Array && isArrayIter(iterFn))) {
+        for (iterator = iterFn.call(O), result = new C; !(step = iterator.next()).done; index++) {
+          result[index] = mapping ? call(iterator, mapfn, [step.value, index], true) : step.value;
+        }
+      } else {
+        length = toLength(O.length);
+        for (result = new C(length); length > index; index++) {
+          result[index] = mapping ? mapfn(O[index], index) : O[index];
+        }
+      }
+      result.length = index;
+      return result;
+    }});
+  return module.exports;
+});
+
+$__System.registerDynamic("23", ["24", "1a", "25"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  $__require('24');
+  $__require('1a');
+  module.exports = $__require('25').Array.from;
+  return module.exports;
+});
+
+$__System.registerDynamic("26", ["23"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  module.exports = {
+    "default": $__require('23'),
+    __esModule: true
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("27", ["26"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var _Array$from = $__require('26')["default"];
+  exports["default"] = function(arr) {
+    if (Array.isArray(arr)) {
+      for (var i = 0,
+          arr2 = Array(arr.length); i < arr.length; i++)
+        arr2[i] = arr[i];
+      return arr2;
+    } else {
+      return _Array$from(arr);
+    }
+  };
+  exports.__esModule = true;
+  return module.exports;
+});
+
+$__System.register('7', ['27'], function (_export) {
+    var _toConsumableArray, modelParser;
+
+    return {
+        setters: [function (_) {
+            _toConsumableArray = _['default'];
+        }],
+        execute: function () {
+            /**
+             * Martian - Core JavaScript API for MindTouch
+             *
+             * Copyright (c) 2015 MindTouch Inc.
+             * www.mindtouch.com  oss@mindtouch.com
+             *
+             * Licensed under the Apache License, Version 2.0 (the "License");
+             * you may not use this file except in compliance with the License.
+             * You may obtain a copy of the License at
+             *
+             *     http://www.apache.org/licenses/LICENSE-2.0
+             *
+             * Unless required by applicable law or agreed to in writing, software
+             * distributed under the License is distributed on an "AS IS" BASIS,
+             * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+             * See the License for the specific language governing permissions and
+             * limitations under the License.
+             */
+
+            'use strict';
+
+            modelParser = {
+                to: {
+                    boolean: function boolean(value) {
+                        return value === 'true';
+                    },
+                    date: function date(value) {
+                        var dateValue = new Date(value);
+                        if (isNaN(dateValue.getTime())) {
+                            throw new Error('Failed converting to date');
+                        }
+                        return dateValue;
+                    },
+                    number: function number(value) {
+                        var intValue = Number(value);
+                        if (String(intValue) !== value) {
+                            throw new Error('Failed converting to integer');
+                        }
+                        return intValue;
+                    },
+                    json: function json(data) {
+                        if (typeof data === 'string') {
+                            data = JSON.parse(data);
+                        }
+                        return data;
+                    }
+                },
+                isValid: function isValid(value) {
+                    return value === 0 || value === false || Boolean(value);
+                },
+                forceArray: function forceArray(value) {
+                    if (!modelParser.isValid(value)) {
+                        return [];
+                    }
+                    return Array.isArray(value) ? value : [value];
+                },
+                getValue: function getValue(obj) {
+                    if (!obj || typeof obj !== 'object') {
+                        return;
+                    }
+
+                    for (var _len = arguments.length, fields = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+                        fields[_key - 1] = arguments[_key];
+                    }
+
+                    var currentField = fields.shift();
+                    if (currentField in obj) {
+
+                        // Special '#text' logic to return parent field if it's a string
+                        var textParentIsString = fields.length === 1 && fields[0] === '#text' && typeof obj[currentField] === 'string';
+                        if (fields.length === 0 || textParentIsString) {
+                            return obj[currentField];
+                        }
+                        return modelParser.getValue.apply(modelParser, [obj[currentField]].concat(fields));
+                    }
+                },
+                transformValue: function transformValue(value, transform) {
+                    var result = value;
+                    if (typeof transform === 'string') {
+                        result = modelParser.to[transform](value);
+                    } else if (Array.isArray(transform)) {
+                        var parser = modelParser.createParser(transform);
+                        result = parser(value);
+                    } else if (typeof transform === 'function') {
+                        result = transform(value);
+                    } else {
+                        throw new Error('Invalid value used for the transform parameter while trying to convert ' + value);
+                    }
+                    return result;
+                },
+                parseProperty: function parseProperty(data, parsedObj, _ref) {
+                    var field = _ref.field;
+                    var name = _ref.name;
+                    var isArray = _ref.isArray;
+                    var transform = _ref.transform;
+
+                    if (!data || typeof data !== 'object') {
+                        throw new TypeError('Cannot parse a non-object');
+                    }
+                    var fields = modelParser.forceArray(field);
+                    var value = modelParser.getValue.apply(modelParser, [data].concat(_toConsumableArray(fields)));
+                    if (isArray) {
+                        value = modelParser.forceArray(value);
+                    }
+                    if (transform && modelParser.isValid(value) || typeof transform === 'function') {
+                        if (isArray) {
+                            value = value.map(function (val) {
+                                return modelParser.transformValue(val, transform);
+                            });
+                        } else {
+                            value = modelParser.transformValue(value, transform);
+                        }
+                    }
+                    name = name || fields[0];
+                    if (name in parsedObj) {
+                        throw new Error('Duplicate "' + name + '" in parsing model');
+                    }
+                    if (modelParser.isValid(value)) {
+                        parsedObj[name] = value;
+                    }
+                },
+                createParser: function createParser(model) {
+                    return function (data) {
+                        data = modelParser.to.json(data);
+                        var parsedObj = {};
+                        model.forEach(function (propertyModel) {
+                            return modelParser.parseProperty(data, parsedObj, propertyModel);
+                        });
+                        return parsedObj;
+                    };
+                }
+            };
+
+            _export('modelParser', modelParser);
+        }
+    };
+});
+$__System.register('28', [], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -1226,42 +1450,45 @@ $__System.register('28', ['3'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, pageTagsModel;
+    var pageTagsModel;
     return {
-        setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }],
+        setters: [],
         execute: function () {
-            pageTagsModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        count: modelHelper.getInt(obj['@count']),
-                        href: obj['@href']
-                    };
-                    if ('tag' in obj) {
-                        parsed.tags = [];
-                        var tags = modelHelper.getArray(obj.tag);
-                        tags.forEach(function (tag) {
-                            parsed.tags.push({
-                                value: tag['@value'],
-                                id: modelHelper.getInt(tag['@id']),
-                                href: tag['@href'],
-                                title: tag.title,
-                                type: tag.type,
-                                uri: tag.uri
-                            });
-                        });
-                    }
-                    return parsed;
-                }
-            };
+            pageTagsModel = [{
+                field: '@count',
+                name: 'count',
+                transform: 'number'
+            }, {
+                field: '@href',
+                name: 'href'
+            }, {
+                field: 'tag',
+                name: 'tags',
+                isArray: true,
+                transform: [{
+                    field: '@id',
+                    name: 'id',
+                    transformer: 'number'
+                }, {
+                    field: '@value',
+                    name: 'value'
+                }, {
+                    field: '@href',
+                    name: 'href'
+                }, {
+                    field: 'title'
+                }, {
+                    field: 'type'
+                }, {
+                    field: 'uri'
+                }]
+            }];
 
             _export('pageTagsModel', pageTagsModel);
         }
     };
 });
-$__System.register('29', ['3', '4', 'd'], function (_export) {
+$__System.register('29', ['3', 'd'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -1282,52 +1509,81 @@ $__System.register('29', ['3', '4', 'd'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, userModel, pageModel, fileModel;
+    var userModel, pageModel, fileModel;
     return {
         setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }, function (_2) {
-            userModel = _2.userModel;
+            userModel = _.userModel;
         }, function (_d) {
             pageModel = _d.pageModel;
         }],
         execute: function () {
-            fileModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        id: modelHelper.getInt(obj['@id']),
-                        revision: modelHelper.getInt(obj['@revision']),
-                        resId: modelHelper.getInt(obj['@res-id']),
-                        href: obj['@href'],
-                        resIsHead: modelHelper.getBool(obj['@res-is-head']),
-                        resIsDeleted: modelHelper.getBool(obj['@res-is-deleted']),
-                        resRevIsDeleted: modelHelper.getBool(obj['@res-rev-is-head']),
-                        resContentsId: modelHelper.getInt(obj['@res-contents-id']),
-                        dateCreated: modelHelper.getDate(obj['date.created']),
-                        description: obj.description,
-                        filename: obj.filename,
-                        contents: {
-                            type: obj.contents['@type'],
-                            size: modelHelper.getInt(obj.contents['@size']),
-                            href: obj.contents['@href']
-                        }
-                    };
-                    if ('user.createdby' in obj) {
-                        parsed.userCreatedBy = userModel.parse(obj['user.createdby']);
-                    }
-                    if ('page.parent' in obj) {
-                        parsed.pageParent = pageModel.parse(obj['page.parent']);
-                    }
-                    return parsed;
-                }
-            };
+            fileModel = [{
+                field: '@id',
+                name: 'id',
+                transform: 'number'
+            }, {
+                field: '@revision',
+                name: 'revision',
+                transform: 'number'
+            }, {
+                field: '@res-id',
+                name: 'resId',
+                transform: 'number'
+            }, {
+                field: '@href',
+                name: 'href'
+            }, {
+                field: '@res-is-head',
+                name: 'resIsHead',
+                transform: 'boolean'
+            }, {
+                field: '@res-is-deleted',
+                name: 'resIsDeleted',
+                transform: 'boolean'
+            }, {
+                field: '@res-rev-is-head',
+                name: 'resRevIsHead',
+                transform: 'boolean'
+            }, {
+                field: '@res-contents-id',
+                name: 'resContentsId',
+                transform: 'number'
+            }, {
+                field: 'date.created',
+                name: 'dateCreated',
+                transform: 'date'
+            }, {
+                field: 'description'
+            }, {
+                field: 'filename'
+            }, {
+                field: 'contents',
+                transform: [{
+                    field: '@type',
+                    name: 'type'
+                }, {
+                    field: '@size',
+                    name: 'size',
+                    transform: 'number'
+                }, {
+                    field: '@href',
+                    name: 'href'
+                }]
+            }, {
+                field: 'user.createdby',
+                name: 'userCreatedBy',
+                transform: userModel
+            }, {
+                field: 'page.parent',
+                name: 'pageParent',
+                transform: pageModel
+            }];
 
             _export('fileModel', fileModel);
         }
     };
 });
-$__System.register('2a', ['3', '29'], function (_export) {
+$__System.register('2a', ['29'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -1348,39 +1604,39 @@ $__System.register('2a', ['3', '29'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, fileModel, pageFilesModel;
+    var fileModel, pageFilesModel;
     return {
         setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }, function (_2) {
-            fileModel = _2.fileModel;
+            fileModel = _.fileModel;
         }],
         execute: function () {
-            pageFilesModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        count: modelHelper.getInt(obj['@count']),
-                        offset: modelHelper.getInt(obj['@offset']),
-                        totalcount: modelHelper.getInt(obj['@totalcount']),
-                        href: obj['@href']
-                    };
-                    if ('file' in obj) {
-                        parsed.file = [];
-                        var files = modelHelper.getArray(obj.file);
-                        files.forEach(function (f) {
-                            parsed.file.push(fileModel.parse(f));
-                        });
-                    }
-                    return parsed;
-                }
-            };
+            pageFilesModel = [{
+                field: '@count',
+                name: 'count',
+                transform: 'number'
+            }, {
+                field: '@offset',
+                name: 'offset',
+                transform: 'number'
+            }, {
+                field: '@totalcount',
+                name: 'totalCount',
+                transform: 'number'
+            }, {
+                field: '@href',
+                name: 'href'
+            }, {
+                field: 'file',
+                name: 'files',
+                isArray: true,
+                transform: fileModel
+            }];
 
             _export('pageFilesModel', pageFilesModel);
         }
     };
 });
-$__System.register('2b', ['3', 'd'], function (_export) {
+$__System.register('2b', ['d'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -1401,41 +1657,36 @@ $__System.register('2b', ['3', 'd'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, pageModel, pageEditModel;
+    var pageModel, pageEditModel;
     return {
-        setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }, function (_d) {
+        setters: [function (_d) {
             pageModel = _d.pageModel;
         }],
         execute: function () {
-            pageEditModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        status: obj['@status']
-                    };
-                    if ('page' in obj) {
-                        parsed.page = pageModel.parse(obj.page);
-                    }
-                    if ('draft' in obj) {
-                        parsed.draft = pageModel.parse(obj.draft);
-                    }
-                    if ('page.base' in obj) {
-                        parsed.pageBase = pageModel.parse(obj['page.base']);
-                    }
-                    if ('page.overwritten' in obj) {
-                        parsed.pageOverwritten = pageModel.parse(obj['page.overwritten']);
-                    }
-                    return parsed;
-                }
-            };
+            pageEditModel = [{
+                field: '@status',
+                name: 'status'
+            }, {
+                field: 'page',
+                transform: pageModel
+            }, {
+                field: 'draft',
+                transform: pageModel
+            }, {
+                field: 'page.base',
+                name: 'pageBase',
+                transform: pageModel
+            }, {
+                field: 'page.overwritten',
+                name: 'pageOverwritten',
+                transform: pageModel
+            }];
 
             _export('pageEditModel', pageEditModel);
         }
     };
 });
-$__System.register('2c', ['3', 'd'], function (_export) {
+$__System.register('2c', ['d'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -1456,48 +1707,45 @@ $__System.register('2c', ['3', 'd'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, pageModel, relatedPagesModel;
+    var pageModel, relatedPagesModel;
     return {
-        setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }, function (_d) {
+        setters: [function (_d) {
             pageModel = _d.pageModel;
         }],
         execute: function () {
-            relatedPagesModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        count: modelHelper.getInt(obj['@count']),
-                        href: obj['@href'],
-                        pages: []
-                    };
-                    var pages = modelHelper.getArray(obj.page);
-                    pages.forEach(function (page) {
-                        parsed.pages.push(pageModel.parse(page));
-                    });
-                    return parsed;
-                }
-            };
+            relatedPagesModel = [{
+                field: '@count',
+                name: 'count',
+                transform: 'number'
+            }, {
+                field: '@href',
+                name: 'href'
+            }, {
+                field: 'page',
+                name: 'pages',
+                isArray: true,
+                transform: pageModel
+            }];
 
             _export('relatedPagesModel', relatedPagesModel);
         }
     };
 });
-$__System.register('25', ['3', '7', '8', '9', '14', '28', '2e', 'd', '2d', '2a', '2b', '2c'], function (_export) {
-    var modelHelper, utility, _createClass, _classCallCheck, _Promise, pageTagsModel, _Object$keys, pageModel, pageContentsModel, pageFilesModel, pageEditModel, relatedPagesModel, PageBase;
+$__System.register('17', ['6', '7', '8', '9', '14', '28', '2e', 'd', '2d', '2a', '2b', '2c'], function (_export) {
+    var utility, modelParser, _createClass, _classCallCheck, _Promise, pageTagsModel, _Object$keys, pageModel, pageContentsModel, pageFilesModel, pageEditModel, relatedPagesModel, PageBase;
 
     function _handleVirtualPage(error) {
         if (error.errorCode === 404 && error.response && error.response['@virtual']) {
-            return _Promise.resolve(pageModel.parse(error.response));
+            var pageModelParser = modelParser.createParser(pageModel);
+            return _Promise.resolve(pageModelParser(error.response));
         }
         throw error;
     }
     return {
-        setters: [function (_5) {
-            modelHelper = _5.modelHelper;
-        }, function (_4) {
+        setters: [function (_4) {
             utility = _4.utility;
+        }, function (_5) {
+            modelParser = _5.modelParser;
         }, function (_) {
             _createClass = _['default'];
         }, function (_2) {
@@ -1553,12 +1801,14 @@ $__System.register('25', ['3', '7', '8', '9', '14', '28', '2e', 'd', '2d', '2a',
                 _createClass(PageBase, [{
                     key: 'getFullInfo',
                     value: function getFullInfo() {
-                        return this._plug.get().then(pageModel.parse)['catch'](_handleVirtualPage);
+                        var pageModelParser = modelParser.createParser(pageModel);
+                        return this._plug.get().then(pageModelParser)['catch'](_handleVirtualPage);
                     }
                 }, {
                     key: 'getContents',
                     value: function getContents(params) {
-                        return this._plug.at('contents').withParams(params).get().then(pageContentsModel.parse);
+                        var pageContentsModelParser = modelParser.createParser(pageContentsModel);
+                        return this._plug.at('contents').withParams(params).get().then(pageContentsModelParser);
                     }
                 }, {
                     key: 'setContents',
@@ -1574,20 +1824,22 @@ $__System.register('25', ['3', '7', '8', '9', '14', '28', '2e', 'd', '2d', '2a',
                         _Object$keys(params).forEach(function (key) {
                             contentsParams[key] = params[key];
                         });
-                        return this._plug.at('contents').withParams(contentsParams).post(contents, 'text/plain; charset=utf-8').then(pageEditModel.parse);
+                        var pageEditModelParser = modelParser.createParser(pageEditModel);
+                        return this._plug.at('contents').withParams(contentsParams).post(contents, 'text/plain; charset=utf-8').then(pageEditModelParser);
                     }
                 }, {
                     key: 'getFiles',
                     value: function getFiles() {
                         var params = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-                        return this._plug.at('files').withParams(params).get().then(pageFilesModel.parse);
+                        var pageFilesModelParser = modelParser.createParser(pageFilesModel);
+                        return this._plug.at('files').withParams(params).get().then(pageFilesModelParser);
                     }
                 }, {
                     key: 'getOverview',
                     value: function getOverview() {
                         return this._plug.at('overview').get().then(JSON.parse).then(function (overview) {
-                            return _Promise.resolve({ overview: modelHelper.getString(overview) });
+                            return _Promise.resolve({ overview: overview });
                         })['catch'](function () {
                             return _Promise.reject('Unable to parse the page overview response');
                         });
@@ -1606,7 +1858,8 @@ $__System.register('25', ['3', '7', '8', '9', '14', '28', '2e', 'd', '2d', '2a',
                 }, {
                     key: 'getTags',
                     value: function getTags() {
-                        return this._plug.at('tags').get().then(pageTagsModel.parse);
+                        var pageTagsModelParser = modelParser.createParser(pageTagsModel);
+                        return this._plug.at('tags').get().then(pageTagsModelParser);
                     }
                 }, {
                     key: 'getDiff',
@@ -1616,7 +1869,8 @@ $__System.register('25', ['3', '7', '8', '9', '14', '28', '2e', 'd', '2d', '2a',
                 }, {
                     key: 'getRelated',
                     value: function getRelated() {
-                        return this._plug.at('related').get().then(relatedPagesModel.parse);
+                        var relatedPagesModelParser = modelParser.createParser(relatedPagesModel);
+                        return this._plug.at('related').get().then(relatedPagesModelParser);
                     }
                 }]);
 
@@ -1627,7 +1881,7 @@ $__System.register('25', ['3', '7', '8', '9', '14', '28', '2e', 'd', '2d', '2a',
         }
     };
 });
-$__System.register('2f', ['3'], function (_export) {
+$__System.register('2f', [], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -1648,37 +1902,57 @@ $__System.register('2f', ['3'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, subpagesModel;
+    var subpagesModel;
     return {
-        setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }],
+        setters: [],
         execute: function () {
-            subpagesModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        totalcount: modelHelper.getInt(obj['@totalcount']),
-                        count: modelHelper.getInt(obj['@count']),
-                        href: obj['@href']
-                    };
-                    parsed.subpages = modelHelper.getArray(obj['page.subpage']).map(function (sp) {
-                        return {
-                            id: modelHelper.getInt(sp['@id']),
-                            href: sp['@href'],
-                            deleted: modelHelper.getBool(sp['@deleted']),
-                            hasSubpages: modelHelper.getBool(sp['@subpages']),
-                            dateCreated: modelHelper.getDate(sp['date.created']),
-                            language: sp.language,
-                            namespace: sp.namespace,
-                            path: modelHelper.getString(sp.path),
-                            title: sp.title,
-                            uriUi: sp['uri.ui']
-                        };
-                    });
-                    return parsed;
-                }
-            };
+            subpagesModel = [{
+                field: '@totalcount',
+                name: 'totalCount',
+                transform: 'number'
+            }, {
+                field: '@count',
+                name: 'count',
+                transform: 'number'
+            }, {
+                field: '@href',
+                name: 'href'
+            }, {
+                field: 'page.subpage',
+                name: 'subpages',
+                isArray: true,
+                transform: [{
+                    field: '@id',
+                    name: 'id',
+                    transform: 'number'
+                }, {
+                    field: '@href',
+                    name: 'href'
+                }, {
+                    field: '@deleted',
+                    name: 'deleted',
+                    transform: 'boolean'
+                }, {
+                    field: '@subpages',
+                    name: 'hasSubpages',
+                    transform: 'boolean'
+                }, {
+                    field: 'date.created',
+                    name: 'dateCreated',
+                    transform: 'date'
+                }, {
+                    field: 'language'
+                }, {
+                    field: 'namespace'
+                }, {
+                    field: ['path', '#text']
+                }, {
+                    field: 'title'
+                }, {
+                    field: 'uri.ui',
+                    name: 'uri'
+                }]
+            }];
 
             _export('subpagesModel', subpagesModel);
         }
@@ -1708,13 +1982,11 @@ $__System.registerDynamic("30", ["31"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.register('2d', ['3', '30'], function (_export) {
-    var modelHelper, _defineProperty, pageContentsModel;
+$__System.register('2d', ['30'], function (_export) {
+    var _defineProperty, pageContentsModel;
 
     return {
-        setters: [function (_2) {
-            modelHelper = _2.modelHelper;
-        }, function (_) {
+        setters: [function (_) {
             _defineProperty = _['default'];
         }],
         execute: function () {
@@ -1738,42 +2010,48 @@ $__System.register('2d', ['3', '30'], function (_export) {
              */
             'use strict';
 
-            pageContentsModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        type: obj['@type'],
-                        title: obj['@title']
-                    };
-                    if ('@unsafe' in obj) {
-                        parsed.unsafe = modelHelper.getBool(obj['@unsafe']);
-                    }
-                    if ('@draft' in obj) {
-                        parsed.draft = modelHelper.getBool(obj['@draft']);
-                    }
-                    if (Array.isArray(obj.body)) {
-                        parsed.body = obj.body[0];
-                        parsed.targets = pageContentsModel._getTargets(obj.body);
-                    } else {
-                        parsed.body = obj.body;
-                    }
-                    modelHelper.addIfDefined(obj.tail, 'tail', parsed);
-                    return parsed;
-                },
-                _getTargets: function _getTargets(body) {
+            pageContentsModel = [{
+                field: '@type',
+                name: 'type'
+            }, {
+                field: '@title',
+                name: 'title'
+            }, {
+                field: '@unsafe',
+                name: 'unsafe',
+                transform: 'boolean'
+            }, {
+                field: '@draft',
+                name: 'draft',
+                transform: 'boolean'
+            }, {
+                field: 'head'
+            }, {
+                field: 'tail'
+            }, {
+                field: 'body',
+                transform: function transform(body) {
+                    return Array.isArray(body) ? body[0] : body;
+                }
+            }, {
+                field: 'body',
+                name: 'targets',
+                transform: function transform(body) {
                     var targets = [];
-                    for (var i = 1; i < body.length; i++) {
-                        targets.push(_defineProperty({}, body[i]['@target'], body[i]['#text']));
+                    if (Array.isArray(body)) {
+                        for (var i = 1; i < body.length; i++) {
+                            targets.push(_defineProperty({}, body[i]['@target'], body[i]['#text']));
+                        }
                     }
                     return targets;
                 }
-            };
+            }];
 
             _export('pageContentsModel', pageContentsModel);
         }
     };
 });
-$__System.register('32', ['3', 'd'], function (_export) {
+$__System.register('32', ['d'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -1794,26 +2072,22 @@ $__System.register('32', ['3', 'd'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, pageModel, pageTreeModel;
+    var pageModel, pageTreeModel;
     return {
-        setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }, function (_d) {
+        setters: [function (_d) {
             pageModel = _d.pageModel;
         }],
         execute: function () {
-            pageTreeModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    return pageModel.parse(obj.page);
-                }
-            };
+            pageTreeModel = [{
+                field: 'page',
+                transform: pageModel
+            }];
 
             _export('pageTreeModel', pageTreeModel);
         }
     };
 });
-$__System.register('33', ['3', 'd'], function (_export) {
+$__System.register('33', ['d'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -1834,36 +2108,28 @@ $__System.register('33', ['3', 'd'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, pageModel, pageMoveModel;
+    var pageModel, pageMoveModel;
     return {
-        setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }, function (_d) {
+        setters: [function (_d) {
             pageModel = _d.pageModel;
         }],
         execute: function () {
-            pageMoveModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        count: obj['@count'],
-                        pages: []
-                    };
-                    if ('page' in obj) {
-                        var pages = modelHelper.getArray(obj.page);
-                        pages.forEach(function (page) {
-                            parsed.pages.push(pageModel.parse(page));
-                        });
-                    }
-                    return parsed;
-                }
-            };
+            pageMoveModel = [{
+                field: '@count',
+                name: 'count',
+                transform: 'number'
+            }, {
+                field: 'page',
+                name: 'pages',
+                isArray: true,
+                transform: pageModel
+            }];
 
             _export('pageMoveModel', pageMoveModel);
         }
     };
 });
-$__System.register('34', ['3'], function (_export) {
+$__System.register('34', [], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -1884,58 +2150,80 @@ $__System.register('34', ['3'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, pageRatingModel;
+    var pageRatingModel;
     return {
-        setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }],
+        setters: [],
         execute: function () {
-            pageRatingModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        count: modelHelper.getInt(obj['@count']),
-                        date: modelHelper.getDate(obj['@date']),
-                        seatedCount: modelHelper.getInt(obj['@seated.count']),
-                        unseatedCount: modelHelper.getInt(obj['@unseated.count'])
-                    };
-                    if ('@score' in obj && obj['@score'] !== '') {
-                        parsed.score = modelHelper.getInt(obj['@score']);
-                    }
-                    if ('@seated.score' in obj && obj['@seated.score'] !== '') {
-                        parsed.seatedScore = modelHelper.getInt(obj['@seated.score']);
-                    }
-                    if ('@unseated.score' in obj && obj['@unseated.score'] !== '') {
-                        parsed.unseatedScore = modelHelper.getInt(obj['@unseated.score']);
-                    }
-                    if ('@score.trend' in obj) {
-                        parsed.scoreTrend = modelHelper.getInt(obj['@score.trend']);
-                    }
-                    if ('@seated.score.trend' in obj) {
-                        parsed.seatedScoreTrend = modelHelper.getInt(obj['@seated.score.trend']);
-                    }
-                    if ('@unseated.score.trend' in obj) {
-                        parsed.unseatedScoreTrend = modelHelper.getInt(obj['@unseated.score.trend']);
-                    }
-                    if ('user.ratedby' in obj) {
-                        var ratedBy = obj['user.ratedby'];
-                        parsed.userRatedBy = {
-                            id: modelHelper.getInt(ratedBy['@id']),
-                            score: modelHelper.getInt(ratedBy['@score']),
-                            date: modelHelper.getDate(ratedBy['@date']),
-                            href: ratedBy['@href'],
-                            seated: modelHelper.getBool(ratedBy['@seated'])
-                        };
-                    }
-                    return parsed;
-                }
-            };
+            pageRatingModel = [{
+                field: '@count',
+                name: 'count',
+                transform: 'number'
+            }, {
+                field: '@date',
+                name: 'date',
+                transform: 'date'
+            }, {
+                field: '@seated.count',
+                name: 'seatedCount',
+                transform: 'number'
+            }, {
+                field: '@unseated.count',
+                name: 'unseatedCount',
+                transform: 'number'
+            }, {
+                field: '@score',
+                name: 'score',
+                transform: 'number'
+            }, {
+                field: '@seated.score',
+                name: 'seatedScore',
+                transform: 'number'
+            }, {
+                field: '@unseated.score',
+                name: 'unseatedScore',
+                transform: 'number'
+            }, {
+                field: '@score.trend',
+                name: 'scoreTrend',
+                transform: 'number'
+            }, {
+                field: '@seated.score.trend',
+                name: 'seatedScoreTrend',
+                transform: 'number'
+            }, {
+                field: '@unseated.score.trend',
+                name: 'unseatedScoreTrend',
+                transform: 'number'
+            }, {
+                field: 'user.ratedby',
+                name: 'userRatedBy',
+                transform: [{
+                    field: '@id',
+                    name: 'id',
+                    transform: 'number'
+                }, {
+                    field: '@score',
+                    name: 'score',
+                    transform: 'number'
+                }, {
+                    field: '@date',
+                    name: 'date',
+                    transform: 'date'
+                }, {
+                    field: '@href',
+                    name: 'href'
+                }, {
+                    field: '@seated',
+                    name: 'seated',
+                    transform: 'boolean'
+                }]
+            }];
 
             _export('pageRatingModel', pageRatingModel);
         }
     };
 });
-$__System.register('3', [], function (_export) {
+$__System.register('35', [], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -1956,97 +2244,45 @@ $__System.register('3', [], function (_export) {
      */
     'use strict';
 
-    var modelHelper;
+    var permissionsModel;
     return {
         setters: [],
         execute: function () {
-            modelHelper = {
-                fromJson: function fromJson(data) {
-                    if (typeof data === 'string') {
-                        data = JSON.parse(data);
+            permissionsModel = [{
+                field: ['operations', '#text'],
+                transform: function transform(value) {
+                    var result = [];
+                    if (typeof value === 'string') {
+                        result = value.split(',');
                     }
-                    return data;
-                },
-                getInt: function getInt(field) {
-                    return parseInt(field, 10);
-                },
-                getString: function getString(field) {
-                    return typeof field === 'string' ? field : field['#text'];
-                },
-                getBool: function getBool(field) {
-                    return field === 'true';
-                },
-                getDate: function getDate(field) {
-                    return new Date(field);
-                },
-                getArray: function getArray(val) {
-                    if (!val) {
-                        return [];
-                    }
-                    return Array.isArray(val) ? val : [val];
-                },
-                addIfDefined: function addIfDefined(field, name, obj) {
-                    var parser = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
-
-                    if (typeof field !== 'undefined') {
-                        if (parser !== null) {
-                            field = parser.parse.call(parser, field);
-                        }
-                        obj[name] = field;
-                    }
+                    return result;
                 }
-            };
-
-            _export('modelHelper', modelHelper);
-        }
-    };
-});
-$__System.register('35', ['3'], function (_export) {
-    /**
-     * Martian - Core JavaScript API for MindTouch
-     *
-     * Copyright (c) 2015 MindTouch Inc.
-     * www.mindtouch.com  oss@mindtouch.com
-     *
-     * Licensed under the Apache License, Version 2.0 (the "License");
-     * you may not use this file except in compliance with the License.
-     * You may obtain a copy of the License at
-     *
-     *     http://www.apache.org/licenses/LICENSE-2.0
-     *
-     * Unless required by applicable law or agreed to in writing, software
-     * distributed under the License is distributed on an "AS IS" BASIS,
-     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     * See the License for the specific language governing permissions and
-     * limitations under the License.
-     */
-    'use strict';
-
-    var modelHelper, permissionsModel;
-    return {
-        setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }],
-        execute: function () {
-            permissionsModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        operations: modelHelper.getString(obj.operations).split(','),
-                        role: {
-                            id: modelHelper.getInt(obj.role['@id']),
-                            name: modelHelper.getString(obj.role)
+            }, {
+                field: 'role',
+                transform: function transform(value) {
+                    var roleObj = {};
+                    if (typeof value === 'string') {
+                        roleObj.name = value;
+                    } else if (value && typeof value === 'object') {
+                        if ('#text' in value) {
+                            roleObj.name = value['#text'];
                         }
-                    };
-                    return parsed;
+                        if ('@id' in value) {
+                            roleObj.id = parseInt(value['@id'], 10);
+                        }
+                        if ('@href' in value) {
+                            roleObj.href = value['@href'];
+                        }
+                    }
+                    return roleObj;
                 }
-            };
+            }];
 
             _export('permissionsModel', permissionsModel);
         }
     };
 });
-$__System.register('4', ['3', '35', 'd'], function (_export) {
+$__System.register('3', ['35', 'd'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -2067,55 +2303,64 @@ $__System.register('4', ['3', '35', 'd'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, permissionsModel, pageModel, userModel;
+    var permissionsModel, pageModel, userModel;
     return {
         setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }, function (_2) {
-            permissionsModel = _2.permissionsModel;
+            permissionsModel = _.permissionsModel;
         }, function (_d) {
             pageModel = _d.pageModel;
         }],
         execute: function () {
-            userModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        id: modelHelper.getInt(obj['@id']),
-                        wikiId: obj['@wikiid'],
-                        href: obj['@href'],
-                        dateCreated: modelHelper.getDate(obj['date.created']),
-                        email: obj.email,
-                        fullname: obj.fullname,
-                        username: obj.username,
-                        nick: obj.nick,
-                        status: obj.status
-                    };
-                    if (typeof obj['license.seat'] === 'string') {
-                        parsed.seated = modelHelper.getBool(obj['license.seat']);
-                        parsed.siteOwner = false;
-                    } else {
-                        parsed.seated = modelHelper.getBool(modelHelper.getString(obj['license.seat']));
-                        parsed.siteOwner = modelHelper.getBool(obj['license.seat']['@owner']);
-                    }
-                    if ('date.lastlogin' in obj) {
-                        parsed.dateLastLogin = modelHelper.getDate(obj['date.lastlogin']);
-                    }
-                    if ('page.home' in obj) {
-                        parsed.pageHome = pageModel.parse(obj['page.home']);
-                    }
-                    if ('permissions.user' in obj) {
-                        parsed.userPermissions = permissionsModel.parse(obj['permissions.user']);
-                    }
-                    return parsed;
-                }
-            };
+            userModel = [{
+                field: '@id',
+                name: 'id',
+                transform: 'number'
+            }, {
+                field: '@wikiid',
+                name: 'wikiId'
+            }, {
+                field: '@href',
+                name: 'href'
+            }, {
+                field: 'date.created',
+                name: 'dateCreated'
+            }, {
+                field: 'email'
+            }, {
+                field: 'fullname'
+            }, {
+                field: 'username'
+            }, {
+                field: 'nick'
+            }, {
+                field: 'status'
+            }, {
+                field: ['license.seat', '#text'],
+                name: 'seated',
+                transform: 'boolean'
+            }, {
+                field: ['license.seat', '@owner'],
+                name: 'siteOwner',
+                transform: 'boolean'
+            }, {
+                field: 'date.lastlogin',
+                name: 'dateLastLogin',
+                transform: 'date'
+            }, {
+                field: 'page.home',
+                name: 'pageHome',
+                transform: pageModel
+            }, {
+                field: 'permissions.user',
+                name: 'userPermissions',
+                transform: permissionsModel
+            }];
 
             _export('userModel', userModel);
         }
     };
 });
-$__System.register('d', ['3', '4', '34'], function (_export) {
+$__System.register('d', ['3', '34'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -2136,103 +2381,110 @@ $__System.register('d', ['3', '4', '34'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, userModel, pageRatingModel, pageModel;
+    var userModel, pageRatingModel, pageModel;
     return {
-        setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }, function (_3) {
-            userModel = _3.userModel;
-        }, function (_2) {
-            pageRatingModel = _2.pageRatingModel;
+        setters: [function (_2) {
+            userModel = _2.userModel;
+        }, function (_) {
+            pageRatingModel = _.pageRatingModel;
         }],
         execute: function () {
-            pageModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        id: modelHelper.getInt(obj['@id'])
-                    };
-                    modelHelper.addIfDefined(obj.title, 'title', parsed);
-                    modelHelper.addIfDefined(obj['uri.ui'], 'uriUi', parsed);
-                    modelHelper.addIfDefined(obj['@href'], 'href', parsed);
-                    modelHelper.addIfDefined(obj['@state'], 'state', parsed);
-                    modelHelper.addIfDefined(obj['@draft.state'], 'draftState', parsed);
-                    modelHelper.addIfDefined(obj.article, 'article', parsed);
-                    modelHelper.addIfDefined(obj.language, 'language', parsed);
-                    modelHelper.addIfDefined(obj.namespace, 'namespace', parsed);
-                    modelHelper.addIfDefined(obj['language.effective'], 'languageEffective', parsed);
-                    modelHelper.addIfDefined(obj.timeuuid, 'timeuuid', parsed);
-                    if ('path' in obj) {
-                        parsed.path = modelHelper.getString(obj.path);
-                    }
-                    if ('@revision' in obj) {
-                        parsed.revision = modelHelper.getInt(obj['@revision']);
-                    }
-                    if ('date.created' in obj) {
-                        parsed.dateCreated = modelHelper.getDate(obj['date.created']);
-                    }
-                    if ('@deleted' in obj) {
-                        parsed.deleted = modelHelper.getBool(obj['@deleted']);
-                    }
-                    if ('@publish' in obj) {
-                        parsed.publish = modelHelper.getBool(obj['@publish']);
-                    }
-                    if ('@unpublish' in obj) {
-                        parsed.unpublish = modelHelper.getBool(obj['@unpublish']);
-                    }
-                    if ('@deactivate' in obj) {
-                        parsed.deactivate = modelHelper.getBool(obj['@deactivate']);
-                    }
-                    if ('@virtual' in obj) {
-                        parsed.virtual = modelHelper.getBool(obj['@virtual']);
-                    }
-                    if ('date.modified' in obj) {
-                        parsed.dateModified = modelHelper.getDate(obj['date.modified']);
-                    }
-                    if ('date.edited' in obj) {
-                        parsed.dateEdited = modelHelper.getDate(obj['date.edited']);
-                    }
-                    if ('page.parent' in obj) {
-                        parsed.pageParent = pageModel._getParents(obj['page.parent']);
-                    }
-                    if ('rating' in obj) {
-                        parsed.rating = pageRatingModel.parse(obj.rating);
-                    }
-                    if ('user.author' in obj) {
-                        parsed.userAuthor = userModel.parse(obj['user.author']);
-                    }
-
-                    // TODO: Parse obj.files if defined
-                    // TODO: Parse obj.content if defined
-                    // TODO: Parse obj.properties if defined
-                    // TODO: Parse obj['user.createdby'] if defined
-
-                    // Only parse subpages if the property exists, and it has a 'page'
-                    //  sub-property.
-                    if ('subpages' in obj && typeof obj.subpages !== 'string' && 'page' in obj.subpages) {
-                        parsed.subpages = pageModel._getSubpages(obj.subpages);
-                    }
-                    return parsed;
-                },
-                _getParents: function _getParents(parent) {
-                    return pageModel.parse(parent);
-                },
-                _getSubpages: function _getSubpages(subpages) {
-                    var pageDef = subpages.page;
-                    var parsed = [];
-                    pageDef = modelHelper.getArray(pageDef);
-                    pageDef.forEach(function (sp) {
-                        parsed.push(pageModel.parse(sp));
-                    });
-                    return parsed;
-                }
-            };
+            pageModel = [{
+                field: '@id',
+                name: 'id',
+                transform: 'number'
+            }, {
+                field: 'title'
+            }, {
+                field: 'uri.ui',
+                name: 'uri'
+            }, {
+                field: '@href',
+                name: 'href'
+            }, {
+                field: '@state',
+                name: 'state'
+            }, {
+                field: '@draft.state',
+                name: 'draftState'
+            }, {
+                field: 'article'
+            }, {
+                field: 'language'
+            }, {
+                field: 'namespace'
+            }, {
+                field: 'language.effective',
+                name: 'languageEffective'
+            }, {
+                field: 'timeuuid'
+            }, {
+                field: ['path', '#text']
+            }, {
+                field: '@revision',
+                name: 'revision',
+                transform: 'number'
+            }, {
+                field: 'date.created',
+                name: 'dateCreated',
+                transform: 'date'
+            }, {
+                field: '@deleted',
+                name: 'deleted',
+                transform: 'boolean'
+            }, {
+                field: '@publish',
+                name: 'publish',
+                transform: 'boolean'
+            }, {
+                field: '@unpublish',
+                name: 'unpublish',
+                transform: 'boolean'
+            }, {
+                field: '@deactivate',
+                name: 'deactivate',
+                transform: 'boolean'
+            }, {
+                field: '@virtual',
+                name: 'virtual',
+                transform: 'boolean'
+            }, {
+                field: 'date.modified',
+                name: 'dateModified',
+                transform: 'date'
+            }, {
+                field: 'date.edited',
+                name: 'dateEdited',
+                transform: 'date'
+            }, {
+                field: 'rating',
+                transform: pageRatingModel
+            }, {
+                field: 'user.author',
+                name: 'userAuthor',
+                transform: userModel
+            }];
 
             _export('pageModel', pageModel);
+
+            pageModel.push({
+                field: 'page.parent',
+                name: 'pageParent',
+                transform: pageModel
+            }, {
+                field: ['subpages', 'page'],
+                isArray: true,
+                transform: pageModel
+            });
+
+            // TODO: Handle files
+            // TODO: Handle content
+            // TODO: Handle properties
+            // TODO: Handle 'user.createdby'
         }
     };
 });
-$__System.register('36', ['3', 'd'], function (_export) {
+$__System.register('36', ['d'], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -2253,64 +2505,60 @@ $__System.register('36', ['3', 'd'], function (_export) {
      */
     'use strict';
 
-    var modelHelper, pageModel, pageRatingsModel;
+    var pageModel, pageRatingsModel;
     return {
-        setters: [function (_) {
-            modelHelper = _.modelHelper;
-        }, function (_d) {
+        setters: [function (_d) {
             pageModel = _d.pageModel;
         }],
         execute: function () {
-            pageRatingsModel = {
-                parse: function parse(data) {
-                    var obj = modelHelper.fromJson(data);
-                    var parsed = {
-                        count: modelHelper.getInt(obj['@count']),
-                        href: obj['@href']
-                    };
-                    if ('page' in obj) {
-                        parsed.page = [];
-                        var pageArray = modelHelper.getArray(obj.page);
-                        pageArray.forEach(function (page) {
-                            parsed.page.push(pageModel.parse(page));
-                        });
-                    }
-                    return parsed;
-                }
-            };
+            pageRatingsModel = [{
+                field: '@count',
+                name: 'count',
+                transform: 'number'
+            }, {
+                field: '@href',
+                name: 'href'
+            }, {
+                field: 'page',
+                name: 'pages',
+                isArray: true,
+                transform: pageModel
+            }];
 
             _export('pageRatingsModel', pageRatingsModel);
         }
     };
 });
-$__System.register('37', ['6', '7', '8', '9', '14', '25', '26', '27', '32', '33', '34', '36', '2e', 'd', '2f', '2d'], function (_export) {
-    var Plug, utility, _createClass, _classCallCheck, _Promise, PageBase, _get, _inherits, pageTreeModel, pageMoveModel, pageRatingModel, pageRatingsModel, _Object$keys, pageModel, subpagesModel, pageContentsModel, Page, PageManager;
+$__System.register('37', ['5', '6', '7', '8', '9', '14', '17', '18', '19', '32', '33', '34', '36', '2e', 'd', '2f', '2d'], function (_export) {
+    var Plug, utility, modelParser, _createClass, _classCallCheck, _Promise, PageBase, _get, _inherits, pageTreeModel, pageMoveModel, pageRatingModel, pageRatingsModel, _Object$keys, pageModel, subpagesModel, pageContentsModel, Page, PageManager;
 
     return {
         setters: [function (_6) {
             Plug = _6.Plug;
         }, function (_7) {
             utility = _7.utility;
+        }, function (_8) {
+            modelParser = _8.modelParser;
         }, function (_3) {
             _createClass = _3['default'];
         }, function (_4) {
             _classCallCheck = _4['default'];
         }, function (_5) {
             _Promise = _5['default'];
-        }, function (_8) {
-            PageBase = _8.PageBase;
+        }, function (_9) {
+            PageBase = _9.PageBase;
         }, function (_) {
             _get = _['default'];
         }, function (_2) {
             _inherits = _2['default'];
-        }, function (_9) {
-            pageTreeModel = _9.pageTreeModel;
-        }, function (_11) {
-            pageMoveModel = _11.pageMoveModel;
         }, function (_10) {
-            pageRatingModel = _10.pageRatingModel;
+            pageTreeModel = _10.pageTreeModel;
         }, function (_12) {
-            pageRatingsModel = _12.pageRatingsModel;
+            pageMoveModel = _12.pageMoveModel;
+        }, function (_11) {
+            pageRatingModel = _11.pageRatingModel;
+        }, function (_13) {
+            pageRatingsModel = _13.pageRatingsModel;
         }, function (_e) {
             _Object$keys = _e['default'];
         }, function (_d) {
@@ -2382,7 +2630,8 @@ $__System.register('37', ['6', '7', '8', '9', '14', '25', '26', '27', '32', '33'
                         _Object$keys(params).forEach(function (key) {
                             infoParams[key] = params[key];
                         });
-                        return this._plug.at('info').withParams(infoParams).get().then(pageModel.parse);
+                        var pageModelParser = modelParser.createParser(pageModel);
+                        return this._plug.at('info').withParams(infoParams).get().then(pageModelParser);
                     }
 
                     /**
@@ -2393,7 +2642,8 @@ $__System.register('37', ['6', '7', '8', '9', '14', '25', '26', '27', '32', '33'
                 }, {
                     key: 'getSubpages',
                     value: function getSubpages(params) {
-                        return this._plug.at('subpages').withParams(params).get().then(subpagesModel.parse);
+                        var subpagesModelParser = modelParser.createParser(subpagesModel);
+                        return this._plug.at('subpages').withParams(params).get().then(subpagesModelParser);
                     }
 
                     /**
@@ -2404,7 +2654,8 @@ $__System.register('37', ['6', '7', '8', '9', '14', '25', '26', '27', '32', '33'
                 }, {
                     key: 'getTree',
                     value: function getTree(params) {
-                        return this._plug.at('tree').withParams(params).get().then(pageTreeModel.parse);
+                        var pageTreeModelParser = modelParser.createParser(pageTreeModel);
+                        return this._plug.at('tree').withParams(params).get().then(pageTreeModelParser);
                     }
 
                     /**
@@ -2434,7 +2685,8 @@ $__System.register('37', ['6', '7', '8', '9', '14', '25', '26', '27', '32', '33'
                 }, {
                     key: 'getRating',
                     value: function getRating() {
-                        return this._plug.at('ratings').get().then(pageRatingModel.parse);
+                        var pageRatingModelParser = modelParser.createParser(pageRatingModel);
+                        return this._plug.at('ratings').get().then(pageRatingModelParser);
                     }
 
                     /**
@@ -2457,7 +2709,8 @@ $__System.register('37', ['6', '7', '8', '9', '14', '25', '26', '27', '32', '33'
                         if (oldRating !== '1' && oldRating !== '0' && oldRating !== '') {
                             throw new Error('Invalid rating supplied for the old rating');
                         }
-                        return this._plug.at('ratings').withParams({ score: rating, previousScore: oldRating }).post(null, utility.textRequestType).then(pageRatingModel.parse);
+                        var pageRatingModelParser = modelParser.createParser(pageRatingModel);
+                        return this._plug.at('ratings').withParams({ score: rating, previousScore: oldRating }).post(null, utility.textRequestType).then(pageRatingModelParser);
                     }
 
                     /**
@@ -2477,7 +2730,8 @@ $__System.register('37', ['6', '7', '8', '9', '14', '25', '26', '27', '32', '33'
                         //  it a proper page ID to be used in a URI segment.
                         var templatePath = '=' + encodeURIComponent(encodeURIComponent(path));
                         var contentsPlug = new Plug().at('@api', 'deki', 'pages', templatePath, 'contents').withParams(params);
-                        return contentsPlug.get().then(pageContentsModel.parse);
+                        var pageContentsModelParser = modelParser.createParser(pageContentsModel);
+                        return contentsPlug.get().then(pageContentsModelParser);
                     }
 
                     /**
@@ -2490,7 +2744,8 @@ $__System.register('37', ['6', '7', '8', '9', '14', '25', '26', '27', '32', '33'
                     value: function move() {
                         var params = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-                        return this._plug.at('move').withParams(params).post(null, 'text/plain; charset=utf-8').then(pageMoveModel.parse);
+                        var pageMoveModelParser = modelParser.createParser(pageMoveModel);
+                        return this._plug.at('move').withParams(params).post(null, 'text/plain; charset=utf-8').then(pageMoveModelParser);
                     }
 
                     /**
@@ -2500,7 +2755,8 @@ $__System.register('37', ['6', '7', '8', '9', '14', '25', '26', '27', '32', '33'
                 }, {
                     key: 'activateDraft',
                     value: function activateDraft() {
-                        return this._plug.at('activate-draft').post().then(pageModel.parse);
+                        var pageModelParser = modelParser.createParser(pageModel);
+                        return this._plug.at('activate-draft').post().then(pageModelParser);
                     }
                 }]);
 
@@ -2526,7 +2782,8 @@ $__System.register('37', ['6', '7', '8', '9', '14', '25', '26', '27', '32', '33'
                     key: 'getRatings',
                     value: function getRatings(pageIds) {
                         var ratingsPlug = this._plug.at('pages', 'ratings').withParams({ pageids: pageIds.join(',') });
-                        return ratingsPlug.get().then(pageRatingsModel.parse);
+                        var pageRatingsModelParser = modelParser.createParser(pageRatingsModel);
+                        return ratingsPlug.get().then(pageRatingsModelParser);
                     }
                 }]);
 
@@ -2537,8 +2794,8 @@ $__System.register('37', ['6', '7', '8', '9', '14', '25', '26', '27', '32', '33'
         }
     };
 });
-$__System.register('38', ['8', '9', '14', '23', '24', '37'], function (_export) {
-    var _createClass, _classCallCheck, _Promise, _toConsumableArray, DraftManager, Page, Article;
+$__System.register('38', ['8', '9', '14', '16', '27', '37'], function (_export) {
+    var _createClass, _classCallCheck, _Promise, DraftManager, _toConsumableArray, Page, Article;
 
     function _getTagsMarkup(tags) {
         var tagsMarkup = '';
@@ -2559,10 +2816,10 @@ $__System.register('38', ['8', '9', '14', '23', '24', '37'], function (_export) 
             _classCallCheck = _2['default'];
         }, function (_4) {
             _Promise = _4['default'];
-        }, function (_3) {
-            _toConsumableArray = _3['default'];
         }, function (_5) {
             DraftManager = _5.DraftManager;
+        }, function (_3) {
+            _toConsumableArray = _3['default'];
         }, function (_6) {
             Page = _6.Page;
         }],
@@ -2733,7 +2990,7 @@ $__System.registerDynamic("3a", ["3b", "3c"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("20", ["3a", "3d"], true, function($__require, exports, module) {
+$__System.registerDynamic("24", ["3a", "3d"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -2805,14 +3062,14 @@ $__System.registerDynamic("40", ["41", "42", "43", "44", "45"], true, function($
   return module.exports;
 });
 
-$__System.registerDynamic("3d", ["46", "18", "47", "44", "48", "49", "40", "43", "41", "45"], true, function($__require, exports, module) {
+$__System.registerDynamic("3d", ["46", "1c", "47", "44", "48", "49", "40", "43", "41", "45"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
   var LIBRARY = $__require('46'),
-      $export = $__require('18'),
+      $export = $__require('1c'),
       redefine = $__require('47'),
       hide = $__require('44'),
       has = $__require('48'),
@@ -2959,7 +3216,7 @@ $__System.registerDynamic("4d", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("1a", ["4e"], true, function($__require, exports, module) {
+$__System.registerDynamic("1e", ["4e"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -2978,7 +3235,7 @@ $__System.registerDynamic("1a", ["4e"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("1b", ["49", "45"], true, function($__require, exports, module) {
+$__System.registerDynamic("1f", ["49", "45"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -3005,7 +3262,7 @@ $__System.registerDynamic("3b", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("1c", ["3b"], true, function($__require, exports, module) {
+$__System.registerDynamic("20", ["3b"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -3046,7 +3303,7 @@ $__System.registerDynamic("49", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("1d", ["4f", "45", "49", "21"], true, function($__require, exports, module) {
+$__System.registerDynamic("21", ["4f", "45", "49", "25"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -3054,24 +3311,24 @@ $__System.registerDynamic("1d", ["4f", "45", "49", "21"], true, function($__requ
   var classof = $__require('4f'),
       ITERATOR = $__require('45')('iterator'),
       Iterators = $__require('49');
-  module.exports = $__require('21').getIteratorMethod = function(it) {
+  module.exports = $__require('25').getIteratorMethod = function(it) {
     if (it != undefined)
       return it[ITERATOR] || it['@@iterator'] || Iterators[classof(it)];
   };
   return module.exports;
 });
 
-$__System.registerDynamic("51", ["17", "1a", "1b", "4e", "1c", "1d"], true, function($__require, exports, module) {
+$__System.registerDynamic("51", ["1b", "1e", "1f", "4e", "20", "21"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var ctx = $__require('17'),
-      call = $__require('1a'),
-      isArrayIter = $__require('1b'),
+  var ctx = $__require('1b'),
+      call = $__require('1e'),
+      isArrayIter = $__require('1f'),
       anObject = $__require('4e'),
-      toLength = $__require('1c'),
-      getIterFn = $__require('1d');
+      toLength = $__require('20'),
+      getIterFn = $__require('21');
   module.exports = function(iterable, entries, fn, that) {
     var iterFn = getIterFn(iterable),
         f = ctx(fn, that, entries ? 2 : 1),
@@ -3167,13 +3424,13 @@ $__System.registerDynamic("58", ["59", "57"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("5a", ["17", "55", "56", "58", "57", "50", "5b"], true, function($__require, exports, module) {
+$__System.registerDynamic("5a", ["1b", "55", "56", "58", "57", "50", "5b"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   (function(process) {
-    var ctx = $__require('17'),
+    var ctx = $__require('1b'),
         invoke = $__require('55'),
         html = $__require('56'),
         cel = $__require('58'),
@@ -3422,13 +3679,13 @@ $__System.registerDynamic("5d", ["5f"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("60", ["21", "41", "5d", "45"], true, function($__require, exports, module) {
+$__System.registerDynamic("60", ["25", "41", "5d", "45"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var core = $__require('21'),
+  var core = $__require('25'),
       $ = $__require('41'),
       DESCRIPTORS = $__require('5d'),
       SPECIES = $__require('45')('species');
@@ -3486,7 +3743,7 @@ $__System.registerDynamic("45", ["61", "62", "57"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("1e", ["45"], true, function($__require, exports, module) {
+$__System.registerDynamic("22", ["45"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -3533,6 +3790,9 @@ $__System.registerDynamic("63", [], true, function($__require, exports, module) 
   var currentQueue;
   var queueIndex = -1;
   function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+      return;
+    }
     draining = false;
     if (currentQueue.length) {
       queue = currentQueue.concat(queue);
@@ -3640,7 +3900,7 @@ $__System.registerDynamic("5b", ["65"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("66", ["41", "46", "57", "17", "4f", "18", "59", "4e", "54", "4d", "51", "67", "52", "45", "53", "5c", "5d", "5e", "43", "60", "21", "1e", "5b"], true, function($__require, exports, module) {
+$__System.registerDynamic("66", ["41", "46", "57", "1b", "4f", "1c", "59", "4e", "54", "4d", "51", "67", "52", "45", "53", "5c", "5d", "5e", "43", "60", "25", "22", "5b"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -3650,9 +3910,9 @@ $__System.registerDynamic("66", ["41", "46", "57", "17", "4f", "18", "59", "4e",
     var $ = $__require('41'),
         LIBRARY = $__require('46'),
         global = $__require('57'),
-        ctx = $__require('17'),
+        ctx = $__require('1b'),
         classof = $__require('4f'),
-        $export = $__require('18'),
+        $export = $__require('1c'),
         isObject = $__require('59'),
         anObject = $__require('4e'),
         aFunction = $__require('54'),
@@ -3888,7 +4148,7 @@ $__System.registerDynamic("66", ["41", "46", "57", "17", "4f", "18", "59", "4e",
     $export($export.G + $export.W + $export.F * !USE_NATIVE, {Promise: P});
     $__require('43')(P, PROMISE);
     $__require('60')(PROMISE);
-    Wrapper = $__require('21')[PROMISE];
+    Wrapper = $__require('25')[PROMISE];
     $export($export.S + $export.F * !USE_NATIVE, PROMISE, {reject: function reject(r) {
         var capability = new PromiseCapability(this),
             $$reject = capability.reject;
@@ -3903,7 +4163,7 @@ $__System.registerDynamic("66", ["41", "46", "57", "17", "4f", "18", "59", "4e",
         $$resolve(x);
         return capability.promise;
       }});
-    $export($export.S + $export.F * !(USE_NATIVE && $__require('1e')(function(iter) {
+    $export($export.S + $export.F * !(USE_NATIVE && $__require('22')(function(iter) {
       P.all(iter)['catch'](function() {});
     })), PROMISE, {
       all: function all(iterable) {
@@ -3952,16 +4212,16 @@ $__System.registerDynamic("66", ["41", "46", "57", "17", "4f", "18", "59", "4e",
   return module.exports;
 });
 
-$__System.registerDynamic("68", ["39", "20", "4c", "66", "21"], true, function($__require, exports, module) {
+$__System.registerDynamic("68", ["39", "24", "4c", "66", "25"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   $__require('39');
-  $__require('20');
+  $__require('24');
   $__require('4c');
   $__require('66');
-  module.exports = $__require('21').Promise;
+  module.exports = $__require('25').Promise;
   return module.exports;
 });
 
@@ -4385,6 +4645,18 @@ $__System.register('6a', ['8', '9', '13', '69', '2e'], function (_export) {
                         return this;
                     }
                 }, {
+                    key: 'withProtocol',
+                    value: function withProtocol(protocol) {
+                        this.parsedUrl.protocol = protocol;
+                        return this;
+                    }
+                }, {
+                    key: 'withHostname',
+                    value: function withHostname(hostname) {
+                        this.parsedUrl.hostname = hostname;
+                        return this;
+                    }
+                }, {
                     key: 'toString',
                     value: function toString() {
                         return this.parsedUrl.toString();
@@ -4393,6 +4665,11 @@ $__System.register('6a', ['8', '9', '13', '69', '2e'], function (_export) {
                     key: 'protocol',
                     get: function get() {
                         return this.parsedUrl.protocol;
+                    }
+                }, {
+                    key: 'hostname',
+                    get: function get() {
+                        return this.parsedUrl.hostname;
                     }
                 }, {
                     key: 'origin',
@@ -4484,7 +4761,7 @@ $__System.registerDynamic("6f", ["6e"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("26", ["6f"], true, function($__require, exports, module) {
+$__System.registerDynamic("18", ["6f"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -4577,7 +4854,7 @@ $__System.registerDynamic("4e", ["59"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("67", ["41", "59", "4e", "17"], true, function($__require, exports, module) {
+$__System.registerDynamic("67", ["41", "59", "4e", "1b"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -4593,7 +4870,7 @@ $__System.registerDynamic("67", ["41", "59", "4e", "17"], true, function($__requ
   module.exports = {
     set: Object.setPrototypeOf || ('__proto__' in {} ? function(test, buggy, set) {
       try {
-        set = $__require('17')(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
+        set = $__require('1b')(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
         set(test, []);
         buggy = !(test instanceof Array);
       } catch (e) {
@@ -4613,23 +4890,23 @@ $__System.registerDynamic("67", ["41", "59", "4e", "17"], true, function($__requ
   return module.exports;
 });
 
-$__System.registerDynamic("72", ["18", "67"], true, function($__require, exports, module) {
+$__System.registerDynamic("72", ["1c", "67"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $export = $__require('18');
+  var $export = $__require('1c');
   $export($export.S, 'Object', {setPrototypeOf: $__require('67').set});
   return module.exports;
 });
 
-$__System.registerDynamic("73", ["72", "21"], true, function($__require, exports, module) {
+$__System.registerDynamic("73", ["72", "25"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   $__require('72');
-  module.exports = $__require('21').Object.setPrototypeOf;
+  module.exports = $__require('25').Object.setPrototypeOf;
   return module.exports;
 });
 
@@ -4645,7 +4922,7 @@ $__System.registerDynamic("74", ["73"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("27", ["71", "74"], true, function($__require, exports, module) {
+$__System.registerDynamic("19", ["71", "74"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -4670,7 +4947,7 @@ $__System.registerDynamic("27", ["71", "74"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.register("75", ["9", "26", "27"], function (_export) {
+$__System.register("75", ["9", "18", "19"], function (_export) {
   var _classCallCheck, _get, _inherits, MTError;
 
   return {
@@ -4726,7 +5003,7 @@ $__System.register("75", ["9", "26", "27"], function (_export) {
     }
   };
 });
-$__System.register('76', ['9', '26', '27', '75'], function (_export) {
+$__System.register('76', ['9', '18', '19', '75'], function (_export) {
     var _classCallCheck, _get, _inherits, MTError, XhrError;
 
     return {
@@ -4791,7 +5068,7 @@ $__System.register('76', ['9', '26', '27', '75'], function (_export) {
         }
     };
 });
-$__System.register('6', ['8', '9', '14', '76', '77', '2e', '6a'], function (_export) {
+$__System.register('5', ['8', '9', '14', '76', '77', '2e', '6a'], function (_export) {
     var _createClass, _classCallCheck, _Promise, XhrError, Settings, _Object$keys, Uri, Plug;
 
     function _handleHttpError(xhr) {
@@ -4817,8 +5094,7 @@ $__System.register('6', ['8', '9', '14', '76', '77', '2e', '6a'], function (_exp
             // server will only respond with Access-Control-Allow-Credentials if valid developer token is provided
             xhr.withCredentials = true;
             var requestParams = {
-                _: Date.now(),
-                origin: 'mt-web' // TODO: F1 req from settings module after 20150820
+                _: Date.now()
             };
             if (_this.parseJson) {
                 requestParams['dream.out.format'] = 'json';
@@ -5188,7 +5464,7 @@ $__System.register('13', [], function (_export) {
         }
     };
 });
-$__System.register('7', [], function (_export) {
+$__System.register('6', [], function (_export) {
     /**
      * Martian - Core JavaScript API for MindTouch
      *
@@ -5256,7 +5532,7 @@ $__System.register('7', [], function (_export) {
         }
     };
 });
-$__System.register('78', ['6', '7', '8', '9', '13'], function (_export) {
+$__System.register('78', ['5', '6', '8', '9', '13'], function (_export) {
   var Plug, utility, _createClass, _classCallCheck, stringUtility, WorkflowManager;
 
   return {
@@ -5604,7 +5880,7 @@ $__System.registerDynamic("3c", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("19", ["3c"], true, function($__require, exports, module) {
+$__System.registerDynamic("1d", ["3c"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -5640,7 +5916,7 @@ $__System.registerDynamic("54", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("17", ["54"], true, function($__require, exports, module) {
+$__System.registerDynamic("1b", ["54"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -5671,14 +5947,14 @@ $__System.registerDynamic("17", ["54"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("18", ["57", "21", "17"], true, function($__require, exports, module) {
+$__System.registerDynamic("1c", ["57", "25", "1b"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   var global = $__require('57'),
-      core = $__require('21'),
-      ctx = $__require('17'),
+      core = $__require('25'),
+      ctx = $__require('1b'),
       PROTOTYPE = 'prototype';
   var $export = function(type, name, source) {
     var IS_FORCED = type & $export.F,
@@ -5735,13 +6011,13 @@ $__System.registerDynamic("5f", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("6d", ["18", "21", "5f"], true, function($__require, exports, module) {
+$__System.registerDynamic("6d", ["1c", "25", "5f"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $export = $__require('18'),
-      core = $__require('21'),
+  var $export = $__require('1c'),
+      core = $__require('25'),
       fails = $__require('5f');
   module.exports = function(KEY, exec) {
     var fn = (core.Object || {})[KEY] || Object[KEY],
@@ -5754,12 +6030,12 @@ $__System.registerDynamic("6d", ["18", "21", "5f"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("7b", ["19", "6d"], true, function($__require, exports, module) {
+$__System.registerDynamic("7b", ["1d", "6d"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var toObject = $__require('19');
+  var toObject = $__require('1d');
   $__require('6d')('keys', function($keys) {
     return function keys(it) {
       return $keys(toObject(it));
@@ -5768,7 +6044,7 @@ $__System.registerDynamic("7b", ["19", "6d"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("21", [], true, function($__require, exports, module) {
+$__System.registerDynamic("25", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -5779,13 +6055,13 @@ $__System.registerDynamic("21", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("7c", ["7b", "21"], true, function($__require, exports, module) {
+$__System.registerDynamic("7c", ["7b", "25"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   $__require('7b');
-  module.exports = $__require('21').Object.keys;
+  module.exports = $__require('25').Object.keys;
   return module.exports;
 });
 
