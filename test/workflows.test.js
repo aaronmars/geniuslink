@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 import { GeniusLink } from '../geniuslink';
-import { WorkflowManager } from 'martian/workflows';
+import { WorkflowManager } from 'mindtouch-martian/workflows';
 describe('Workflows', () => {
     let gl = null;
     beforeEach(() => {

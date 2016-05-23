@@ -19,7 +19,7 @@ import { User } from './user';
 import { Search } from './search';
 import { Article } from './article';
 import { Workflows } from './workflows';
-import { Settings } from 'martian/lib/settings';
+import { Settings } from 'mindtouch-martian/lib/settings';
 
 /**
  * The main GeniusLink SDK entry point.

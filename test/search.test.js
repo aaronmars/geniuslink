@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 import { GeniusLink } from '../geniuslink';
-import { Site } from 'martian/site';
+import { Site } from 'mindtouch-martian/site';
 describe('search', () => {
     describe('operations', () => {
         let gl = null;

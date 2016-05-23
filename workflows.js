@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { WorkflowManager } from 'martian/workflows';
+import { WorkflowManager } from 'mindtouch-martian/workflows';
 
 /**
  * Workflow management

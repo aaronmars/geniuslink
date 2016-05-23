@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 import { GeniusLink } from '../geniuslink';
-import { UserManager } from 'martian/user';
-import { UserEvents } from 'martian/userEvents';
+import { UserManager } from 'mindtouch-martian/user';
+import { UserEvents } from 'mindtouch-martian/userEvents';
 describe('user', () => {
     describe('operations', () => {
         let gl = null;

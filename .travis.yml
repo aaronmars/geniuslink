@@ -16,7 +16,7 @@ cache:
     - jspm_packages
 
 before_install:
-  - npm -g install npm@latest-2
+  - npm -g install npm@3
   - pip install --user codecov
 
 install:
