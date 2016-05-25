@@ -7,17 +7,22 @@ env:
     secure: MARmPapEXClZL7KfY7cWMcAzrQh519YhXiSg6+10Bm/cUWHdBYnPaMdTjae1UBLjrYiUN/huCLJfgSqxm+mY0wN1l9OzKIJNK0RwRatmrSP4KfuTDQeIx6kiCd/aEdcLKMpILhzrnFjRNSbqid6k0uNRTCeb7C0Wwy/8TUsN6zTnoYXop7yslNA2KhOaUCiSX+BULWbwwP2k9tWuFo09Qx1g3xBdW4fkeSoFR+Co3FcEzZxW1+OPR/HLI4pjQLZEzih0oLtS4CZSgDMmO9yHcJqzh/oiq8gJvZkzqNRG7+beCRpAYzkvOGczr5OIL7/NOYepSiJHYsLrszMLQooi/P7PMiScDGo99wBcvDWDH5ZL9r7AuDooMQVVKZEXBm8McVfwmR4E8wTQ4FI6eRsCFoJbE2hTXu5uZdpdzl7pQmp+C2zupX4Za6+HcdPkGswMkvbszo7GNGP3+POs3j2hs0zOqByIF5b/2TWfQ8ZVB6P82DhZ4z5VHyJR0lHoU4tSiFYf2a/IGgaosq+M5ZRhzTP2XvJ3qSIZ0d0rr+wEod3TCvSbylu9QPoEXBuVNZ8tl7l/XJNwfQcgp6Tphd0THEK3Ig9A/0FOxtJESaI49rl4wc7HxOAzqXYeLs0HCAcfL8b0twS6HQC1L7SmXSdTL+tgjwIeaV/r2akHXrcJ+sI=
 
 notifications:
-  flowdock: $FLOWDOCK_API_TOKEN
+  flowdock:
+    secure: "mwQkfZfsnNl0q5tdiA0U2FCI01hWjvawnBNLpPQXPUe8CpDNdMEHbjKSTJPYBlO/ahSVdwxvUjVKbOBSnVlt37vQcELbE4uOOnHSwdhJsf8LArd//3ciVkYeKOBXjKQlmM0z72LHr5pi1tf40thu+3f0RZNvaIoiCrQGanZooa0Doesi9nKnD0HfahqNZ5kw6FXMK4OpGcnzgOWDYjE+dRxVbxGOU4+LeKhusG7zvXkgTvsA2c9iiSkq9kqD1/Zdk+e4XhAoa8WnvM7C/1V+64wQwfEyrXyziRaz87FuaGWhlBw3AhWJAIH1UA8IWvLZHmrfJ4m9dGd/++VNxLBqXBGbzZYvmBZolzwJ2xypU3TpUwo5ETB3TDoR8Oa4kUITwdwTbG8+sSF8ACzlaWiZGGSe1b/afoNaqDYo3XImQeK8mnJqZmuGEpbSq2Nu6ASGCkaIHStbqhEwyCJDuW4zCX3L4AhyuZWg7OwvKbcTfbEK/eE50bZR7FxydoRd+ZjSwt2Z/zEVTjhNhK1qXe9VYm3e506KmDPTWV+uHbxklyeYO7zQYA3NLiIHiSZxEG7u2SG+7cDiMDmXd8aT/Rn/455dvBTiYWdtdHxJ0Wa+GEG71ODXOTp3dX0tXSZhLgs8LOdBv0c2D2DhSpWFzw4moO3lfxOQE9g3ggqEG8SE2Og="
+  email:
+    recipients:
+      - secure: "kItCsNTXrAhaExWsrzqsINi0AE2VQdonaKGLrQRrTJVjRvwB/fx5/N2vG1N64hDNX0Dt67XM6zUZimln/0scuXJqjsrUEUMOvXB5OHfh0jvhozSyBFH1Twbep66nMvxYyLVQ0eTb4/BYTSH8DATGIRWkz7TgW7mbZf4YnyF+QmWiAI4EQtDY7u/v2ZmDi95BQSuiPnwtiQeLZm3w23hxRxkJNcelrztv86wsscwkV9pohzXq8Ohzz9AKYI+NPKZyKgfrE8GYmtQlIciQg/O6n83vfpq2rHggCvAldBfDJutl/ssWuRY/ajyMjFu+2wIOvKaXFw6R7BIMXGrytHHw7fL5KCuhH7yacCLRzOMKvvV6SS9gmkCNfpKmUKmo7l4wc5bNfbRowJyg0OuI58OutvYrsaSl3sOJf5SL1uX1mLqz49Mp3jkpiw+Q6ITdAYKUJHfx8fr3chhbgGqKpkfnS+yf5GGNlue33SsSoECmNhWTc1yFd9boGGZBaAu5e0wrlOH+AnlP1s16JSivlxxoZUg7vZcn9XOlD/mIF3ijUlrPgYFBuBKA7gMj9sUGSQYeH0fUL7WXfi0rdNE9TcgG3L5mKCEnNnyagUzSz1F80cxTIdn8I3tD/MzQd8sEkCMobxrRjopbR3Ij6K/Nq6JWN/MAY5Qp5F5WVudGNSxsFHM="
+    on_success: change
+    on_failure: always
 
 cache:
   directories:
-    - "${HOME}/.cache/pip"
-    - node_modules
-    - jspm_packages
+    - $HOME/.npm
+    - $HOME/.jspm
+    - /tmp/phantomjs
 
 before_install:
   - npm -g install npm@3
-  - pip install --user codecov
 
 install:
   - npm install
@@ -29,7 +34,7 @@ script:
   - travis/deploy.sh
 
 after_success:
-  - if [[ "${TRAVIS_SECURE_ENV_VARS}" == "true" ]]; then cat coverage/*/lcov.info | codecov; fi
+  - bash <(curl -s https://codecov.io/bash)
 
 deploy:
   - provider: releases
