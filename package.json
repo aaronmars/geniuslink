@@ -23,7 +23,7 @@
     "isparta": "4.0.0",
     "jasmine": "2.4.1",
     "jasmine-core": "2.4.1",
-    "jspm": "0.16.34",
+    "jspm": "0.16.35",
     "karma": "0.13.22",
     "karma-babel-preprocessor": "6.0.1",
     "karma-cli": "1.0.0",
@@ -45,7 +45,7 @@
     },
     "dependencies": {
       "fetch": "github:github/fetch@^1.0.0",
-      "mindtouch-martian": "github:MindTouch/martian@master"
+      "mindtouch-martian": "github:MindTouch/martian@1.0.0-beta.0"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",

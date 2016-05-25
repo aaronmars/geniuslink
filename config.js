@@ -17,9 +17,9 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "core-js": "npm:core-js@1.2.6",
     "fetch": "github:github/fetch@1.0.0",
-    "mindtouch-martian": "github:MindTouch/martian@master",
-    "github:MindTouch/martian@master": {
-      "mindtouch-http": "github:MindTouch/mindtouch-http.js@master"
+    "mindtouch-martian": "github:MindTouch/martian@1.0.0-beta.0",
+    "github:MindTouch/martian@1.0.0-beta.0": {
+      "mindtouch-http": "github:MindTouch/mindtouch-http.js@0.0.0"
     },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.0"
