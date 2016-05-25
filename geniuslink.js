@@ -65,7 +65,10 @@ export class GeniusLink {
      * @return {Object} A settings object with the configuration parameters
      */
     get configuration() {
-        return this.settings.getProperties();
+        return {
+            host: this.settings.host,
+            token: this.settings.token
+        };
     }
 
     /**

@@ -40,7 +40,7 @@ export class User {
      * @returns {String} - The URL on the MindTouch site that will present a user with a login form.
      */
     getLoginUrl() {
-        return `${this.settings.get('host')}/@app/login/redirect`;
+        return `${this.settings.host}/@app/login/redirect`;
     }
 
     /**
